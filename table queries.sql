@@ -1,8 +1,8 @@
 create database SunBank;
 
 use SunBank;
---use master;
---drop database SunBank;
+use master;
+drop database SunBank;
 
 CREATE TABLE Customer (
     CustomerID varchar PRIMARY KEY,
@@ -57,7 +57,7 @@ CREATE TABLE Employee (
 	PasswordHash nvarchar,
     EmployeeFirstName VARCHAR(25),
     EmployeeLastName VARCHAR(25),
-	EmployeeRole Varchar(10), -- Customer Support/Compliance Officer, cashier, staff, Admin
+--	EmployeeRole Varchar(10), -- Customer Support/Compliance Officer, cashier, staff, Admin
     CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
 	IsActive BIT NOT NULL DEFAULT 0,
 	LastLoginDate datetime2
@@ -164,6 +164,12 @@ CREATE TABLE LoanRepaymentLog (
     RepaymentMethod VARCHAR(50)  -- 'Online', 'Cash', 'Cheque', etc.
 );
 
+CREATE TABLE ComplaintType (
+    ComplaintTypeID INT PRIMARY KEY IDENTITY(1,1),
+    ComplaintTypeName VARCHAR(50),  -- 'Service Issue', 'Transaction Issue', 'Account Problem', etc.
+    ComplaintTypeDescription VARCHAR(100)
+);
+
 CREATE TABLE Complaint (
     ComplaintID INT PRIMARY KEY IDENTITY(1,1),
     CustomerID varchar FOREIGN KEY REFERENCES Customer(CustomerID),
@@ -177,11 +183,6 @@ CREATE TABLE Complaint (
     ResolutionComments VARCHAR(255)
 );
 
-CREATE TABLE ComplaintType (
-    ComplaintTypeID INT PRIMARY KEY IDENTITY(1,1),
-    ComplaintTypeName VARCHAR(50),  -- 'Service Issue', 'Transaction Issue', 'Account Problem', etc.
-    ComplaintTypeDescription VARCHAR(100)
-);
 
 CREATE TABLE ComplaintStatusHistory (
     StatusHistoryID INT PRIMARY KEY IDENTITY(1,1),
