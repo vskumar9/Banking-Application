@@ -4,7 +4,7 @@ namespace BankApplicationAPI.Interfaces
 {
     public interface ILoanRepaymentLog
     {
-        Task<IEnumerable<LoanRepaymentLog>> GetLoanLoanRepaymentLogsAsync();
+        Task<IEnumerable<LoanRepaymentLog>> GetLoanRepaymentLogsAsync();
         Task<IEnumerable<LoanRepaymentLog>> GetLoanRepaymentLogByLoanRepaymentLogIdAsync(int RepaymentId);
         Task<LoanRepaymentLog> UpdateLoanRepaymentLogAsync(LoanRepaymentLog loanRepaymentLog);
         Task<Boolean> DeleteLoanRepaymentLogAsync(LoanRepaymentLog loanRepaymentLog);

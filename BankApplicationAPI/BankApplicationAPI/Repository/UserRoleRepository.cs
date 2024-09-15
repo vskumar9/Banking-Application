@@ -1,38 +1,152 @@
-﻿using BankApplicationAPI.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using BankApplicationAPI.Models;
+using BankApplicationAPI.Interfaces;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BankApplicationAPI.Repository
 {
     public class UserRoleRepository : IUserRole
     {
-        public Task<bool> CreateUserRoleAsync(UserRole userRole)
+        private readonly SunBankContext _context;
+        private readonly ILogger<UserRoleRepository> _logger;
+
+        public UserRoleRepository(SunBankContext context, ILogger<UserRoleRepository> logger)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _logger = logger;
         }
 
-        public Task<bool> DeleteUserRoleAsync(UserRole userRole)
+        // Create a new UserRole
+        public async Task<bool> CreateUserRoleAsync(UserRole userRole)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.UserRoles.Add(userRole);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating UserRole");
+                return false;
+            }
         }
 
-        public Task<UserRole> GetUserRoleAsync(int? UserRoleId = null, string? EmployeeId = null, int? RoleId = null)
+        // Delete an existing UserRole
+        public async Task<bool> DeleteUserRoleAsync(UserRole userRole)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.UserRoles.Remove(userRole);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting UserRole");
+                return false;
+            }
         }
 
-        public Task<IEnumerable<UserRole>> GetUserRoleByUserRoleIdAsync(int UserRoleId)
+        // Get a specific UserRole based on optional parameters
+        public async Task<UserRole> GetUserRoleAsync(int? UserRoleId = null, string? EmployeeId = null, int? RoleId = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = _context.UserRoles.AsQueryable();
+
+                if (UserRoleId.HasValue)
+                {
+                    query = query.Where(ur => ur.UserRoleId == UserRoleId.Value);
+                }
+
+                if (!string.IsNullOrEmpty(EmployeeId))
+                {
+                    query = query.Where(ur => ur.EmployeeId == EmployeeId);
+                }
+
+                if (RoleId.HasValue)
+                {
+                    query = query.Where(ur => ur.RoleId == RoleId.Value);
+                }
+
+                return await query.Include(ur => ur.Employee).Include(ur => ur.Role)
+                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException("UserRoles not found with the provided criteria.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving UserRole");
+                throw;
+            }
         }
 
-        public Task<IEnumerable<UserRole>> GetUserRolesAsync()
+        // Get UserRoles by UserRoleId
+        public async Task<IEnumerable<UserRole>> GetUserRoleByUserRoleIdAsync(int UserRoleId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.UserRoles
+                    .Where(ur => ur.UserRoleId == UserRoleId)
+                    .Include(ur => ur.Employee)
+                    .Include(ur => ur.Role)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving UserRoles by UserRoleId");
+                throw;
+            }
         }
 
-        public Task<UserRole> UpdateUserRoleAsync(UserRole userRole)
+        // Get all UserRoles
+        public async Task<IEnumerable<UserRole>> GetUserRolesAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.UserRoles
+                    .Include(ur => ur.Employee)
+                    .Include(ur => ur.Role)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving UserRoles");
+                throw;
+            }
+        }
+
+        // Update an existing UserRole
+        public async Task<UserRole> UpdateUserRoleAsync(UserRole userRole)
+        {
+            try
+            {
+                var existingUserRole = await _context.UserRoles
+                    .FirstOrDefaultAsync(ur => ur.UserRoleId == userRole.UserRoleId);
+
+                if (existingUserRole == null)
+                {
+                    throw new KeyNotFoundException("UserRole not found");
+                }
+
+                // Update fields
+                existingUserRole.EmployeeId = userRole.EmployeeId;
+                existingUserRole.RoleId = userRole.RoleId;
+
+                _context.UserRoles.Update(existingUserRole);
+                await _context.SaveChangesAsync();
+
+                return existingUserRole;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating UserRole");
+                throw;
+            }
         }
     }
 }

@@ -5,17 +5,16 @@ namespace BankApplicationAPI.Interfaces
     public interface ITransactionLog
     {
         Task<IEnumerable<TransactionLog>> GetTransactionLogsAsync();
-        Task<IEnumerable<TransactionLog>> GetTransactionLogByTransactionLogIdAsync(byte TransactionId);
+        Task<IEnumerable<TransactionLog>> GetTransactionLogsByTransactionIdAsync(int TransactionId);
         Task<TransactionLog> UpdateTransactionLogAsync(TransactionLog transactionLog);
         Task<Boolean> DeleteTransactionLogAsync(TransactionLog transactionLog);
         Task<Boolean> CreateTransactionLogAsync(TransactionLog transactionLog);
-        Task<TransactionLog> GetTransactionLogAsync(byte? TransactionId = null,
-                                                    byte? TransactionTypeId = null,
-                                                    DateTime? TransactionDate = null,
-                                                    int? AccountId = null,
-                                                    decimal? TransactionAmount = null,
-                                                    string? EmployeeId = null,
-                                                    string? CustomerId = null,
-                                                    int? PermissionId = null);
+        Task<TransactionLog> GetTransactionLogAsync(int? TransactionId = null, 
+                                                    DateTime? TransactionDate = null, 
+                                                    byte? TransactionTypeId = null, 
+                                                    decimal? TransactionAmount = null, 
+                                                    int? AccountId = null, 
+                                                    string? EmployeeId = null, 
+                                                    string? CustomerId = null);
     }
 }

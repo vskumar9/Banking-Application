@@ -1,38 +1,135 @@
 ﻿using BankApplicationAPI.Interfaces;
 using BankApplicationAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankApplicationAPI.Repository
 {
     public class AccountRepository : IAccount
     {
-        public Task<bool> CreateAccountAsync(Account account)
+        private readonly SunBankContext _context;
+        private readonly ILogger<AccountRepository> _logger;
+
+        public AccountRepository(SunBankContext context, ILogger<AccountRepository> logger)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _logger = logger;
         }
 
-        public Task<bool> DeleteAccountAsync(Account account)
+        // Create Account with exception handling
+        public async Task<bool> CreateAccountAsync(Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.Accounts.AddAsync(account);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError($"Error creating account: {ex.Message}", ex);
+                throw new Exception("An error occurred while creating the account.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An unexpected error occurred: {ex.Message}", ex);
+                throw new Exception("An unexpected error occurred.");
+            }
         }
 
-        public Task<Account> GetAccountAsync(int? AccountId = null, string? AccountStatusType = null, string? CustomerId = null)
+        // Delete Account with exception handling
+        public async Task<bool> DeleteAccountAsync(Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Accounts.Remove(account);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError($"Error deleting account: {ex.Message}", ex);
+                throw new Exception("An error occurred while deleting the account.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An unexpected error occurred: {ex.Message}", ex);
+                throw new Exception("An unexpected error occurred.");
+            }
         }
 
-        public Task<IEnumerable<Account>> GetAccountsAsync()
+        // Get Account by optional parameters with exception handling
+        public async Task<Account> GetAccountAsync(int? AccountId = null, string? AccountStatusType = null, string? CustomerId = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = _context.Accounts.AsQueryable();
+
+                if (AccountId.HasValue)
+                    query = query.Where(a => a.AccountId == AccountId);
+
+                if (!string.IsNullOrEmpty(AccountStatusType))
+                    query = query.Where(a => a.AccountStatusType!.AccountStatusDescription == AccountStatusType);
+
+                if (!string.IsNullOrEmpty(CustomerId))
+                    query = query.Where(a => a.CustomerId == CustomerId);
+
+                return await query.Include(a => a.AccountStatusType).Include(a => a.Customer).Include(a => a.InterestSavingsRate)
+                                                                    .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error fetching account: {ex.Message}", ex);
+                throw new Exception("An error occurred while fetching the account.");
+            }
         }
 
-        public Task<IEnumerable<Account>> GetAccountsByAccountIdAsync(int accountId)
+        // Get all Accounts with exception handling
+        public async Task<IEnumerable<Account>> GetAccountsAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.Accounts.Include(a => a.AccountStatusType).Include(a => a.Customer)
+                                     .Include(a => a.InterestSavingsRate).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error fetching accounts: {ex.Message}", ex);
+                throw new Exception("An error occurred while fetching the accounts.");
+            }
         }
 
-        public Task<Account> UpdateAccountAsync(Account account)
+        // Get Accounts by AccountId with exception handling
+        public async Task<IEnumerable<Account>> GetAccountsByAccountIdAsync(int accountId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.Accounts.Where(a => a.AccountId == accountId).Include(a => a.AccountStatusType)
+                                     .Include(a => a.Customer).Include(a => a.InterestSavingsRate).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error fetching accounts by AccountId: {ex.Message}", ex);
+                throw new Exception("An error occurred while fetching the account by ID.");
+            }
+        }
+
+        // Update Account with exception handling
+        public async Task<Account> UpdateAccountAsync(Account account)
+        {
+            try
+            {
+                _context.Accounts.Update(account);
+                await _context.SaveChangesAsync();
+                return account;
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError($"Error updating account: {ex.Message}", ex);
+                throw new Exception("An error occurred while updating the account.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An unexpected error occurred: {ex.Message}", ex);
+                throw new Exception("An unexpected error occurred.");
+            }
         }
     }
 }
