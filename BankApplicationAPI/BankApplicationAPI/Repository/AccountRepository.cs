@@ -97,12 +97,13 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Accounts by AccountId with exception handling
-        public async Task<IEnumerable<Account>> GetAccountsByAccountIdAsync(int accountId)
+        public async Task<Account> GetAccountsByAccountIdAsync(int accountId)
         {
             try
             {
                 return await _context.Accounts.Where(a => a.AccountId == accountId).Include(a => a.AccountStatusType)
-                                     .Include(a => a.Customer).Include(a => a.InterestSavingsRate).ToListAsync();
+                                     .Include(a => a.Customer).Include(a => a.InterestSavingsRate)
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException("Account not found.");
             }
             catch (Exception ex)
             {
@@ -131,5 +132,28 @@ namespace BankApplicationAPI.Repository
                 throw new Exception("An unexpected error occurred.");
             }
         }
+
+        public async Task<IEnumerable<Account>> GetAccountsByCustomerIdAsync(string customerId)
+        {
+            if (string.IsNullOrWhiteSpace(customerId))
+            {
+                throw new ArgumentException("Customer ID cannot be null or empty", nameof(customerId));
+            }
+
+            try
+            {
+                var accounts = await _context.Accounts
+                    .Where(a => a.CustomerId == customerId) 
+                    .Include(a => a.Customer)
+                    .ToListAsync(); 
+                return accounts;
+            }
+            catch (Exception ex)
+            {
+                 _logger.LogError(ex, "An error occurred while retrieving accounts for customer ID: {CustomerId}", customerId);
+                throw new ApplicationException("An error occurred while retrieving accounts.", ex);
+            }
+        }
+
     }
 }

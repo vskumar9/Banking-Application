@@ -26,8 +26,9 @@ namespace BankApplicationAPI.Services
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.EmailAddress!),
                     new Claim(JwtRegisteredClaimNames.Name, user.CustomerFirstName!),
-                    new Claim(ClaimTypes.Role, "User"),
-                    new Claim(ClaimTypes.PrimarySid, user.CustomerId!)
+                    new Claim(ClaimTypes.Role, "customer"),
+                    new Claim(ClaimTypes.PrimarySid, user.CustomerId!),
+                    new Claim("CustomerId", user.CustomerId!)
                 };
 
                 return await GenerateTokenAsync(claims);
@@ -61,7 +62,8 @@ namespace BankApplicationAPI.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, employee.EmailAddress ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Name, employee.EmployeeFirstName ?? string.Empty),
-                new Claim(ClaimTypes.PrimarySid, employee.EmployeeId)
+                new Claim(ClaimTypes.PrimarySid, employee.EmployeeId),
+                new Claim("EmployeeId", employee.EmployeeId)
             };
 
                 // Add roles as claims

@@ -50,7 +50,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsByAccountIdAsync(int accountId)
+        public async Task<Account> GetAccountsByAccountIdAsync(int accountId)
         {
             try
             {
@@ -65,6 +65,16 @@ namespace BankApplicationAPI.Services
             {
                 if (account == null) return null!;
                 return await _account.UpdateAccountAsync(account);
+            }
+            catch { throw; }
+        }
+
+        public async Task<IEnumerable<Account>> GetAccountsByCustomerIdAsync(string customerId)
+        {
+            try
+            {
+                if (customerId == null) return null!;
+                return await _account.GetAccountsByCustomerIdAsync(customerId);
             }
             catch { throw; }
         }

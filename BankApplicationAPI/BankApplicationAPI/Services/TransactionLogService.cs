@@ -6,10 +6,12 @@ namespace BankApplicationAPI.Services
     public class TransactionLogService
     {
         private readonly ITransactionLog _transactionLog;
+        private readonly IAccount _account;
 
-        public TransactionLogService(ITransactionLog transactionLog)
+        public TransactionLogService(ITransactionLog transactionLog, IAccount account)
         {
             _transactionLog = transactionLog;
+            _account = account;
         }
 
         public async Task<bool> CreateTransactionLogAsync(TransactionLog transactionLog)
@@ -66,5 +68,59 @@ namespace BankApplicationAPI.Services
             }
             catch { throw; }
         }
+
+        public async Task<bool> TransferFundsAsync(int fromAccountId, int toAccountId, decimal amount, string employeeId, string customerId)
+        {
+            // Fetch accounts
+            var fromAccount = await _account.GetAccountsByAccountIdAsync(fromAccountId);
+            var toAccount = await _account.GetAccountsByAccountIdAsync(toAccountId);
+
+            if (fromAccount == null || toAccount == null)
+                return false;
+
+            if (fromAccount.CurrentBalance < amount)
+                return false;
+
+            // Create transaction logs
+            var transactionLogFrom = new TransactionLog
+            {
+                TransactionDate = DateTime.UtcNow,
+                TransactionTypeId = 1, // Assuming 1 is for 'Debit'
+                TransactionAmount = amount,
+                NewBalance = fromAccount.CurrentBalance - amount,
+                AccountId = fromAccountId,
+                EmployeeId = employeeId,
+                CustomerId = customerId
+            };
+
+            var transactionLogTo = new TransactionLog
+            {
+                TransactionDate = DateTime.UtcNow,
+                TransactionTypeId = 2, // Assuming 2 is for 'Credit'
+                TransactionAmount = amount,
+                NewBalance = toAccount.CurrentBalance + amount,
+                AccountId = toAccountId,
+                EmployeeId = employeeId,
+                CustomerId = customerId
+            };
+
+            // Update account balances
+            fromAccount.CurrentBalance -= amount;
+            toAccount.CurrentBalance += amount;
+
+            // Persist changes
+            var resultFrom = await _transactionLog.CreateTransactionLogAsync(transactionLogFrom);
+            var resultTo = await _transactionLog.CreateTransactionLogAsync(transactionLogTo);
+
+            if (!resultFrom || !resultTo)
+                return false;
+
+            await _account.UpdateAccountAsync(fromAccount);
+            await _account.UpdateAccountAsync(toAccount);
+
+            return true;
+        }
+
+
     }
 }
