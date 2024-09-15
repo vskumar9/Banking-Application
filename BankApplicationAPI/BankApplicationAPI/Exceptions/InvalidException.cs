@@ -1,4 +1,4 @@
-﻿namespace CarRentalService.Exceptions
+﻿namespace BankApplicationAPI.Exceptions
 {
     public class InvalidException : Exception
     {

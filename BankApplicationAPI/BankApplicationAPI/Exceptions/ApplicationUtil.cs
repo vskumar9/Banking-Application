@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace CarRentalService.Exceptions
+namespace BankApplicationAPI.Exceptions
 {
     public class ApplicationUtil
     {

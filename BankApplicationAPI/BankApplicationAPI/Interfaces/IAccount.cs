@@ -5,7 +5,8 @@ namespace BankApplicationAPI.Interfaces
     public interface IAccount
     {
         Task<IEnumerable<Account>> GetAccountsAsync();
-        Task<IEnumerable<Account>> GetAccountsByAccountIdAsync(int accountId);
+        Task<Account> GetAccountsByAccountIdAsync(int accountId);
+        Task<IEnumerable<Account>> GetAccountsByCustomerIdAsync(string accountId);
         Task<Account> UpdateAccountAsync(Account account);
         Task<Boolean> DeleteAccountAsync(Account account);
         Task<Boolean> CreateAccountAsync(Account account);
