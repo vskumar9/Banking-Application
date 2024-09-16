@@ -8,6 +8,8 @@ using BankApplicationAPI.Models;
 using BankApplicationAPI.Interfaces;
 using BankApplicationAPI.Repository;
 using BankApplicationAPI.Exceptions;
+using BankApplicationAPI.Helpers;
+using BankApplicationAPI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +40,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                    {
                        ValidateIssuerSigningKey = true,
                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Key"]!)),
-                       ValidateIssuer = false,  // You can set this to true if you want to validate the issuer.
-                       ValidateAudience = false // You can set this to true if you want to validate the audience.
+                       ValidateIssuer = false,  
+                       ValidateAudience = false ,
+                       ValidateLifetime = true,
                    };
                });
 
@@ -72,8 +75,12 @@ builder.Services.AddSwaggerGen(c => {
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<ApplicationUtil>();
+builder.Services.AddScoped<IdHelper>();
+builder.Services.AddHostedService<TokenExpiryService>();
 
 
+
+builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<IAccount, AccountRepository>();
 builder.Services.AddScoped<IAccountStatusType, AccountStatusTypeRepository>();
 builder.Services.AddScoped<IAuditLog, AuditLogRepository>();
@@ -98,6 +105,27 @@ builder.Services.AddScoped<ITransactionType, TransactionTypeRepository>();
 builder.Services.AddScoped<IUserRole, UserRoleRepository>();
 
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<AccountStatusTypeService>();
+builder.Services.AddScoped<AuditLogService>();
+builder.Services.AddScoped<ComplaintFeedbackService>();
+builder.Services.AddScoped<ComplaintResolutionService>();
+builder.Services.AddScoped<ComplaintService>();
+builder.Services.AddScoped<ComplaintStatusHistoryService>();
+builder.Services.AddScoped<ComplaintTypeService>();
+builder.Services.AddScoped<ConfigurationService>();
+builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<LoanApplicationService>();
+builder.Services.AddScoped<LoanPaymentScheduleService>();
+builder.Services.AddScoped<LoanRepaymentLogService>();
+builder.Services.AddScoped<LoanTypeService>();
+builder.Services.AddScoped<PermissionService>();
+builder.Services.AddScoped<RolePermissionService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<SavingsInterestRateService>();
+builder.Services.AddScoped<TransactionLogService>();
+builder.Services.AddScoped<TransactionTypeService>();
+builder.Services.AddScoped<UserRoleService>();
 
 
 

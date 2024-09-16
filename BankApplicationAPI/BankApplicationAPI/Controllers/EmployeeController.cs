@@ -1,4 +1,5 @@
-﻿using BankApplicationAPI.Models;
+﻿using BankApplicationAPI.Helpers;
+using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace BankApplicationAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly EmployeeService _employeeService;
+        private readonly IdHelper _idHelper;
 
-        public EmployeeController(EmployeeService employeeService)
+        public EmployeeController(EmployeeService employeeService, IdHelper idHelper)
         {
             _employeeService = employeeService;
+            _idHelper = idHelper;
         }
 
         // GET: api/Employee
@@ -61,6 +64,7 @@ namespace BankApplicationAPI.Controllers
 
             try
             {
+                employee.EmployeeId = _idHelper.GenerateEmployeeUniqueId();
                 var result = await _employeeService.CreateEmployeeAsync(employee);
                 if (result)
                     return CreatedAtAction(nameof(GetEmployee), new { id = employee.EmployeeId }, employee);

@@ -30,6 +30,7 @@ namespace BankApplicationAPI.Controllers
                 if (customer != null)
                 {
                     var token = await _tokenService.GenerateTokenAsync(customer);
+                    customer.IsActive = true;
                     customer.LastLoginDate = DateTime.UtcNow;
                     _context.Entry(customer).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
@@ -54,6 +55,7 @@ namespace BankApplicationAPI.Controllers
                 if (employee != null)
                 {
                     var token = await _tokenService.GenerateAdminTokenAsync(employee);
+                    employee.IsActive = true;
                     employee.LastLoginDate = DateTime.Now;
                     _context.Entry(employee).State = EntityState.Modified;
                     await _context.SaveChangesAsync();

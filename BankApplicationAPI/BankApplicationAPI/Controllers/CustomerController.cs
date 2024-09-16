@@ -1,4 +1,5 @@
-﻿using BankApplicationAPI.Models;
+﻿using BankApplicationAPI.Helpers;
+using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace BankApplicationAPI.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly CustomerService _customerService;
+        private readonly IdHelper _idHelper;
 
-        public CustomerController(CustomerService customerService)
+        public CustomerController(CustomerService customerService, IdHelper idHelper)
         {
             _customerService = customerService;
+            _idHelper = idHelper;
         }
 
         // GET: api/Customer
@@ -61,6 +64,7 @@ namespace BankApplicationAPI.Controllers
 
             try
             {
+                customer.CustomerId = _idHelper.GenerateCustomerUniqueId();
                 var result = await _customerService.CreateCustomerAsync(customer);
                 if (result)
                     return CreatedAtAction(nameof(GetCustomer), new { id = customer.CustomerId }, customer);

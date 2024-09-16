@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Controllers
 
         // POST: api/AuditLog
         [HttpPost]
-        [Authorize(Roles = "admin")] // Only admins can create a new audit log
+        [Authorize(Roles = "none")] // Role that no one has
         public async Task<ActionResult> CreateAuditLog([FromBody] AuditLog auditLog)
         {
             if (auditLog == null)
