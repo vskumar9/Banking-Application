@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Employee by optional parameters
-        public async Task<Employee> GetEmployeeAsync(string? EmployeeId = null, string? EmailAddress = null, string? EmployeeFirstName = null, string? EmployeeLastName = null, string? RoleName = null)
+        public async Task<IEnumerable<Employee>> GetEmployeeAsync(string? EmployeeId = null, string? EmailAddress = null, string? EmployeeFirstName = null, string? EmployeeLastName = null, string? RoleName = null)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace BankApplicationAPI.Repository
                                   .Include(e => e.LoanApplications)
                                   .Include(e => e.LoanRepaymentLogs)
                                   .Include(e => e.TransactionLogs)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException("Employee not found");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -112,7 +112,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Employee by EmployeeId
-        public async Task<IEnumerable<Employee>> GetEmployeeByEmployeeIdAsync(string EmployeeId)
+        public async Task<Employee> GetEmployeeByEmployeeIdAsync(string EmployeeId)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace BankApplicationAPI.Repository
                                      .Include(e => e.LoanApplications)
                                      .Include(e => e.LoanRepaymentLogs)
                                      .Include(e => e.TransactionLogs)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

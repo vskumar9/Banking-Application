@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<Permission> GetPermissionAsync(int? PermissionId = null, string? PermissionName = null)
+        public async Task<IEnumerable<Permission>> GetPermissionAsync(int? PermissionId = null, string? PermissionName = null)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<Permission>> GetPermissionByPermissionIdAsync(int PermissionId)
+        public async Task<Permission> GetPermissionByPermissionIdAsync(int PermissionId)
         {
             try
             {

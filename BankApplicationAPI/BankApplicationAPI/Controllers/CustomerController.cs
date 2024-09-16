@@ -43,10 +43,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var customers = await _customerService.GetCustomerByCustomerIdAsync(id);
-                if (customers == null || !customers.Any())
+                if (customers == null)
                     return NotFound("Customer not found.");
 
-                return Ok(customers.First());
+                return Ok(customers);
             }
             catch
             {
@@ -107,10 +107,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var customers = await _customerService.GetCustomerByCustomerIdAsync(id);
-                if (customers == null || !customers.Any())
+                if (customers == null)
                     return NotFound("Customer not found.");
 
-                var result = await _customerService.DeleteCustomerAsync(customers.First());
+                var result = await _customerService.DeleteCustomerAsync(customers);
                 if (result)
                     return NoContent();
 

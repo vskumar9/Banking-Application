@@ -47,10 +47,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var histories = await _complaintStatusHistoryService.GetComplaintStatusHistoryByComplaintStatusHistoryIdAsync(id);
-                if (histories == null || !histories.Any())
+                if (histories == null)
                     return NotFound("Complaint status history not found.");
 
-                return Ok(histories.First());
+                return Ok(histories);
             }
             catch
             {
@@ -109,7 +109,7 @@ namespace BankApplicationAPI.Controllers
         {
             try
             {
-                var history = await _complaintStatusHistoryService.GetComplaintStatusHistoryAsync(statusHistoryId: id);
+                var history = await _complaintStatusHistoryService.GetComplaintStatusHistoryByComplaintStatusHistoryIdAsync(statusHistoryId: id);
                 if (history == null)
                     return NotFound("Complaint status history not found.");
 

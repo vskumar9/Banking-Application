@@ -36,7 +36,7 @@ namespace BankApplicationAPI.Controllers
         [Authorize(Roles = "admin, staff")] // Only admin and staff can delete
         public async Task<IActionResult> DeleteLoanPaymentSchedule(int paymentId)
         {
-            var schedule = await _loanPaymentScheduleService.GetLoanPaymentScheduleAsync(PaymentId: paymentId);
+            var schedule = await _loanPaymentScheduleService.GetLoanPaymentScheduleByLoanPaymentScheduleIdAsync(PaymentId: paymentId);
 
             if (schedule == null) return NotFound("Loan Payment Schedule not found.");
 

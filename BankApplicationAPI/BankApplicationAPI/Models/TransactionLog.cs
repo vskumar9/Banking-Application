@@ -2,7 +2,7 @@
 
 public partial class TransactionLog
 {
-    public int TransactionId { get; set; }
+    public int? TransactionId { get; set; }
 
     public DateTime? TransactionDate { get; set; }
 

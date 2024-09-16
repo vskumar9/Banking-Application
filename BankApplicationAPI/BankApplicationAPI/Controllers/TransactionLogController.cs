@@ -43,10 +43,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var transactionLogs = await _transactionLogService.GetTransactionLogsByTransactionIdAsync(id);
-                if (transactionLogs == null || !transactionLogs.Any())
+                if (transactionLogs == null)
                     return NotFound("Transaction log not found.");
 
-                return Ok(transactionLogs.First());
+                return Ok(transactionLogs);
             }
             catch
             {
@@ -106,10 +106,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var transactionLogs = await _transactionLogService.GetTransactionLogsByTransactionIdAsync(id);
-                if (transactionLogs == null || !transactionLogs.Any())
+                if (transactionLogs == null)
                     return NotFound("Transaction log not found.");
 
-                var result = await _transactionLogService.DeleteTransactionLogAsync(transactionLogs.First());
+                var result = await _transactionLogService.DeleteTransactionLogAsync(transactionLogs);
                 if (result)
                     return NoContent();
 
@@ -123,21 +123,21 @@ namespace BankApplicationAPI.Controllers
 
         [HttpPost("transfer")]
         [Authorize(Roles = "admin, staff, cashier, customer")]
-        public async Task<ActionResult> TransferFunds([FromBody] TransferRequest request)
+        public async Task<ActionResult> TransferFunds(byte TransactionTypeId, [FromBody] TransferRequest request)
         {
             if (request == null || request.Amount <= 0 || request.FromAccountId <= 0 || request.ToAccountId <= 0)
                 return BadRequest("Invalid transfer request.");
 
             try
             {
-                
                 var employeeId = User.FindFirst("EmployeeId")?.Value;
                 var customerId = User.FindFirst("CustomerId")?.Value;
 
                 if (string.IsNullOrEmpty(employeeId) || string.IsNullOrEmpty(customerId))
                     return Unauthorized("Invalid user credentials.");
 
-                var result = await _transactionLogService.TransferFundsAsync(request.FromAccountId, request.ToAccountId, request.Amount, employeeId, customerId);
+                var result = await _transactionLogService.TransferFundsAsync(request.FromAccountId, request.ToAccountId, request.Amount, employeeId, customerId, TransactionTypeId);
+
                 if (result)
                     return Ok("Transfer successful.");
 
@@ -149,6 +149,7 @@ namespace BankApplicationAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error processing the transfer.");
             }
         }
+
 
     }
 }

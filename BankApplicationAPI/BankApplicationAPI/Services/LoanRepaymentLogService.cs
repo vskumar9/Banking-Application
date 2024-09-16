@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<LoanRepaymentLog> GetLoanRepaymentLogAsync(int? RepaymentId = null, int? LoanId = null, string? EmployeeId = null, string? RepaymentMethod = null)
+        public async Task<IEnumerable<LoanRepaymentLog>> GetLoanRepaymentLogAsync(int? RepaymentId = null, int? LoanId = null, string? EmployeeId = null, string? RepaymentMethod = null)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<LoanRepaymentLog>> GetLoanRepaymentLogByLoanRepaymentLogIdAsync(int RepaymentId)
+        public async Task<LoanRepaymentLog> GetLoanRepaymentLogByLoanRepaymentLogIdAsync(int RepaymentId)
         {
             try
             {

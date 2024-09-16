@@ -2,7 +2,7 @@
 
 public partial class TransactionType
 {
-    public byte TransactionTypeId { get; set; }
+    public byte? TransactionTypeId { get; set; }
 
     public string? TransactionTypeName { get; set; }
 
@@ -10,5 +10,5 @@ public partial class TransactionType
 
     public decimal? TransactionFeeAmount { get; set; }
 
-    public virtual ICollection<TransactionLog> TransactionLogs { get; set; } = new List<TransactionLog>();
+    public virtual ICollection<TransactionLog>? TransactionLogs { get; set; } = new List<TransactionLog>();
 }

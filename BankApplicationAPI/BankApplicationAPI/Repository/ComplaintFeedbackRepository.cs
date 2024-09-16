@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintFeedback by optional parameters
-        public async Task<ComplaintFeedback> GetComplaintFeedbackAsync(int? feedbackId = null, string? customerId = null, string? complaintId = null, DateTime? feedbackDate = null, byte? feedbackRating = null, string? feedbackComments = null)
+        public async Task<IEnumerable<ComplaintFeedback>> GetComplaintFeedbackAsync(int? feedbackId = null, string? customerId = null, string? complaintId = null, DateTime? feedbackDate = null, byte? feedbackRating = null, string? feedbackComments = null)
         {
             try
             {
@@ -80,8 +80,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(feedbackComments))
                     query = query.Where(f => f.FeedbackComments!.Contains(feedbackComments));
 
-                return await query.Include(f => f.Customer).Include(f => f.Complaint)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                return await query.Include(f => f.Customer).Include(f => f.Complaint).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -91,7 +90,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintFeedback by FeedbackId
-        public async Task<IEnumerable<ComplaintFeedback>> GetCComplaintFeedbacksByComplaintFeedbackIdAsync(int feedbackId)
+        public async Task<ComplaintFeedback> GetCComplaintFeedbacksByComplaintFeedbackIdAsync(int feedbackId)
         {
             try
             {
@@ -99,7 +98,7 @@ namespace BankApplicationAPI.Repository
                                      .Where(f => f.FeedbackId == feedbackId)
                                      .Include(f => f.Customer)
                                      .Include(f => f.Complaint)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

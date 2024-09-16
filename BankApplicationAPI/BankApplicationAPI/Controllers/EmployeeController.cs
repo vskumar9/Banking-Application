@@ -43,10 +43,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var employees = await _employeeService.GetEmployeeByEmployeeIdAsync(id);
-                if (employees == null || !employees.Any())
+                if (employees == null)
                     return NotFound("Employee not found.");
 
-                return Ok(employees.First());
+                return Ok(employees);
             }
             catch
             {
@@ -107,10 +107,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var employees = await _employeeService.GetEmployeeByEmployeeIdAsync(id);
-                if (employees == null || !employees.Any())
+                if (employees == null)
                     return NotFound("Employee not found.");
 
-                var result = await _employeeService.DeleteEmployeeAsync(employees.First());
+                var result = await _employeeService.DeleteEmployeeAsync(employees);
                 if (result)
                     return NoContent();
 

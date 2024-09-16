@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var rolePermissions = await _rolePermissionService.GetRolePermissionByRolePermissionIdAsync(id);
-                if (rolePermissions == null || !rolePermissions.Any())
+                if (rolePermissions == null)
                     return NotFound("Role permission not found.");
 
-                return Ok(rolePermissions.First());
+                return Ok(rolePermissions);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var rolePermissions = await _rolePermissionService.GetRolePermissionByRolePermissionIdAsync(id);
-                if (rolePermissions == null || !rolePermissions.Any())
+                if (rolePermissions == null)
                     return NotFound("Role permission not found.");
 
-                var result = await _rolePermissionService.DeleteRolePermissionAsync(rolePermissions.First());
+                var result = await _rolePermissionService.DeleteRolePermissionAsync(rolePermissions);
                 if (result)
                     return NoContent();
 

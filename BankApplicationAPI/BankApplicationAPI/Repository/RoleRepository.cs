@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Role by optional parameters
-        public async Task<Role> GetRoleAsync(int? RoleId = null, string? RoleName = null)
+        public async Task<IEnumerable<Role>> GetRoleAsync(int? RoleId = null, string? RoleName = null)
         {
             try
             {
@@ -86,8 +86,7 @@ namespace BankApplicationAPI.Repository
 
                 return await query.Include(r => r.RolePermissions)
                                   .Include(r => r.UserRoles)
-                                  .FirstOrDefaultAsync()
-                       ?? throw new KeyNotFoundException("Role not found with the provided criteria.");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -97,7 +96,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Role by RoleId
-        public async Task<IEnumerable<Role>> GetRoleByRoleIdAsync(int RoleId)
+        public async Task<Role> GetRoleByRoleIdAsync(int RoleId)
         {
             try
             {
@@ -110,7 +109,7 @@ namespace BankApplicationAPI.Repository
                                      .Where(r => r.RoleId == RoleId)
                                      .Include(r => r.RolePermissions)
                                      .Include(r => r.UserRoles)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException(); 
             }
             catch (Exception ex)
             {

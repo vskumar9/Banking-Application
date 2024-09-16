@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanApplication by optional parameters
-        public async Task<LoanApplication> GetLoanApplicationAsync(int? LoanId = null, string? CustomerId = null, int? LoanTypeId = null, DateTime? ApplicationDate = null, string? EmployeeId = null, string? LoanStatus = null)
+        public async Task<IEnumerable<LoanApplication>> GetLoanApplicationAsync(int? LoanId = null, string? CustomerId = null, int? LoanTypeId = null, DateTime? ApplicationDate = null, string? EmployeeId = null, string? LoanStatus = null)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace BankApplicationAPI.Repository
                                   .Include(la => la.LoanType)
                                   .Include(la => la.LoanPaymentSchedules)
                                   .Include(la => la.LoanRepaymentLogs)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException("LoanApplication not found");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -111,7 +111,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanApplication by LoanId
-        public async Task<IEnumerable<LoanApplication>> GetLoanApplicationByLoanApplicationIdAsync(int LoanId)
+        public async Task<LoanApplication> GetLoanApplicationByLoanApplicationIdAsync(int LoanId)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace BankApplicationAPI.Repository
                                      .Include(la => la.LoanType)
                                      .Include(la => la.LoanPaymentSchedules)
                                      .Include(la => la.LoanRepaymentLogs)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

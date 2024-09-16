@@ -2,7 +2,7 @@
 
 public partial class LoanRepaymentLog
 {
-    public int RepaymentId { get; set; }
+    public int? RepaymentId { get; set; }
 
     public int? LoanId { get; set; }
 

@@ -48,7 +48,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get a specific TransactionLog based on various optional parameters
-        public async Task<TransactionLog> GetTransactionLogAsync(int? TransactionId = null, DateTime? TransactionDate = null, byte? TransactionTypeId = null, decimal? TransactionAmount = null, int? AccountId = null, string? EmployeeId = null, string? CustomerId = null)
+        public async Task<IEnumerable<TransactionLog>> GetTransactionLogAsync(int? TransactionId = null, DateTime? TransactionDate = null, byte? TransactionTypeId = null, decimal? TransactionAmount = null, int? AccountId = null, string? EmployeeId = null, string? CustomerId = null)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace BankApplicationAPI.Repository
                     .Include(tl => tl.Customer)
                     .Include(tl => tl.Employee)
                     .Include(tl => tl.TransactionType)
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
                 if (result == null)
                 {
@@ -111,7 +111,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get TransactionLogs by TransactionId
-        public async Task<IEnumerable<TransactionLog>> GetTransactionLogsByTransactionIdAsync(int TransactionId)
+        public async Task<TransactionLog> GetTransactionLogsByTransactionIdAsync(int TransactionId)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace BankApplicationAPI.Repository
                     .Include(tl => tl.Customer)
                     .Include(tl => tl.Employee)
                     .Include(tl => tl.TransactionType)
-                    .ToListAsync();
+                    .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

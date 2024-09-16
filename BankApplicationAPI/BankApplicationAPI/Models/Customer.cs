@@ -2,7 +2,7 @@
 
 public partial class Customer
 {
-    public string CustomerId { get; set; } = null!;
+    public string? CustomerId { get; set; } = null!;
     public string? PasswordHash { get; set; }
     public string? CustomerFirstName { get; set; }
     public string? CustomerLastName { get; set; }
@@ -15,15 +15,15 @@ public partial class Customer
     public string? CellPhone { get; set; }
     public string? HomePhone { get; set; }
     public string? WorkPhone { get; set; }
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
     public DateTime? LastLoginDate { get; set; }
-    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
+    public virtual ICollection<Account>? Accounts { get; set; } = new List<Account>();
 
-    public virtual ICollection<ComplaintFeedback> ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
+    public virtual ICollection<ComplaintFeedback>? ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
 
-    public virtual ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
+    public virtual ICollection<Complaint>? Complaints { get; set; } = new List<Complaint>();
 
-    public virtual ICollection<LoanApplication> LoanApplications { get; set; } = new List<LoanApplication>();
+    public virtual ICollection<LoanApplication>? LoanApplications { get; set; } = new List<LoanApplication>();
 
-    public virtual ICollection<TransactionLog> TransactionLogs { get; set; } = new List<TransactionLog>();
+    public virtual ICollection<TransactionLog>? TransactionLogs { get; set; } = new List<TransactionLog>();
 }

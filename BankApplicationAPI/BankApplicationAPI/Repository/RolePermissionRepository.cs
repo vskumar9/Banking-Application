@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get RolePermission by optional parameters
-        public async Task<RolePermission> GetRolePermissionAsync(int? RolePermissionId = null, int? RoleId = null, int? PermissionId = null)
+        public async Task<IEnumerable<RolePermission>> GetRolePermissionAsync(int? RolePermissionId = null, int? RoleId = null, int? PermissionId = null)
         {
             try
             {
@@ -89,8 +89,7 @@ namespace BankApplicationAPI.Repository
 
                 return await query.Include(rp => rp.Permission)
                                   .Include(rp => rp.Role)
-                                  .FirstOrDefaultAsync()
-                       ?? throw new KeyNotFoundException("RolePermission not found with the provided criteria.");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -100,7 +99,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get RolePermission by RolePermissionId
-        public async Task<IEnumerable<RolePermission>> GetRolePermissionByRolePermissionIdAsync(int RolePermissionId)
+        public async Task<RolePermission> GetRolePermissionByRolePermissionIdAsync(int RolePermissionId)
         {
             try
             {
@@ -113,7 +112,7 @@ namespace BankApplicationAPI.Repository
                                      .Where(rp => rp.RolePermissionId == RolePermissionId)
                                      .Include(rp => rp.Permission)
                                      .Include(rp => rp.Role)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

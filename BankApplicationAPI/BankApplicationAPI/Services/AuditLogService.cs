@@ -32,7 +32,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<AuditLog> GetAuditLogAsync(int? AuditLogId = null, string? Action = null, string? EmployeeId = null, DateTime? ActionDate = null, string? IpAddress = null, string? Details = null)
+        public async Task<IEnumerable<AuditLog>> GetAuditLogAsync(int? AuditLogId = null, string? Action = null, string? EmployeeId = null, DateTime? ActionDate = null, string? IpAddress = null, string? Details = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<AuditLog>> GetAuditLogByAuditLogIdAsync(int AuditLogId)
+        public async Task<AuditLog> GetAuditLogByAuditLogIdAsync(int AuditLogId)
         {
             try
             {

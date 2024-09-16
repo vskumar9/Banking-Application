@@ -48,7 +48,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get a specific TransactionType based on optional parameters
-        public async Task<TransactionType> GetTransactionTypeAsync(byte? TransactionTypeId = null, string? TransactionTypeName = null, decimal? TransactionFeeAmount = null)
+        public async Task<IEnumerable<TransactionType>> GetTransactionTypeAsync(byte? TransactionTypeId = null, string? TransactionTypeName = null, decimal? TransactionFeeAmount = null)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Where(tt => tt.TransactionFeeAmount == TransactionFeeAmount.Value);
                 }
 
-                return await query.FirstOrDefaultAsync() ?? throw new NullReferenceException("TransactionType not found with the provided criteria.");
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -79,13 +79,13 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get a specific TransactionType by its ID
-        public async Task<IEnumerable<TransactionType>> GetTransactionTypeByTransactionTypeIdAsync(byte TransactionTypeId)
+        public async Task<TransactionType> GetTransactionTypeByTransactionTypeIdAsync(byte TransactionTypeId)
         {
             try
             {
                 return await _context.TransactionTypes
                     .Where(tt => tt.TransactionTypeId == TransactionTypeId)
-                    .ToListAsync();
+                    .FirstOrDefaultAsync()?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

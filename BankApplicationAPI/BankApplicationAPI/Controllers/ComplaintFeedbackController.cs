@@ -46,10 +46,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var result = await _complaintFeedbackService.GetCComplaintFeedbacksByComplaintFeedbackIdAsync(id);
-                if (result == null || !result.Any())
+                if (result == null)
                     return NotFound("Feedback not found.");
 
-                return Ok(result.First());
+                return Ok(result);
             }
             catch
             {
@@ -109,10 +109,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var feedbacks = await _complaintFeedbackService.GetCComplaintFeedbacksByComplaintFeedbackIdAsync(id);
-                if (feedbacks == null || !feedbacks.Any())
+                if (feedbacks == null)
                     return NotFound("Feedback not found.");
 
-                var deleted = await _complaintFeedbackService.DeleteComplaintFeedbackAsync(feedbacks.First());
+                var deleted = await _complaintFeedbackService.DeleteComplaintFeedbackAsync(feedbacks);
                 if (deleted)
                     return NoContent();
 

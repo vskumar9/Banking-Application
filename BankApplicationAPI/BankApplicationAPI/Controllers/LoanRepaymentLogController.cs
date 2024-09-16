@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var loanRepaymentLogs = await _loanRepaymentLogService.GetLoanRepaymentLogByLoanRepaymentLogIdAsync(id);
-                if (loanRepaymentLogs == null || !loanRepaymentLogs.Any())
+                if (loanRepaymentLogs == null)
                     return NotFound("Loan repayment log not found.");
 
-                return Ok(loanRepaymentLogs.First());
+                return Ok(loanRepaymentLogs);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var loanRepaymentLogs = await _loanRepaymentLogService.GetLoanRepaymentLogByLoanRepaymentLogIdAsync(id);
-                if (loanRepaymentLogs == null || !loanRepaymentLogs.Any())
+                if (loanRepaymentLogs == null)
                     return NotFound("Loan repayment log not found.");
 
-                var result = await _loanRepaymentLogService.DeleteLoanRepaymentLogAsync(loanRepaymentLogs.First());
+                var result = await _loanRepaymentLogService.DeleteLoanRepaymentLogAsync(loanRepaymentLogs);
                 if (result)
                     return NoContent();
 

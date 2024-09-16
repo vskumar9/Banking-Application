@@ -48,7 +48,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get a specific UserRole based on optional parameters
-        public async Task<UserRole> GetUserRoleAsync(int? UserRoleId = null, string? EmployeeId = null, int? RoleId = null)
+        public async Task<IEnumerable<UserRole>> GetUserRoleAsync(int? UserRoleId = null, string? EmployeeId = null, int? RoleId = null)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace BankApplicationAPI.Repository
                 }
 
                 return await query.Include(ur => ur.Employee).Include(ur => ur.Role)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException("UserRoles not found with the provided criteria.");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get UserRoles by UserRoleId
-        public async Task<IEnumerable<UserRole>> GetUserRoleByUserRoleIdAsync(int UserRoleId)
+        public async Task<UserRole> GetUserRoleByUserRoleIdAsync(int UserRoleId)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace BankApplicationAPI.Repository
                     .Where(ur => ur.UserRoleId == UserRoleId)
                     .Include(ur => ur.Employee)
                     .Include(ur => ur.Role)
-                    .ToListAsync();
+                    .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

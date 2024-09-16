@@ -32,7 +32,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<Account> GetAccountAsync(int? AccountId = null, string? AccountStatusType = null, string? CustomerId = null)
+        public async Task<IEnumerable<Account>> GetAccountAsync(int? AccountId = null, string? AccountStatusType = null, string? CustomerId = null)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsByCustomerIdAsync(string customerId)
+        public async Task<Account> GetAccountsByCustomerIdAsync(string customerId)
         {
             try
             {

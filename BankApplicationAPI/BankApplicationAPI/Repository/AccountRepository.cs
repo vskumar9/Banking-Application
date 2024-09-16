@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Account by optional parameters with exception handling
-        public async Task<Account> GetAccountAsync(int? AccountId = null, string? AccountStatusType = null, string? CustomerId = null)
+        public async Task<IEnumerable<Account>> GetAccountAsync(int? AccountId = null, string? AccountStatusType = null, string? CustomerId = null)
         {
             try
             {
@@ -71,8 +71,8 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(CustomerId))
                     query = query.Where(a => a.CustomerId == CustomerId);
 
-                return await query.Include(a => a.AccountStatusType).Include(a => a.Customer).Include(a => a.InterestSavingsRate)
-                                                                    .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                return await query.Include(a => a.AccountStatusType).Include(a => a.Customer)
+                                  .Include(a => a.InterestSavingsRate).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -133,7 +133,7 @@ namespace BankApplicationAPI.Repository
             }
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsByCustomerIdAsync(string customerId)
+        public async Task<Account> GetAccountsByCustomerIdAsync(string customerId)
         {
             if (string.IsNullOrWhiteSpace(customerId))
             {
@@ -145,8 +145,8 @@ namespace BankApplicationAPI.Repository
                 var accounts = await _context.Accounts
                     .Where(a => a.CustomerId == customerId) 
                     .Include(a => a.Customer)
-                    .ToListAsync(); 
-                return accounts;
+                    .FirstOrDefaultAsync(); 
+                return accounts!;
             }
             catch (Exception ex)
             {

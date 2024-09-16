@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var configurations = await _configurationService.GetConfigurationByConfigurationIdAsync(id);
-                if (configurations == null || !configurations.Any())
+                if (configurations == null)
                     return NotFound("Configuration not found.");
 
-                return Ok(configurations.First());
+                return Ok(configurations);
             }
             catch
             {
@@ -102,7 +102,7 @@ namespace BankApplicationAPI.Controllers
         {
             try
             {
-                var configuration = await _configurationService.GetConfigurationAsync(configurationId: id);
+                var configuration = await _configurationService.GetConfigurationByConfigurationIdAsync(configurationId: id);
                 if (configuration == null)
                     return NotFound("Configuration not found.");
 

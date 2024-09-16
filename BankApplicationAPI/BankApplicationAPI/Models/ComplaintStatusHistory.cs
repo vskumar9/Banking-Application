@@ -2,7 +2,7 @@
 
 public partial class ComplaintStatusHistory
 {
-    public int StatusHistoryId { get; set; }
+    public int? StatusHistoryId { get; set; }
 
     public int? ComplaintId { get; set; }
 

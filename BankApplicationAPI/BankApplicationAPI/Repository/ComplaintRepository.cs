@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Complaint by optional parameters
-        public async Task<Complaint> GetComplaintAsync(int? ComplaintId = null, string? CustomerId = null, string? ComplaintTypeId = null, DateTime? ComplaintDate = null, string? ComplaintDescription = null, string? ComplaintStatus = null, string? EmployeeId = null, DateTime? ResolutionDate = null, string? ResolutionComments = null)
+        public async Task<IEnumerable<Complaint>> GetComplaintAsync(int? ComplaintId = null, string? CustomerId = null, string? ComplaintTypeId = null, DateTime? ComplaintDate = null, string? ComplaintDescription = null, string? ComplaintStatus = null, string? EmployeeId = null, DateTime? ResolutionDate = null, string? ResolutionComments = null)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Where(c => c.ResolutionComments!.Contains(ResolutionComments));
 
                 return await query.Include(c => c.Customer).Include(c => c.ComplaintType)
-                                  .Include(c => c.Employee).FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                                  .Include(c => c.Employee).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Complaints by ComplaintId
-        public async Task<IEnumerable<Complaint>> GetComplaintsByComplaintIdAsync(int ComplaintId)
+        public async Task<Complaint> GetComplaintsByComplaintIdAsync(int ComplaintId)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace BankApplicationAPI.Repository
                                      .Include(c => c.Customer)
                                      .Include(c => c.ComplaintType)
                                      .Include(c => c.Employee)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

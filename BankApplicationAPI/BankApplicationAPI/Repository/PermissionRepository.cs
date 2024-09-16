@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Permission by optional parameters
-        public async Task<Permission> GetPermissionAsync(int? PermissionId = null, string? PermissionName = null)
+        public async Task<IEnumerable<Permission>> GetPermissionAsync(int? PermissionId = null, string? PermissionName = null)
         {
             try
             {
@@ -84,8 +84,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(PermissionName))
                     query = query.Where(p => p.PermissionName == PermissionName);
 
-                return await query.FirstOrDefaultAsync()
-                       ?? throw new KeyNotFoundException("Permission not found with the provided criteria.");
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -95,7 +94,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Permission by PermissionId
-        public async Task<IEnumerable<Permission>> GetPermissionByPermissionIdAsync(int PermissionId)
+        public async Task<Permission> GetPermissionByPermissionIdAsync(int PermissionId)
         {
             try
             {
@@ -106,7 +105,7 @@ namespace BankApplicationAPI.Repository
 
                 return await _context.Permissions
                                      .Where(p => p.PermissionId == PermissionId)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

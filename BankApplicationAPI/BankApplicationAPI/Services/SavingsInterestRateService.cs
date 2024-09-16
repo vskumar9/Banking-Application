@@ -31,7 +31,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<SavingsInterestRate> GetSavingsInterestRateAsync(byte? InterestSavingsRateId = null, decimal? InterestRateValue = null)
+        public async Task<IEnumerable<SavingsInterestRate>> GetSavingsInterestRateAsync(byte? InterestSavingsRateId = null, decimal? InterestRateValue = null)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<SavingsInterestRate>> GetSavingsInterestRateBySavingsInterestRateIdAsync(byte InterestSavingsRateId)
+        public async Task<SavingsInterestRate> GetSavingsInterestRateBySavingsInterestRateIdAsync(byte InterestSavingsRateId)
         {
             try
             {

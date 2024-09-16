@@ -29,7 +29,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<Configuration> GetConfigurationAsync(int? configurationId = null, string? configKey = null, string? configValue = null, DateTime? lastUpdated = null, string? updatedBy = null)
+        public async Task<IEnumerable<Configuration>> GetConfigurationAsync(int? configurationId = null, string? configKey = null, string? configValue = null, DateTime? lastUpdated = null, string? updatedBy = null)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<Configuration>> GetConfigurationByConfigurationIdAsync(int configurationId)
+        public async Task<Configuration> GetConfigurationByConfigurationIdAsync(int configurationId)
         {
             try
             {

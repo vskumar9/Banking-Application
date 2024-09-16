@@ -2,7 +2,7 @@
 
 public partial class ComplaintResolution
 {
-    public int ResolutionId { get; set; }
+    public int? ResolutionId { get; set; }
 
     public int? ComplaintId { get; set; }
 

@@ -2,7 +2,7 @@
 
 public partial class ComplaintFeedback
 {
-    public int FeedbackId { get; set; }
+    public int? FeedbackId { get; set; }
 
     public int? ComplaintId { get; set; }
 

@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<ComplaintStatusHistory> GetComplaintStatusHistoryAsync(int? statusHistoryId = null, int? complaintId = null, string? complaintStatus = null, DateTime? statusDate = null)
+        public async Task<IEnumerable<ComplaintStatusHistory>> GetComplaintStatusHistoryAsync(int? statusHistoryId = null, int? complaintId = null, string? complaintStatus = null, DateTime? statusDate = null)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<ComplaintStatusHistory>> GetComplaintStatusHistoryByComplaintStatusHistoryIdAsync(int statusHistoryId)
+        public async Task<ComplaintStatusHistory> GetComplaintStatusHistoryByComplaintStatusHistoryIdAsync(int statusHistoryId)
         {
             try
             {

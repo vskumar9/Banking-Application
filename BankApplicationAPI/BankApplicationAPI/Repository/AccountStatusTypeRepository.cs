@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get AccountStatusType by optional parameters (AccountStatusTypeId or AccountStatusDescription)
-        public async Task<AccountStatusType> GetAccountStatusTypeAsync(byte? AccountStatusTypeId = null, string? AccountStatusDescription = null)
+        public async Task<IEnumerable<AccountStatusType>> GetAccountStatusTypeAsync(byte? AccountStatusTypeId = null, string? AccountStatusDescription = null)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(AccountStatusDescription))
                     query = query.Where(a => a.AccountStatusDescription == AccountStatusDescription);
 
-                return await query.FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -78,13 +78,12 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get AccountStatusType by AccountStatusTypeId
-        public async Task<IEnumerable<AccountStatusType>> GetAccountStatusTypeByAccountStatusTypeIdAsync(byte AccountStatusTypeId)
+        public async Task<AccountStatusType> GetAccountStatusTypeByAccountStatusTypeIdAsync(byte AccountStatusTypeId)
         {
             try
             {
                 return await _context.AccountStatusTypes
-                                     .Where(a => a.AccountStatusTypeId == AccountStatusTypeId)
-                                     .ToListAsync();
+                                     .Where(a => a.AccountStatusTypeId == AccountStatusTypeId).FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

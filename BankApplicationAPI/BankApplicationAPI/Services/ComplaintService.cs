@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<Complaint> GetComplaintAsync(int? ComplaintId = null, string? CustomerId = null, string? ComplaintTypeId = null, DateTime? ComplaintDate = null, string? ComplaintDescription = null, string? ComplaintStatus = null, string? EmployeeId = null, DateTime? ResolutionDate = null, string? ResolutionComments = null)
+        public async Task<IEnumerable<Complaint>> GetComplaintAsync(int? ComplaintId = null, string? CustomerId = null, string? ComplaintTypeId = null, DateTime? ComplaintDate = null, string? ComplaintDescription = null, string? ComplaintStatus = null, string? EmployeeId = null, DateTime? ResolutionDate = null, string? ResolutionComments = null)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<Complaint>> GetComplaintsByComplaintIdAsync(int ComplaintId)
+        public async Task<Complaint> GetComplaintsByComplaintIdAsync(int ComplaintId)
         {
             try
             {

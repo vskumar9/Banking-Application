@@ -55,7 +55,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Configuration by optional parameters
-        public async Task<Configuration> GetConfigurationAsync(int? configurationId = null, string? configKey = null, string? configValue = null, DateTime? lastUpdated = null, string? updatedBy = null)
+        public async Task<IEnumerable<Configuration>> GetConfigurationAsync(int? configurationId = null, string? configKey = null, string? configValue = null, DateTime? lastUpdated = null, string? updatedBy = null)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Where(c => c.UpdatedBy == updatedBy);
 
                 return await query.Include(c => c.UpdatedByNavigation)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -87,14 +87,14 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Configuration by ConfigurationId
-        public async Task<IEnumerable<Configuration>> GetConfigurationByConfigurationIdAsync(int configurationId)
+        public async Task<Configuration> GetConfigurationByConfigurationIdAsync(int configurationId)
         {
             try
             {
                 return await _context.Configurations
                                      .Where(c => c.ConfigurationId == configurationId)
                                      .Include(c => c.UpdatedByNavigation)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

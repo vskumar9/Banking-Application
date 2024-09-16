@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var transactionTypes = await _transactionTypeService.GetTransactionTypeByTransactionTypeIdAsync(id);
-                if (transactionTypes == null || !transactionTypes.Any())
+                if (transactionTypes == null)
                     return NotFound("Transaction type not found.");
 
-                return Ok(transactionTypes.First());
+                return Ok(transactionTypes);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var transactionTypes = await _transactionTypeService.GetTransactionTypeByTransactionTypeIdAsync(id);
-                if (transactionTypes == null || !transactionTypes.Any())
+                if (transactionTypes == null)
                     return NotFound("Transaction type not found.");
 
-                var result = await _transactionTypeService.DeleteTransactionTypeAsync(transactionTypes.First());
+                var result = await _transactionTypeService.DeleteTransactionTypeAsync(transactionTypes);
                 if (result)
                     return NoContent();
 

@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanRepaymentLog by optional parameters
-        public async Task<LoanRepaymentLog> GetLoanRepaymentLogAsync(int? RepaymentId = null, int? LoanId = null, string? EmployeeId = null, string? RepaymentMethod = null)
+        public async Task<IEnumerable<LoanRepaymentLog>> GetLoanRepaymentLogAsync(int? RepaymentId = null, int? LoanId = null, string? EmployeeId = null, string? RepaymentMethod = null)
         {
             try
             {
@@ -92,8 +92,7 @@ namespace BankApplicationAPI.Repository
 
                 return await query.Include(lrl => lrl.Loan)
                                   .Include(lrl => lrl.Employee)
-                                  .FirstOrDefaultAsync()
-                       ?? throw new KeyNotFoundException("LoanRepaymentLog not found with the provided criteria.");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -103,7 +102,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanRepaymentLog by RepaymentId
-        public async Task<IEnumerable<LoanRepaymentLog>> GetLoanRepaymentLogByLoanRepaymentLogIdAsync(int RepaymentId)
+        public async Task<LoanRepaymentLog> GetLoanRepaymentLogByLoanRepaymentLogIdAsync(int RepaymentId)
         {
             try
             {
@@ -116,7 +115,7 @@ namespace BankApplicationAPI.Repository
                                      .Where(lrl => lrl.RepaymentId == RepaymentId)
                                      .Include(lrl => lrl.Loan)
                                      .Include(lrl => lrl.Employee)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

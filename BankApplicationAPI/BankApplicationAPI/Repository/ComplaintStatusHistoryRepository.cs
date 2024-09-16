@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintStatusHistory by optional parameters
-        public async Task<ComplaintStatusHistory> GetComplaintStatusHistoryAsync(int? statusHistoryId = null, int? complaintId = null, string? complaintStatus = null, DateTime? statusDate = null)
+        public async Task<IEnumerable<ComplaintStatusHistory>> GetComplaintStatusHistoryAsync(int? statusHistoryId = null, int? complaintId = null, string? complaintStatus = null, DateTime? statusDate = null)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Where(c => c.StatusDate == statusDate.Value);
 
                 return await query.Include(c => c.Complaint)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -85,14 +85,14 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintStatusHistory by StatusHistoryId
-        public async Task<IEnumerable<ComplaintStatusHistory>> GetComplaintStatusHistoryByComplaintStatusHistoryIdAsync(int statusHistoryId)
+        public async Task<ComplaintStatusHistory> GetComplaintStatusHistoryByComplaintStatusHistoryIdAsync(int statusHistoryId)
         {
             try
             {
                 return await _context.ComplaintStatusHistories
                                      .Where(c => c.StatusHistoryId == statusHistoryId)
                                      .Include(c => c.Complaint)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

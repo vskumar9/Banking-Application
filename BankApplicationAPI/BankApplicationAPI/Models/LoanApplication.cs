@@ -2,7 +2,7 @@
 
 public partial class LoanApplication
 {
-    public int LoanId { get; set; }
+    public int? LoanId { get; set; }
 
     public string? CustomerId { get; set; }
 
@@ -26,9 +26,9 @@ public partial class LoanApplication
 
     public virtual Employee? Employee { get; set; }
 
-    public virtual ICollection<LoanPaymentSchedule> LoanPaymentSchedules { get; set; } = new List<LoanPaymentSchedule>();
+    public virtual ICollection<LoanPaymentSchedule>? LoanPaymentSchedules { get; set; } = new List<LoanPaymentSchedule>();
 
-    public virtual ICollection<LoanRepaymentLog> LoanRepaymentLogs { get; set; } = new List<LoanRepaymentLog>();
+    public virtual ICollection<LoanRepaymentLog>? LoanRepaymentLogs { get; set; } = new List<LoanRepaymentLog>();
 
     public virtual LoanType? LoanType { get; set; }
 }

@@ -43,10 +43,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var result = await _complaintService.GetComplaintsByComplaintIdAsync(id);
-                if (result == null || !result.Any())
+                if (result == null)
                     return NotFound("Complaint not found.");
 
-                return Ok(result.First());
+                return Ok(result);
             }
             catch
             {
@@ -106,10 +106,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var complaint = await _complaintService.GetComplaintsByComplaintIdAsync(id);
-                if (complaint == null || !complaint.Any())
+                if (complaint == null)
                     return NotFound("Complaint not found.");
 
-                var deleted = await _complaintService.DeleteComplaintAsync(complaint.First());
+                var deleted = await _complaintService.DeleteComplaintAsync(complaint);
                 if (deleted)
                     return NoContent();
 

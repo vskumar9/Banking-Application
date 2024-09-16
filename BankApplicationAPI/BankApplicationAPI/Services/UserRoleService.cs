@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<UserRole> GetUserRoleAsync(int? UserRoleId = null, string? EmployeeId = null, int? RoleId = null)
+        public async Task<IEnumerable<UserRole>> GetUserRoleAsync(int? UserRoleId = null, string? EmployeeId = null, int? RoleId = null)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<UserRole>> GetUserRoleByUserRoleIdAsync(int UserRoleId)
+        public async Task<UserRole> GetUserRoleByUserRoleIdAsync(int UserRoleId)
         {
             try
             {

@@ -2,7 +2,7 @@
 
 public partial class Complaint
 {
-    public int ComplaintId { get; set; }
+    public int? ComplaintId { get; set; }
 
     public string? CustomerId { get; set; }
 
@@ -22,11 +22,11 @@ public partial class Complaint
 
     public string? ResolutionComments { get; set; }
 
-    public virtual ICollection<ComplaintFeedback> ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
+    public virtual ICollection<ComplaintFeedback> ? ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
 
-    public virtual ICollection<ComplaintResolution> ComplaintResolutions { get; set; } = new List<ComplaintResolution>();
+    public virtual ICollection<ComplaintResolution>? ComplaintResolutions { get; set; } = new List<ComplaintResolution>();
 
-    public virtual ICollection<ComplaintStatusHistory> ComplaintStatusHistories { get; set; } = new List<ComplaintStatusHistory>();
+    public virtual ICollection<ComplaintStatusHistory> ? ComplaintStatusHistories { get; set; } = new List<ComplaintStatusHistory>();
 
     public virtual ComplaintType? ComplaintType { get; set; }
 

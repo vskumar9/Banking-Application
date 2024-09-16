@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get AuditLog by optional parameters
-        public async Task<AuditLog> GetAuditLogAsync(int? AuditLogId = null, string? Action = null, string? EmployeeId = null, DateTime? ActionDate = null, string? IpAddress = null, string? Details = null)
+        public async Task<IEnumerable<AuditLog>> GetAuditLogAsync(int? AuditLogId = null, string? Action = null, string? EmployeeId = null, DateTime? ActionDate = null, string? IpAddress = null, string? Details = null)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(Details))
                     query = query.Where(a => a.Details == Details);
 
-                return await query.Include(a => a.Employee).FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                return await query.Include(a => a.Employee).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -90,14 +90,13 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get AuditLog by AuditLogId
-        public async Task<IEnumerable<AuditLog>> GetAuditLogByAuditLogIdAsync(int AuditLogId)
+        public async Task<AuditLog> GetAuditLogByAuditLogIdAsync(int AuditLogId)
         {
             try
             {
                 return await _context.AuditLogs
                                      .Where(a => a.AuditLogId == AuditLogId)
-                                     .Include(a => a.Employee)
-                                     .ToListAsync();
+                                     .Include(a => a.Employee).FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

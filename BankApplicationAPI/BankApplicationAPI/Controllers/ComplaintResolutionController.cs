@@ -47,10 +47,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var resolutions = await _complaintResolutionService.GetComplaintResolutionsByComplaintResolutionIdAsync(id);
-                if (resolutions == null || !resolutions.Any())
+                if (resolutions == null)
                     return NotFound("Complaint resolution not found.");
 
-                return Ok(resolutions.First());
+                return Ok(resolutions);
             }
             catch
             {
@@ -109,7 +109,7 @@ namespace BankApplicationAPI.Controllers
         {
             try
             {
-                var resolution = await _complaintResolutionService.GetComplaintResolutionAsync(resolutionId: id);
+                var resolution = await _complaintResolutionService.GetComplaintResolutionsByComplaintResolutionIdAsync(resolutionId: id);
                 if (resolution == null)
                     return NotFound("Complaint resolution not found.");
 

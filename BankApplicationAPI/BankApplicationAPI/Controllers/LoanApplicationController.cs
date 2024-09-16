@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var loanApplications = await _loanApplicationService.GetLoanApplicationByLoanApplicationIdAsync(id);
-                if (loanApplications == null || !loanApplications.Any())
+                if (loanApplications == null)
                     return NotFound("Loan application not found.");
 
-                return Ok(loanApplications.First());
+                return Ok(loanApplications);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var loanApplications = await _loanApplicationService.GetLoanApplicationByLoanApplicationIdAsync(id);
-                if (loanApplications == null || !loanApplications.Any())
+                if (loanApplications == null)
                     return NotFound("Loan application not found.");
 
-                var result = await _loanApplicationService.DeleteLoanApplicationAsync(loanApplications.First());
+                var result = await _loanApplicationService.DeleteLoanApplicationAsync(loanApplications);
                 if (result)
                     return NoContent();
 

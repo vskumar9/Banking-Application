@@ -2,7 +2,7 @@
 
 public partial class LoanPaymentSchedule
 {
-    public int PaymentId { get; set; }
+    public int? PaymentId { get; set; }
 
     public int? LoanId { get; set; }
 

@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Customer by optional parameters
-        public async Task<Customer> GetCustomerAsync(string? CustomerId = null, string? CustomerFirstName = null, string? CustomerLastName = null, string? City = null, string? State = null, string? ZipCode = null, string? EmailAddress = null, string? CellPhone = null)
+        public async Task<IEnumerable<Customer>> GetCustomerAsync(string? CustomerId = null, string? CustomerFirstName = null, string? CustomerLastName = null, string? City = null, string? State = null, string? ZipCode = null, string? EmailAddress = null, string? CellPhone = null)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace BankApplicationAPI.Repository
                                   .Include(c => c.Complaints)
                                   .Include(c => c.LoanApplications)
                                   .Include(c => c.TransactionLogs)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException("Customer not found");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Customer by CustomerId
-        public async Task<IEnumerable<Customer>> GetCustomerByCustomerIdAsync(string CustomerId)
+        public async Task<Customer> GetCustomerByCustomerIdAsync(string CustomerId)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace BankApplicationAPI.Repository
                                      .Include(c => c.Complaints)
                                      .Include(c => c.LoanApplications)
                                      .Include(c => c.TransactionLogs)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

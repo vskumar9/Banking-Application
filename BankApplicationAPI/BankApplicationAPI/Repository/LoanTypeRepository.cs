@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanType by optional parameters
-        public async Task<LoanType> GetLoanTypeAsync(int? LoanTypeId = null, string? LoanTypeName = null)
+        public async Task<IEnumerable<LoanType>> GetLoanTypeAsync(int? LoanTypeId = null, string? LoanTypeName = null)
         {
             try
             {
@@ -84,8 +84,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(LoanTypeName))
                     query = query.Where(lt => lt.LoanTypeName == LoanTypeName);
 
-                return await query.FirstOrDefaultAsync()
-                       ?? throw new KeyNotFoundException("LoanType not found with the provided criteria.");
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -95,7 +94,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanType by LoanTypeId
-        public async Task<IEnumerable<LoanType>> GetLoanTypeByLoanTypeIdAsync(int LoanTypeId)
+        public async Task<LoanType> GetLoanTypeByLoanTypeIdAsync(int LoanTypeId)
         {
             try
             {
@@ -106,7 +105,7 @@ namespace BankApplicationAPI.Repository
 
                 return await _context.LoanTypes
                                      .Where(lt => lt.LoanTypeId == LoanTypeId)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

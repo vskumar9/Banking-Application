@@ -2,7 +2,7 @@
 
 public partial class Account
 {
-    public int AccountId { get; set; }
+    public int? AccountId { get; set; }
 
     public decimal? CurrentBalance { get; set; }
 
@@ -18,5 +18,5 @@ public partial class Account
 
     public virtual SavingsInterestRate? InterestSavingsRate { get; set; }
 
-    public virtual ICollection<TransactionLog> TransactionLogs { get; set; } = new List<TransactionLog>();
+    public virtual ICollection<TransactionLog>? TransactionLogs { get; set; } = new List<TransactionLog>();
 }

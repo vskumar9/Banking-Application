@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get SavingsInterestRate by optional parameters
-        public async Task<SavingsInterestRate> GetSavingsInterestRateAsync(byte? InterestSavingsRateId = null, decimal? InterestRateValue = null)
+        public async Task<IEnumerable<SavingsInterestRate>> GetSavingsInterestRateAsync(byte? InterestSavingsRateId = null, decimal? InterestRateValue = null)
         {
             try
             {
@@ -85,8 +85,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Where(sir => sir.InterestRateValue == InterestRateValue.Value);
 
                 return await query.Include(sir => sir.Accounts)
-                                  .FirstOrDefaultAsync()
-                       ?? throw new KeyNotFoundException("SavingsInterestRate not found with the provided criteria.");
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -96,7 +95,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get SavingsInterestRate by InterestSavingsRateId
-        public async Task<IEnumerable<SavingsInterestRate>> GetSavingsInterestRateBySavingsInterestRateIdAsync(byte InterestSavingsRateId)
+        public async Task<SavingsInterestRate> GetSavingsInterestRateBySavingsInterestRateIdAsync(byte InterestSavingsRateId)
         {
             try
             {
@@ -108,7 +107,7 @@ namespace BankApplicationAPI.Repository
                 return await _context.SavingsInterestRates
                                      .Where(sir => sir.InterestSavingsRateId == InterestSavingsRateId)
                                      .Include(sir => sir.Accounts)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

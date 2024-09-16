@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var complaintTypes = await _complaintTypeService.GetComplaintTypeByComplaintTypeIdAsync(id);
-                if (complaintTypes == null || !complaintTypes.Any())
+                if (complaintTypes == null)
                     return NotFound("Complaint type not found.");
 
-                return Ok(complaintTypes.First());
+                return Ok(complaintTypes);
             }
             catch
             {
@@ -102,7 +102,7 @@ namespace BankApplicationAPI.Controllers
         {
             try
             {
-                var complaintType = await _complaintTypeService.GetComplaintTypeAsync(complaintTypeId: id);
+                var complaintType = await _complaintTypeService.GetComplaintTypeByComplaintTypeIdAsync(complaintTypeId: id);
                 if (complaintType == null)
                     return NotFound("Complaint type not found.");
 

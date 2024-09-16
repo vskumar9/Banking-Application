@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var permissions = await _permissionService.GetPermissionByPermissionIdAsync(id);
-                if (permissions == null || !permissions.Any())
+                if (permissions == null)
                     return NotFound("Permission not found.");
 
-                return Ok(permissions.First());
+                return Ok(permissions);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var permissions = await _permissionService.GetPermissionByPermissionIdAsync(id);
-                if (permissions == null || !permissions.Any())
+                if (permissions == null)
                     return NotFound("Permission not found.");
 
-                var result = await _permissionService.DeletePermissionAsync(permissions.First());
+                var result = await _permissionService.DeletePermissionAsync(permissions);
                 if (result)
                     return NoContent();
 

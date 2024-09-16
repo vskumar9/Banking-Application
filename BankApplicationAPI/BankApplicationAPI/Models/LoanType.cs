@@ -2,7 +2,7 @@
 
 public partial class LoanType
 {
-    public int LoanTypeId { get; set; }
+    public int? LoanTypeId { get; set; }
 
     public string? LoanTypeName { get; set; }
 
@@ -10,5 +10,5 @@ public partial class LoanType
 
     public string? Description { get; set; }
 
-    public virtual ICollection<LoanApplication> LoanApplications { get; set; } = new List<LoanApplication>();
+    public virtual ICollection<LoanApplication>? LoanApplications { get; set; } = new List<LoanApplication>();
 }

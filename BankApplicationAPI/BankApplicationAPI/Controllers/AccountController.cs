@@ -34,7 +34,7 @@ namespace BankApplicationAPI.Controllers
         [Authorize(Roles = "admin,staff")] // Only admin and staff can delete an account
         public async Task<IActionResult> DeleteAccount(int id)
         {
-            var account = await _accountService.GetAccountAsync(AccountId: id);
+            var account = await _accountService.GetAccountsByAccountIdAsync(id);
             if (account == null)
             {
                 return NotFound("Account not found.");
@@ -74,7 +74,7 @@ namespace BankApplicationAPI.Controllers
                 return Unauthorized("Invalid token.");
 
             var accounts = await _accountService.GetAccountsByCustomerIdAsync(customerId);
-            if (accounts == null || !accounts.Any())
+            if (accounts == null)
             {
                 return NotFound("No accounts found for the given customer.");
             }

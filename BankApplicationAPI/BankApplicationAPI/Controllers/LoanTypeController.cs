@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var loanTypes = await _loanTypeService.GetLoanTypeByLoanTypeIdAsync(id);
-                if (loanTypes == null || !loanTypes.Any())
+                if (loanTypes == null)
                     return NotFound("Loan type not found.");
 
-                return Ok(loanTypes.First());
+                return Ok(loanTypes);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var loanTypes = await _loanTypeService.GetLoanTypeByLoanTypeIdAsync(id);
-                if (loanTypes == null || !loanTypes.Any())
+                if (loanTypes == null)
                     return NotFound("Loan type not found.");
 
-                var result = await _loanTypeService.DeleteLoanTypeAsync(loanTypes.First());
+                var result = await _loanTypeService.DeleteLoanTypeAsync(loanTypes);
                 if (result)
                     return NoContent();
 

@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<TransactionType> GetTransactionTypeAsync(byte? TransactionTypeId = null, string? TransactionTypeName = null, decimal? TransactionFeeAmount = null)
+        public async Task<IEnumerable<TransactionType>> GetTransactionTypeAsync(byte? TransactionTypeId = null, string? TransactionTypeName = null, decimal? TransactionFeeAmount = null)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<TransactionType>> GetTransactionTypeByTransactionTypeIdAsync(byte TransactionTypeId)
+        public async Task<TransactionType> GetTransactionTypeByTransactionTypeIdAsync(byte TransactionTypeId)
         {
             try
             {

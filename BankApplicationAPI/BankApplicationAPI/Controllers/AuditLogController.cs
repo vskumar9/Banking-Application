@@ -43,10 +43,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var result = await _auditLogService.GetAuditLogByAuditLogIdAsync(id);
-                if (result == null || !result.Any())
+                if (result == null)
                     return NotFound("Audit log not found.");
 
-                return Ok(result.First());
+                return Ok(result);
             }
             catch
             {
@@ -106,10 +106,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var auditLog = await _auditLogService.GetAuditLogByAuditLogIdAsync(id);
-                if (auditLog == null || !auditLog.Any())
+                if (auditLog == null)
                     return NotFound("Audit log not found.");
 
-                var deleted = await _auditLogService.DeleteAuditLogAsync(auditLog.First());
+                var deleted = await _auditLogService.DeleteAuditLogAsync(auditLog);
                 if (deleted)
                     return NoContent();
 

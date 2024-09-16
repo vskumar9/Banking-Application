@@ -30,7 +30,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<ComplaintFeedback> GetComplaintFeedbackAsync(int? feedbackId = null, string? customerId = null, string? complaintId = null, DateTime? feedbackDate = null, byte? feedbackRating = null, string? feedbackComments = null)
+        public async Task<IEnumerable<ComplaintFeedback>> GetComplaintFeedbackAsync(int? feedbackId = null, string? customerId = null, string? complaintId = null, DateTime? feedbackDate = null, byte? feedbackRating = null, string? feedbackComments = null)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<ComplaintFeedback>> GetCComplaintFeedbacksByComplaintFeedbackIdAsync(int feedbackId)
+        public async Task<ComplaintFeedback> GetCComplaintFeedbacksByComplaintFeedbackIdAsync(int feedbackId)
         {
             try
             {

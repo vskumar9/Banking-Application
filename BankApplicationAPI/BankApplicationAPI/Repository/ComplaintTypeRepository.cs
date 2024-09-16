@@ -57,7 +57,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintType by optional parameters
-        public async Task<ComplaintType> GetComplaintTypeAsync(int? complaintTypeId = null, string? complaintTypeName = null, string? complaintTypeDescription = null)
+        public async Task<IEnumerable<ComplaintType>> GetComplaintTypeAsync(int? complaintTypeId = null, string? complaintTypeName = null, string? complaintTypeDescription = null)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(complaintTypeDescription))
                     query = query.Where(ct => ct.ComplaintTypeDescription == complaintTypeDescription);
 
-                return await query.FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -82,13 +82,13 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintType by ComplaintTypeId
-        public async Task<IEnumerable<ComplaintType>> GetComplaintTypeByComplaintTypeIdAsync(int complaintTypeId)
+        public async Task<ComplaintType> GetComplaintTypeByComplaintTypeIdAsync(int complaintTypeId)
         {
             try
             {
                 return await _context.ComplaintTypes
                                      .Where(ct => ct.ComplaintTypeId == complaintTypeId)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

@@ -56,7 +56,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintResolution by optional parameters
-        public async Task<ComplaintResolution> GetComplaintResolutionAsync(int? resolutionId = null, int? complaintId = null, string? resolutionMethod = null, DateTime? resolutionDate = null, string? employeeId = null)
+        public async Task<IEnumerable<ComplaintResolution>> GetComplaintResolutionAsync(int? resolutionId = null, int? complaintId = null, string? resolutionMethod = null, DateTime? resolutionDate = null, string? employeeId = null)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Where(r => r.EmployeeId == employeeId);
 
                 return await query.Include(r => r.Complaint).Include(r => r.Employee)
-                                  .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                                  .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -105,7 +105,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get ComplaintResolutions by ResolutionId
-        public async Task<IEnumerable<ComplaintResolution>> GetComplaintResolutionsByComplaintResolutionIdAsync(int resolutionId)
+        public async Task<ComplaintResolution> GetComplaintResolutionsByComplaintResolutionIdAsync(int resolutionId)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace BankApplicationAPI.Repository
                                      .Where(r => r.ResolutionId == resolutionId)
                                      .Include(r => r.Complaint)
                                      .Include(r => r.Employee)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

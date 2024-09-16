@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var userRoles = await _userRoleService.GetUserRoleByUserRoleIdAsync(id);
-                if (userRoles == null || !userRoles.Any())
+                if (userRoles == null)
                     return NotFound("User role not found.");
 
-                return Ok(userRoles.First());
+                return Ok(userRoles);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var userRoles = await _userRoleService.GetUserRoleByUserRoleIdAsync(id);
-                if (userRoles == null || !userRoles.Any())
+                if (userRoles == null)
                     return NotFound("User role not found.");
 
-                var result = await _userRoleService.DeleteUserRoleAsync(userRoles.First());
+                var result = await _userRoleService.DeleteUserRoleAsync(userRoles);
                 if (result)
                     return NoContent();
 

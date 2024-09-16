@@ -29,7 +29,7 @@ namespace BankApplicationAPI.Services
             }
             catch { throw; }
         }
-        public async Task<LoanType> GetLoanTypeAsync(int? LoanTypeId = null, string? LoanTypeName = null)
+        public async Task<IEnumerable<LoanType>> GetLoanTypeAsync(int? LoanTypeId = null, string? LoanTypeName = null)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<LoanType>> GetLoanTypeByLoanTypeIdAsync(int LoanTypeId)
+        public async Task<LoanType> GetLoanTypeByLoanTypeIdAsync(int LoanTypeId)
         {
             try
             {

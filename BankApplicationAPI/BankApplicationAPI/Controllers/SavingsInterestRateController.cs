@@ -40,10 +40,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var interestRates = await _savingsInterestRateService.GetSavingsInterestRateBySavingsInterestRateIdAsync(id);
-                if (interestRates == null || !interestRates.Any())
+                if (interestRates == null)
                     return NotFound("Savings interest rate not found.");
 
-                return Ok(interestRates.First());
+                return Ok(interestRates);
             }
             catch
             {
@@ -103,10 +103,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var interestRates = await _savingsInterestRateService.GetSavingsInterestRateBySavingsInterestRateIdAsync(id);
-                if (interestRates == null || !interestRates.Any())
+                if (interestRates == null)
                     return NotFound("Savings interest rate not found.");
 
-                var result = await _savingsInterestRateService.DeleteSavingsInterestRateAsync(interestRates.First());
+                var result = await _savingsInterestRateService.DeleteSavingsInterestRateAsync(interestRates);
                 if (result)
                     return NoContent();
 

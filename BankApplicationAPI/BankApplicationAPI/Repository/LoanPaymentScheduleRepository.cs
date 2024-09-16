@@ -72,7 +72,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanPaymentSchedule by optional parameters, filters based on provided parameters
-        public async Task<LoanPaymentSchedule> GetLoanPaymentScheduleAsync(int? PaymentId = null, int? LoanId = null, string? PaymentStatus = null, string? LoanStatus = null)
+        public async Task<IEnumerable<LoanPaymentSchedule>> GetLoanPaymentScheduleAsync(int? PaymentId = null, int? LoanId = null, string? PaymentStatus = null, string? LoanStatus = null)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace BankApplicationAPI.Repository
                     query = query.Include(lps => lps.Loan).Where(lps => lps.Loan!.LoanStatus == LoanStatus);
                 }
 
-                return await query.FirstOrDefaultAsync() ?? throw new KeyNotFoundException("LoanPaymentSchedule not found with the provided criteria.");
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get LoanPaymentSchedule by PaymentId
-        public async Task<IEnumerable<LoanPaymentSchedule>> GetLoanPaymentScheduleByLoanPaymentScheduleIdAsync(int PaymentId)
+        public async Task<LoanPaymentSchedule> GetLoanPaymentScheduleByLoanPaymentScheduleIdAsync(int PaymentId)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace BankApplicationAPI.Repository
                 return await _context.LoanPaymentSchedules
                                      .Where(lps => lps.PaymentId == PaymentId)
                                      .Include(lps => lps.Loan)
-                                     .ToListAsync();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
             {

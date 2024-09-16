@@ -43,10 +43,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var result = await _accountStatusTypeService.GetAccountStatusTypeByAccountStatusTypeIdAsync(id);
-                if (result == null || !result.Any())
+                if (result == null)
                     return NotFound("Account status type not found.");
 
-                return Ok(result.First());
+                return Ok(result);
             }
             catch
             {
@@ -106,10 +106,10 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var accountStatusType = await _accountStatusTypeService.GetAccountStatusTypeByAccountStatusTypeIdAsync(id);
-                if (accountStatusType == null || !accountStatusType.Any())
+                if (accountStatusType == null)
                     return NotFound("Account status type not found.");
 
-                var deleted = await _accountStatusTypeService.DeleteAccountStatusTypeAsync(accountStatusType.First());
+                var deleted = await _accountStatusTypeService.DeleteAccountStatusTypeAsync(accountStatusType);
                 if (deleted)
                     return NoContent();
 

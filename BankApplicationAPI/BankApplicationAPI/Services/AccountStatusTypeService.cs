@@ -32,7 +32,7 @@ namespace BankApplicationAPI.Services
             catch { throw; };
         }
 
-        public async Task<AccountStatusType> GetAccountStatusTypeAsync(byte? AccountStatusTypeId = null, string? AccountStatusDescription = null)
+        public async Task<IEnumerable<AccountStatusType>> GetAccountStatusTypeAsync(byte? AccountStatusTypeId = null, string? AccountStatusDescription = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
-        public async Task<IEnumerable<AccountStatusType>> GetAccountStatusTypeByAccountStatusTypeIdAsync(byte AccountStatusTypeId)
+        public async Task<AccountStatusType> GetAccountStatusTypeByAccountStatusTypeIdAsync(byte AccountStatusTypeId)
         {
             try
             {
