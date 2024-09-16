@@ -1,0 +1,318 @@
+<div id="body-pd">
+  <header class="header" id="header">
+    <div class="header_toggle">
+      <i class="bx bx-menu" id="header-toggle"></i>
+    </div>
+    <div class="header_img">
+      <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
+    </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="#" class="nav_logo">
+          <i class="bx bx-layer nav_logo-icon"></i>
+          <span class="nav_logo-name">Mini - Project - 2</span>
+        </a>
+        <div class="nav_list">
+          <a href="#" class="nav_link active">
+            <i class="bx bx-grid-alt nav_icon"></i>
+            <span class="nav_name">Dashboard</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class="bx bx-user nav_icon"></i>
+            <span class="nav_name">Users Entry</span>
+          </a>
+          <a href="#task" class="nav_link">
+            <i class="bx bx-task nav_icon"></i>
+            <span class="nav_name">Task</span>
+          </a>
+          <a href="#date-time" class="nav_link">
+            <i class="bx bx-timer nav_icon"></i>
+            <span class="nav_name">Date & Time</span>
+          </a>
+        </div>
+      </div>
+      <a href="#" class="nav_link">
+        <i class="bx bx-log-out nav_icon"></i>
+        <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
+  </div>
+  <!--Container Main start-->
+  <div class="container-fluid">
+    <button class="btn btn-primary d-md-none" type="button" id="sidebarToggle">
+      Toggle Sidebar
+    </button>
+    <div class="d-flex justify-content-between align-items-center my-4 py-5">
+      <h2>User Information</h2>
+    </div>
+    <form id="userForm">
+      <div class="mb-2">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="name" required />
+        <div class="invalid-feedback">Please enter your name.</div>
+      </div>
+      <div class="mb-2">
+        <label for="city" class="form-label">City:</label>
+        <input type="text" class="form-control" id="city" required />
+        <div class="invalid-feedback">Please enter your city.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h2 id="task" class="mt-4">Task List</h2>
+    <hr />
+    <form id="taskForm">
+      <div class="mb-2">
+        <label for="taskName" class="form-label">Task Name:</label>
+        <input type="text" class="form-control" id="taskName" required />
+        <div class="invalid-feedback">Please enter your task...</div>
+      </div>
+      <div class="mb-2">
+        <label for="userName" class="form-label">User:</label>
+        <input
+          type="text"
+          list="userNames"
+          class="form-control"
+          id="userName"
+          required
+        />
+        <datalist id="userNames">
+          <option value="None">None</option>
+          <!-- Users will be added here dynamically -->
+        </datalist>
+        <div class="invalid-feedback">Please enter your user...</div>
+      </div>
+      <div class="mb-4">
+        <label for="priority" class="form-label">Priority:</label>
+        <select class="form-select" id="priority" required>
+          <option value="">Select priority</option>
+          <option value="P1">P1 (High-priority)</option>
+          <option value="P2">P2 (Medium-priority)</option>
+          <option value="P3">P3 (Medium-priority)</option>
+          <option value="P4">P4 (Low-priority)</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br />
+    <input
+      type="text"
+      id="filterInput"
+      class="filter-input"
+      placeholder="Filter tasks..."
+    />
+    <button class="btn btn-secondary" id="sortTask">Sort by Task</button>
+    <button class="btn btn-secondary" id="sortPriority">
+      Sort by Priority
+    </button>
+    <table class="table task-table">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody id="taskList">
+        <!-- Tasks will be added here dynamically -->
+      </tbody>
+    </table>
+
+    <hr />
+    <h3 id="date-time">Date & time</h3>
+    <div class="date-time-display" id="dateTimeDisplay">
+      <!-- Date and time will be displayed here -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Form validation and task handling
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function to display the current date and time
+    function updateDateTime() {
+      const now = new Date();
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      };
+      document.getElementById("dateTimeDisplay").textContent =
+        now.toLocaleDateString("en-US", options);
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    const showNavbar = (toggleId, navId, bodyId, headerId) => {
+      const toggle = document.getElementById(toggleId),
+        nav = document.getElementById(navId),
+        bodypd = document.getElementById(bodyId),
+        headerpd = document.getElementById(headerId);
+
+      // Validate that all variables exist
+      if (toggle && nav && bodypd && headerpd) {
+        toggle.addEventListener("click", () => {
+          nav.classList.toggle("show");
+          toggle.classList.toggle("bx-x");
+          bodypd.classList.toggle("body-pd");
+          headerpd.classList.toggle("body-pd");
+        });
+      }
+    };
+
+    showNavbar("header-toggle", "nav-bar", "body-pd", "header");
+
+    /*===== LINK ACTIVE =====*/
+    const linkColor = document.querySelectorAll(".nav_link");
+
+    function colorLink() {
+      if (linkColor) {
+        linkColor.forEach((l) => l.classList.remove("active"));
+        this.classList.add("active");
+      }
+    }
+
+    linkColor.forEach((l) => l.addEventListener("click", colorLink));
+
+    const taskList = document.getElementById("taskList");
+
+    const sortTaskButton = document.getElementById("sortTask");
+    const sortPriorityButton = document.getElementById("sortPriority");
+    const filterInput = document.getElementById("filterInput");
+
+    const userForm = document.getElementById("userForm");
+    const nameInput = document.getElementById("name");
+    const cityInput = document.getElementById("city");
+
+    const taskForm = document.getElementById("taskForm");
+    const taskNameInput = document.getElementById("taskName");
+    const userNameInput = document.getElementById("userName");
+    const prioritySelect = document.getElementById("priority");
+
+    const userNamesDatalist = document.getElementById("userNames");
+
+    // Initialize tasks array
+    const tasks = [];
+    const users = [];
+
+    // Handle userFrom submit event
+    userForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Get user input values
+      const name = nameInput.value.trim();
+      const city = cityInput.value.trim();
+      // Validate input fields
+      if (name && city) {
+        users.push({ name, city });
+        nameInput.value = "";
+        cityInput.value = "";
+        console.log(`Added new user: ${name}, ${city}`);
+
+        confirm(`Added new user: ${name}`) === true
+          ? renderUsers(users)
+          : console.log("Not added");
+      } else {
+        // Handle invalid inputs
+        console.error("Please enter valid name and city.");
+      }
+    });
+
+    // Handle taskFrom submit event
+    taskForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const taskName = taskNameInput.value.trim();
+      const userName = userNameInput.value.trim();
+      const priority = prioritySelect.value;
+
+      console.log(
+        `Task: ${taskName}, User: ${userName}, Priority: ${priority}`
+      );
+
+      if (taskName && userName && priority) {
+        tasks.push({ name: taskName, user: userName, priority: priority });
+        taskNameInput.value = "";
+        userNameInput.value = "";
+        prioritySelect.value = "";
+
+        confirm(`Added new task ${taskName}`) === true
+          ? renderTasks(tasks)
+          : console.log("Not added");
+      } else {
+        // Handle invalid inputs
+        console.error("Please enter valid task details.");
+      }
+    });
+
+    function renderTasks(tasksToRender) {
+      taskList.innerHTML = ""; // Clear existing tasks
+
+      tasksToRender.forEach((task) => {
+        // Determine class based on task priority
+        const priorityClass =
+          task.priority === "P1"
+            ? "priority-high"
+            : task.priority === "P2" || task.priority === "P3"
+            ? "priority-medium"
+            : "priority-low";
+
+        const row = document.createElement("tr");
+        row.classList.add(priorityClass);
+        row.innerHTML = `
+            <td>${task.name} (${task.user})</td>
+            <td>${task.priority}</td>
+        `;
+        taskList.appendChild(row);
+      });
+    }
+
+    function renderUsers(userToRender) {
+      userNamesDatalist.innerHTML = "";
+      userToRender.forEach((user) => {
+        const opt = document.createElement("option");
+        opt.value = `${user.name} from ${user.city}`;
+        opt.innerHTML = `${user.name} from ${user.city}`;
+        userNamesDatalist.appendChild(opt);
+        console.log(opt);
+      });
+    }
+
+    function sortTasksByPriority() {
+      const priorityOrder = { P1: 1, P2: 2, P3: 3, P4: 4 };
+      tasks.sort(
+        (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
+      );
+      renderTasks(tasks);
+    }
+
+    function sortTasksByTask() {
+      tasks.sort((a, b) => a.name.localeCompare(b.name));
+      renderTasks(tasks);
+    }
+
+    function filterTasks() {
+      const filterText = filterInput.value.toLowerCase();
+      const filteredTasks = tasks.filter(
+        (task) =>
+          task.name.toLowerCase().includes(filterText) ||
+          task.user.toLowerCase().includes(filterText) ||
+          task.priority.toLowerCase().includes(filterText)
+      );
+      renderTasks(filteredTasks);
+    }
+
+    sortTaskButton.addEventListener("click", sortTasksByTask);
+    sortPriorityButton.addEventListener("click", sortTasksByPriority);
+    filterInput.addEventListener("input", filterTasks);
+
+    // Initial rendering
+    renderTasks(tasks);
+    renderUsers(users);
+  });
+</script>
