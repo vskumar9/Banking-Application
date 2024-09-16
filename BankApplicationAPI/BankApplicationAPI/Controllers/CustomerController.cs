@@ -3,6 +3,7 @@ using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -56,7 +57,7 @@ namespace BankApplicationAPI.Controllers
 
         // POST: api/Customer
         [HttpPost]
-        [Authorize(Roles = "admin")] // Only admins can create new customers
+        //[Authorize(Roles = "admin")] // Only admins can create new customers
         public async Task<ActionResult> CreateCustomer([FromBody] Customer customer)
         {
             if (customer == null)
@@ -79,7 +80,7 @@ namespace BankApplicationAPI.Controllers
 
         // PUT: api/Customer/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")] // Only admins can update customer details
+        [Authorize(Roles = "admin, customer, staff")] // Only admins can update customer details
         public async Task<ActionResult> UpdateCustomer(string id, [FromBody] Customer customer)
         {
             if (customer == null || customer.CustomerId != id)
@@ -98,6 +99,33 @@ namespace BankApplicationAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating customer.");
             }
         }
+
+        [HttpPut]
+        [Authorize(Roles = "customer")] // Only update customer details self customer
+        public async Task<ActionResult> UpdateCustomerByCustomer()
+        {
+            var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+            if (string.IsNullOrEmpty(customerId))
+                return Unauthorized("Invalid token.");
+
+            try
+            {
+                var customers = await _customerService.GetCustomerByCustomerIdAsync(customerId);
+                if (customers == null)
+                    return NotFound("Customer not found.");
+
+                var updatedCustomer = await _customerService.UpdateCustomerAsync(customers);
+                if (updatedCustomer != null)
+                    return Ok(updatedCustomer);
+
+                return NotFound("Customer not found.");
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating customer.");
+            }
+        }
+
 
         // DELETE: api/Customer/5
         [HttpDelete("{id}")]

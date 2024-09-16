@@ -25,6 +25,11 @@ namespace BankApplicationAPI.Repository
                     throw new ArgumentNullException(nameof(employee), "Employee cannot be null");
                 }
 
+                if (!string.IsNullOrEmpty(employee.PasswordHash))
+                {
+                    employee.PasswordHash = BCrypt.Net.BCrypt.HashPassword(employee.PasswordHash);
+                }
+
                 await _context.Employees.AddAsync(employee);
                 return await _context.SaveChangesAsync() > 0;
             }
@@ -92,7 +97,7 @@ namespace BankApplicationAPI.Repository
 
                 if (!string.IsNullOrEmpty(RoleName))
                 {
-                    query = query.Where(e => e.UserRoles.Any(ur => ur.Role.RoleName == RoleName));
+                    query = query.Where(e => e.UserRoles!.Any(ur => ur.Role!.RoleName == RoleName));
                 }
 
                 return await query.Include(e => e.AuditLogs)
@@ -175,6 +180,11 @@ namespace BankApplicationAPI.Repository
                 if (existingEmployee == null)
                 {
                     throw new KeyNotFoundException("Employee not found");
+                }
+
+                if (!string.IsNullOrEmpty(employee.PasswordHash) && !BCrypt.Net.BCrypt.Verify(employee.PasswordHash, existingEmployee.PasswordHash))
+                {
+                    employee.PasswordHash = BCrypt.Net.BCrypt.HashPassword(existingEmployee.PasswordHash);
                 }
 
                 _context.Entry(existingEmployee).CurrentValues.SetValues(employee);

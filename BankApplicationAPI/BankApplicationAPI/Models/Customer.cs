@@ -15,7 +15,7 @@ public partial class Customer
     public string? CellPhone { get; set; }
     public string? HomePhone { get; set; }
     public string? WorkPhone { get; set; }
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
     public DateTime? LastLoginDate { get; set; }
     public virtual ICollection<Account>? Accounts { get; set; } = new List<Account>();
 

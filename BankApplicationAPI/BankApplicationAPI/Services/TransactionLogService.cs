@@ -140,8 +140,5 @@ namespace BankApplicationAPI.Services
 
             return true;
         }
-
-
-
     }
 }

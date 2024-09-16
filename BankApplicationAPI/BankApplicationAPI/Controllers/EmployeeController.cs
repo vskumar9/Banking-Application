@@ -3,6 +3,7 @@ using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -87,6 +88,30 @@ namespace BankApplicationAPI.Controllers
 
             try
             {
+                var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employee);
+                if (updatedEmployee != null)
+                    return Ok(updatedEmployee);
+
+                return NotFound("Employee not found.");
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating employee.");
+            }
+        }
+        
+        [HttpPut]
+        [Authorize(Roles = "staff, admin, support, chashier")] // Only admins can update employee details
+        public async Task<ActionResult> UpdateEmployeeByEmployee()
+        {
+            try
+            {
+                var employeeId = User.FindFirstValue(ClaimTypes.PrimarySid);
+                if (string.IsNullOrEmpty(employeeId))
+                    return Unauthorized("Invalid token.");
+
+                var employee = await _employeeService.GetEmployeeByEmployeeIdAsync(employeeId);
+
                 var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employee);
                 if (updatedEmployee != null)
                     return Ok(updatedEmployee);

@@ -44,10 +44,8 @@ namespace BankApplicationAPI.Services
         {
             try
             {
-                var employee = await _context.Employees
-                .Include(e => e.UserRoles)
-                    .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(e => e.EmployeeId == emp.EmployeeId);
+                var employee = await _context.Employees.Include(e => e.UserRoles)!
+                    .ThenInclude(ur => ur.Role).FirstOrDefaultAsync(e => e.EmployeeId == emp.EmployeeId);
 
                 if (employee == null)
                 {
@@ -55,21 +53,21 @@ namespace BankApplicationAPI.Services
                 }
 
                 // Retrieve roles
-                var roles = employee.UserRoles.Select(ur => ur.Role.RoleName).ToList();
+                var roles = employee.UserRoles!.Select(ur => ur.Role!.RoleName).ToList();
 
                 // Create the list of claims
                 var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, employee.EmailAddress ?? string.Empty),
                 new Claim(JwtRegisteredClaimNames.Name, employee.EmployeeFirstName ?? string.Empty),
-                new Claim(ClaimTypes.PrimarySid, employee.EmployeeId),
-                new Claim("EmployeeId", employee.EmployeeId)
+                new Claim(ClaimTypes.PrimarySid, employee.EmployeeId!),
+                new Claim("EmployeeId", employee.EmployeeId!)
             };
 
                 // Add roles as claims
                 foreach (var role in roles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
+                    claims.Add(new Claim(ClaimTypes.Role, role!));
                 }
 
                 return await GenerateTokenAsync(claims);

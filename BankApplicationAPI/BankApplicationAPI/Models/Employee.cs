@@ -16,7 +16,7 @@ public partial class Employee
 
     public DateTime? CreatedDate { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public DateTime? LastLoginDate { get; set; }
 

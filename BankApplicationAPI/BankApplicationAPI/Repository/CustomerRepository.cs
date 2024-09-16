@@ -25,6 +25,11 @@ namespace BankApplicationAPI.Repository
                     throw new ArgumentNullException(nameof(customer), "Customer cannot be null");
                 }
 
+                if (!string.IsNullOrEmpty(customer.PasswordHash))
+                {
+                    customer.PasswordHash = BCrypt.Net.BCrypt.HashPassword(customer.PasswordHash);
+                }
+
                 await _context.Customers.AddAsync(customer);
                 return await _context.SaveChangesAsync() > 0;
             }
@@ -176,6 +181,10 @@ namespace BankApplicationAPI.Repository
                 if (existingCustomer == null)
                 {
                     throw new KeyNotFoundException("Customer not found");
+                }
+                if (!string.IsNullOrEmpty(customer.PasswordHash) && !BCrypt.Net.BCrypt.Verify(customer.PasswordHash, existingCustomer.PasswordHash))
+                {
+                    customer.PasswordHash = BCrypt.Net.BCrypt.HashPassword(customer.PasswordHash);
                 }
 
                 _context.Entry(existingCustomer).CurrentValues.SetValues(customer);
