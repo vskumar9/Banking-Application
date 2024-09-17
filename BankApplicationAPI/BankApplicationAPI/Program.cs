@@ -9,7 +9,6 @@ using BankApplicationAPI.Interfaces;
 using BankApplicationAPI.Repository;
 using BankApplicationAPI.Exceptions;
 using BankApplicationAPI.Helpers;
-using BankApplicationAPI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

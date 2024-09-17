@@ -25,6 +25,11 @@ namespace BankApplicationAPI.Repository
                     throw new ArgumentNullException(nameof(customer), "Customer cannot be null");
                 }
 
+                if (await _context.Customers.AnyAsync(c => c.EmailAddress == customer.EmailAddress) || (await _context.Customers.AnyAsync(c => c.CellPhone == customer.CellPhone)))
+                {
+                    return false;
+                }
+
                 if (!string.IsNullOrEmpty(customer.PasswordHash))
                 {
                     customer.PasswordHash = BCrypt.Net.BCrypt.HashPassword(customer.PasswordHash);

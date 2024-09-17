@@ -9,6 +9,7 @@ namespace BankApplicationAPI.Repository
         private readonly SunBankContext _context;
         private readonly ILogger<EmployeeRepository> _logger;
 
+
         public EmployeeRepository(SunBankContext context, ILogger<EmployeeRepository> logger)
         {
             _context = context;
@@ -24,6 +25,12 @@ namespace BankApplicationAPI.Repository
                 {
                     throw new ArgumentNullException(nameof(employee), "Employee cannot be null");
                 }
+
+                if (await _context.Employees.AnyAsync(c => c.EmailAddress == employee.EmailAddress))
+                {
+                    return false;
+                }
+
 
                 if (!string.IsNullOrEmpty(employee.PasswordHash))
                 {

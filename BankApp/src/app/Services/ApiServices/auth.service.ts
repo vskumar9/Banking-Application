@@ -12,7 +12,8 @@ import { Login } from '../../Modules/Login';
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7203/api/Login/'; // Ensure this is the correct API URL
+  private apiUrl = 'https://localhost:7203/api/Login/'; 
+  private apiLogout = 'https://localhost:7203/api/Logout/';
   private tokenKey = 'jwtToken'; // Use the correct key for localStorage
   private userRoleSubject = new BehaviorSubject<string>('');
   userRole$ = this.userRoleSubject.asObservable();
@@ -106,10 +107,64 @@ export class AuthService {
     return this.getUserRole() === 'cashier';
   }
 
-  logout() {
+  customerLogout(): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem(this.tokenKey);
+      const token = this.getToken();
+      if (token) {
+        this.http.post(`${this.apiLogout}customer`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        }).subscribe({
+          next: () => {
+            localStorage.removeItem(this.tokenKey); // Clear the token from localStorage
+            this.userRoleSubject.next(''); // Clear the user role
+            this.router.navigate(['/login']); // Redirect to login page
+          },
+          error: (err) => {
+            console.error('Logout error:', err);
+            localStorage.removeItem(this.tokenKey); // Clear the token even if the logout request fails
+            this.userRoleSubject.next(''); // Clear the user role
+            this.router.navigate(['/login']); // Redirect to login page
+          }
+        });
+      } else {
+        this.router.navigate(['/login']); // Redirect to login page if no token is present
+      }
+    } else {
+      this.router.navigate(['/login']); // Redirect to login page if not in browser
     }
-    this.router.navigate(['/login']);
   }
+  employeeLogout(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = this.getToken();
+      if (token) {
+        this.http.post(`${this.apiLogout}employee`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        }).subscribe({
+          next: () => {
+            localStorage.removeItem(this.tokenKey); // Clear the token from localStorage
+            this.userRoleSubject.next(''); // Clear the user role
+            this.router.navigate(['/login']); // Redirect to login page
+          },
+          error: (err) => {
+            console.error('Logout error:', err);
+            localStorage.removeItem(this.tokenKey); // Clear the token even if the logout request fails
+            this.userRoleSubject.next(''); // Clear the user role
+            this.router.navigate(['/login']); // Redirect to login page
+          }
+        });
+      } else {
+        this.router.navigate(['/login']); // Redirect to login page if no token is present
+      }
+    } else {
+      this.router.navigate(['/login']); // Redirect to login page if not in browser
+    }
+  }
+  
+
+  // logout() {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     localStorage.removeItem(this.tokenKey);
+  //   }
+  //   this.router.navigate(['/login']);
+  // }
 }

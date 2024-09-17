@@ -25,7 +25,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   if (isPlatformBrowser(platformId) && authService.hasRole(requiredRole)) {
     return true;
   } else {
-    router.navigate(['/forbidden']); // Redirect to forbidden if the role doesn't match
+    router.navigate(['/login']); // Redirect to forbidden if the role doesn't match
     return false;
   }
 };

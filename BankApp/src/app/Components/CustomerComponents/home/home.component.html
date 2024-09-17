@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Account Information</h2>
+  
+  <!-- Display customer data -->
+  <div *ngIf="data" class="card">
+    <div class="card-header">
+      <h3>{{ data.customerFirstName }} {{ data.customerLastName }}</h3>
+    </div>
+    <div class="card-body">
+      <!-- <h5 class="card-title">Contact Information</h5>
+      <p class="card-text"><strong>Email:</strong> {{ data.emailAddress }}</p>
+      <p class="card-text"><strong>Cell Phone:</strong> {{ data.cellPhone }}</p>
+      <p class="card-text"><strong>Home Phone:</strong> {{ data.homePhone }}</p>
+      <p class="card-text"><strong>Work Phone:</strong> {{ data.workPhone }}</p>
+
+      <h5 class="card-title mt-4">Address</h5>
+      <p class="card-text"><strong>Address 1:</strong> {{ data.customerAddress1 }}</p>
+      <p class="card-text"><strong>Address 2:</strong> {{ data.customerAddress2 }}</p>
+      <p class="card-text"><strong>City:</strong> {{ data.city }}, {{ data.state }} - {{ data.zipCode }}</p>
+
+      <h5 class="card-title mt-4">Account Information</h5>
+      <p class="card-text"><strong>Status:</strong> {{ data.isActive ? 'Active' : 'Inactive' }}</p>
+      <p class="card-text"><strong>Last Login Date:</strong> {{ data.lastLoginDate | date:'medium' }}</p> -->
+
+      <div *ngIf="data.accounts.length">
+        <h5 class="card-title mt-4">Accounts</h5>
+        <ul class="list-group">
+          <li *ngFor="let account of data.accounts" class="list-group-item">
+            <strong>Account ID:</strong> {{ account.accountId }} - 
+            <strong>Balance:</strong> ${{ account.currentBalance }}
+            <p><strong>interestSavingsRateValue: </strong>
+              <strong *ngFor="let ir of account.interestSavingsRate">
+                {{ir.interestRateValue}}
+              </strong>
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="data.transactionLogs.length">
+        <h5 class="card-title mt-4">Transactions</h5>
+        <ul class="list-group">
+          <li *ngFor="let transaction of data.transactionLogs" class="list-group-item">
+            <strong>ID:</strong> {{ transaction.transactionId }} - 
+            <strong>Amount:</strong> ${{ transaction.transactionAmount }}
+            <p><strong>New Balance: </strong>{{transaction.newBalance}}</p>
+          </li>
+        </ul>
+      </div>
+
+      <button class="btn btn-primary mt-4" routerLink="profile">View Full Profile</button>
+    </div>
+  </div>
+
+  <div *ngIf="!data" class="alert alert-info mt-4" role="alert">
+    Loading customer information...
+  </div>
+</div>

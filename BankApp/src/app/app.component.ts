@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { authInterceptor } from './Services/auth.interceptor';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

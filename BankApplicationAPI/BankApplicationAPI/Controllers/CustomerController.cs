@@ -36,6 +36,7 @@ namespace BankApplicationAPI.Controllers
             }
         }
 
+        
         // GET: api/Customer/5
         [HttpGet("{id}")]
         [Authorize(Roles = "admin, support")] // Admins and support can view a specific customer
@@ -99,6 +100,29 @@ namespace BankApplicationAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating customer.");
             }
         }
+
+        [HttpGet("customer")]
+        [Authorize(Roles = "customer")] // customer data
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        {
+            var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+            if (string.IsNullOrEmpty(customerId))
+                return Unauthorized("Invalid token.");
+
+            try
+            {
+                var customers = await _customerService.GetCustomerByCustomerIdAsync(customerId);
+                if (customers == null)
+                    return NotFound("Customer not found.");
+                return Ok(customers);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving customer.");
+            }
+        }
+
 
         [HttpPut]
         [Authorize(Roles = "customer")] // Only update customer details self customer
