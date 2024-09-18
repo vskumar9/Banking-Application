@@ -112,11 +112,13 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(CellPhone))
                     query = query.Where(c => c.CellPhone == CellPhone);
 
-                return await query.Include(c => c.Accounts)
-                                  .Include(c => c.ComplaintFeedbacks)
-                                  .Include(c => c.Complaints)
-                                  .Include(c => c.LoanApplications)
-                                  .Include(c => c.TransactionLogs)
+                return await query.Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
+                                  .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
+                                  .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
+                                  .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
+                                  .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                  .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
+                                  .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
                                   .ToListAsync();
             }
             catch (Exception ex)
@@ -138,11 +140,13 @@ namespace BankApplicationAPI.Repository
 
                 return await _context.Customers
                                      .Where(c => c.CustomerId == CustomerId)
-                                     .Include(c => c.Accounts)
-                                     .Include(c => c.ComplaintFeedbacks)
-                                     .Include(c => c.Complaints)
-                                     .Include(c => c.LoanApplications)
-                                     .Include(c => c.TransactionLogs)
+                                     .Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
+                                     .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
+                                     .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
+                                     .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
+                                     .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                     .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
+                                     .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
                                      .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
@@ -158,12 +162,14 @@ namespace BankApplicationAPI.Repository
             try
             {
                 return await _context.Customers
-                                     .Include(c => c.Accounts)
-                                     .Include(c => c.ComplaintFeedbacks)
-                                     .Include(c => c.Complaints)
-                                     .Include(c => c.LoanApplications)
-                                     .Include(c => c.TransactionLogs)
-                                     .ToListAsync();
+                                      .Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
+                                      .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
+                                      .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
+                                      .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
+                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
+                                      .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
+                                      .ToListAsync();
             }
             catch (Exception ex)
             {

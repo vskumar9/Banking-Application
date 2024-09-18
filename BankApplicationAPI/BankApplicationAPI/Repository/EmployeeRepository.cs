@@ -108,12 +108,17 @@ namespace BankApplicationAPI.Repository
                 }
 
                 return await query.Include(e => e.AuditLogs)
-                                  .Include(e => e.ComplaintResolutions)
-                                  .Include(e => e.Complaints)
-                                  .Include(e => e.Configurations)
-                                  .Include(e => e.LoanApplications)
-                                  .Include(e => e.LoanRepaymentLogs)
-                                  .Include(e => e.TransactionLogs)
+                                  .Include(e => e.ComplaintResolutions!).ThenInclude(e => e.Complaint)
+                                  .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintFeedbacks)
+                                  .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintStatusHistories)
+                                  .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintType)
+                                  .Include(e => e.Configurations!).ThenInclude(e => e.UpdatedByNavigation)
+                                  .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanPaymentSchedules)
+                                  .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanType)
+                                  .Include(e => e.LoanRepaymentLogs!).ThenInclude(e => e.Loan)
+                                  .Include(e => e.TransactionLogs!).ThenInclude(e => e.TransactionType)
+                                  .Include(e=> e.UserRoles!).ThenInclude(e => e.Role)
+                                  .Include(e=> e.UserRoles!).ThenInclude(e => e.Role!.RolePermissions)
                                   .ToListAsync();
             }
             catch (Exception ex)
@@ -136,12 +141,17 @@ namespace BankApplicationAPI.Repository
                 return await _context.Employees
                                      .Where(e => e.EmployeeId == EmployeeId)
                                      .Include(e => e.AuditLogs)
-                                     .Include(e => e.ComplaintResolutions)
-                                     .Include(e => e.Complaints)
-                                     .Include(e => e.Configurations)
-                                     .Include(e => e.LoanApplications)
-                                     .Include(e => e.LoanRepaymentLogs)
-                                     .Include(e => e.TransactionLogs)
+                                      .Include(e => e.ComplaintResolutions!).ThenInclude(e => e.Complaint)
+                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintFeedbacks)
+                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintStatusHistories)
+                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintType)
+                                      .Include(e => e.Configurations!).ThenInclude(e => e.UpdatedByNavigation)
+                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanPaymentSchedules)
+                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanType)
+                                      .Include(e => e.LoanRepaymentLogs!).ThenInclude(e => e.Loan)
+                                      .Include(e => e.TransactionLogs!).ThenInclude(e => e.TransactionType)
+                                      .Include(e => e.UserRoles!).ThenInclude(e => e.Role)
+                                      .Include(e => e.UserRoles!).ThenInclude(e => e.Role!.RolePermissions)
                                      .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)
@@ -158,12 +168,17 @@ namespace BankApplicationAPI.Repository
             {
                 return await _context.Employees
                                      .Include(e => e.AuditLogs)
-                                     .Include(e => e.ComplaintResolutions)
-                                     .Include(e => e.Complaints)
-                                     .Include(e => e.Configurations)
-                                     .Include(e => e.LoanApplications)
-                                     .Include(e => e.LoanRepaymentLogs)
-                                     .Include(e => e.TransactionLogs)
+                                      .Include(e => e.ComplaintResolutions!).ThenInclude(e => e.Complaint)
+                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintFeedbacks)
+                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintStatusHistories)
+                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintType)
+                                      .Include(e => e.Configurations!).ThenInclude(e => e.UpdatedByNavigation)
+                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanPaymentSchedules)
+                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanType)
+                                      .Include(e => e.LoanRepaymentLogs!).ThenInclude(e => e.Loan)
+                                      .Include(e => e.TransactionLogs!).ThenInclude(e => e.TransactionType)
+                                      .Include(e => e.UserRoles!).ThenInclude(e => e.Role)
+                                      .Include(e => e.UserRoles!).ThenInclude(e => e.Role!.RolePermissions)
                                      .ToListAsync();
             }
             catch (Exception ex)
