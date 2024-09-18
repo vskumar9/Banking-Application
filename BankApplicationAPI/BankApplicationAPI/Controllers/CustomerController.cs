@@ -1,9 +1,11 @@
 ﻿using BankApplicationAPI.Helpers;
+using BankApplicationAPI.Exceptions;
 using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BankApplicationAPI.Interfaces;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -13,11 +15,13 @@ namespace BankApplicationAPI.Controllers
     {
         private readonly CustomerService _customerService;
         private readonly IdHelper _idHelper;
+        private readonly ApplicationUtil _applicationUtil;
 
-        public CustomerController(CustomerService customerService, IdHelper idHelper)
+        public CustomerController(CustomerService customerService, IdHelper idHelper, ApplicationUtil applicationUtil)
         {
             _customerService = customerService;
             _idHelper = idHelper;
+            _applicationUtil = applicationUtil;
         }
 
         // GET: api/Customer
@@ -66,12 +70,18 @@ namespace BankApplicationAPI.Controllers
 
             try
             {
+                _applicationUtil.ValidateEmail(customer.EmailAddress!);
+                _applicationUtil.ValidatePassword(customer.PasswordHash!);
                 customer.CustomerId = _idHelper.GenerateCustomerUniqueId();
                 var result = await _customerService.CreateCustomerAsync(customer);
                 if (result)
                     return CreatedAtAction(nameof(GetCustomer), new { id = customer.CustomerId }, customer);
 
                 return BadRequest("Failed to create customer.");
+            }
+            catch (InvalidException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch
             {
@@ -135,6 +145,8 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 var customers = await _customerService.GetCustomerByCustomerIdAsync(customerId);
+                _applicationUtil.ValidateEmail(customers.EmailAddress!);
+                _applicationUtil.ValidatePassword(customers.PasswordHash!);
                 if (customers == null)
                     return NotFound("Customer not found.");
 
@@ -143,6 +155,10 @@ namespace BankApplicationAPI.Controllers
                     return Ok(updatedCustomer);
 
                 return NotFound("Customer not found.");
+            }
+            catch (InvalidException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch
             {

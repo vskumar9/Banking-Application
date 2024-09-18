@@ -1,4 +1,6 @@
-﻿using BankApplicationAPI.Helpers;
+﻿using BankApplicationAPI.Exceptions;
+using BankApplicationAPI.Helpers;
+using BankApplicationAPI.Interfaces;
 using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +15,13 @@ namespace BankApplicationAPI.Controllers
     {
         private readonly EmployeeService _employeeService;
         private readonly IdHelper _idHelper;
+        private readonly ApplicationUtil _applicationUtil;
 
-        public EmployeeController(EmployeeService employeeService, IdHelper idHelper)
+        public EmployeeController(EmployeeService employeeService, IdHelper idHelper, ApplicationUtil applicationUtil)
         {
             _employeeService = employeeService;
             _idHelper = idHelper;
+            _applicationUtil = applicationUtil;
         }
 
         // GET: api/Employee
@@ -66,6 +70,8 @@ namespace BankApplicationAPI.Controllers
             try
             {
                 employee.EmployeeId = _idHelper.GenerateEmployeeUniqueId();
+                _applicationUtil.ValidateEmail(employee.EmailAddress!);
+                _applicationUtil.ValidatePassword(employee.PasswordHash!);
                 var result = await _employeeService.CreateEmployeeAsync(employee);
                 if (result)
                     return CreatedAtAction(nameof(GetEmployee), new { id = employee.EmployeeId }, employee);
@@ -88,6 +94,8 @@ namespace BankApplicationAPI.Controllers
 
             try
             {
+                _applicationUtil.ValidateEmail(employee.EmailAddress!);
+                _applicationUtil.ValidatePassword(employee.PasswordHash!);
                 var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employee);
                 if (updatedEmployee != null)
                     return Ok(updatedEmployee);
