@@ -1,0 +1,105 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Complaint Details</h2>
+
+  <!-- Display Complaint details if available -->
+  <div *ngIf="complaint; else noData" class="card shadow-sm p-4">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>Complaint ID:</strong>
+        <p>{{ complaint.complaintId }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong>Complaint Date:</strong>
+        <p>{{ complaint.complaintDate | date: 'long' }}</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>Customer ID:</strong>
+        <p>{{ complaint.customerId }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong>Complaint Type:</strong>
+        <p>{{ complaint.complaintType?.complaintTypeName || 'N/A' }}</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <strong>Description:</strong>
+        <p class="text-muted">{{ complaint.complaintDescription }}</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>Status:</strong>
+        <p>{{ complaint.complaintStatus }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong>Resolution Date:</strong>
+        <p>{{ complaint.resolutionDate ? (complaint.resolutionDate | date: 'mediumDate') : 'N/A' }}</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <strong>Resolution Comments:</strong>
+        <p class="text-muted">{{ complaint.resolutionComments || 'N/A' }}</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>Assigned Employee:</strong>
+        <p>{{ complaint.employee?.employeeFirstName || 'N/A' }} {{ complaint.employee?.employeeLastName || '' }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong>File:</strong>
+        <p>
+          <a *ngIf="complaint?.files" (click)="downloadFile(complaint.complaintId!)" class="btn btn-outline-primary btn-sm">
+            Download File
+          </a>
+          <span *ngIf="!complaint?.files" class="text-muted">No file attached</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Feedback and Resolution sections -->
+    <div class="row">
+      <div *ngIf="complaint.complaintFeedbacks?.length" class="col-md-6 mb-4">
+        <h5 class="text-primary">Complaint Feedbacks</h5>
+        <ul class="list-group">
+          <li *ngFor="let feedback of complaint.complaintFeedbacks" class="list-group-item">
+            <strong>{{ feedback.feedbackDate | date: 'shortDate' }}:</strong> 
+            {{ feedback.feedbackComments }}
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="complaint.complaintResolutions?.length" class="col-md-6 mb-4">
+        <h5 class="text-primary">Complaint Resolutions</h5>
+        <ul class="list-group">
+          <li *ngFor="let resolution of complaint.complaintResolutions" class="list-group-item">
+            {{ resolution.resolutionDescription }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-12 text-center">
+        <a class="btn btn-primary" routerLink="/Home/complaints">Back to Complaints</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- No data message -->
+  <ng-template #noData>
+    <div class="alert alert-warning text-center" role="alert">
+      No complaint data found.
+    </div>
+  </ng-template>
+</div>

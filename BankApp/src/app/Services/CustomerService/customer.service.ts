@@ -5,13 +5,17 @@ import { Customer } from '../../Modules/Customer';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../ApiServices/auth.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Complaint } from '../../Modules/Complaint';
+import { ComplaintType } from '../../Modules/ComplaintType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  private apiUrl = 'https://localhost:7203/api/Customer'; // Ensure this is the correct API URL
+  private mainUrl = 'https://localhost:7203/api';
+  private apiUrl = 'https://localhost:7203/api/Customer'; 
+  private complaintAPI = 'https://localhost:7203/api/Complaint';
   private tokenKey = 'jwtToken'; // Use the correct key for localStorage
   private userRoleSubject = new BehaviorSubject<string>('');
   userRole$ = this.userRoleSubject.asObservable();
@@ -37,6 +41,44 @@ export class CustomerService {
     const headers = this.getHeaders(); // Get headers with token
     return this.http.get<any>(`${this.apiUrl}/customer`, { headers }); // Pass headers in the request
   }
+
+  update(customer: Customer){
+    const headers = this.getHeaders(); // Get headers with token
+    return this.http.put(`${this.apiUrl}/customer/Update`, customer, { headers });
+  }
+
+  complaintDetails(complaintId: number): Observable<any>{
+    const headers = this.getHeaders(); // Get headers with token
+    return this.http.get<any>(`${this.complaintAPI}/${complaintId}`, { headers });
+  }
+
+  complaintType(): Observable<ComplaintType>{
+    const headers = this.getHeaders();
+    return this.http.get(`${this.mainUrl}/ComplaintType`, { headers });
+  }
+  registerComplaint(complaint: FormData){
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.mainUrl}/Complaint`, complaint, { headers });
+  }
+
+  getFileDownloadUrl(complaintId: number): Observable<Blob> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.complaintAPI}/download/${complaintId}`, { responseType: 'blob', headers });
+
+  }
+
+  getLoans(customerId:string): Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get(`${this.mainUrl}/LoanApplication/`);
+  }
+
+  getLoanById(id: number): Observable<any>{
+    const headers = this.getHeaders();
+    return  this.http.get(`${this.mainUrl}/LoanApplication/` + id, { headers });
+
+  }
+
+  
 
 
   

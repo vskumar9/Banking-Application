@@ -1,1 +1,73 @@
 <app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Customer Complaints</h2>
+
+  <!-- Button to register new complaint -->
+  <div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-success" routerLink="newComplaint">
+      Register New Complaint
+    </button>
+  </div>
+
+  <!-- Filter and Pagination Controls -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search complaints"
+        [(ngModel)]="searchTerm"
+        (input)="filterComplaints()"
+      />
+    </div>
+    <div class="col-md-6 d-flex justify-content-end">
+      <button
+        class="btn btn-primary"
+        [disabled]="currentPage === 1"
+        (click)="previousPage()"
+      >
+        Previous
+      </button>
+      <button
+        class="btn btn-primary mx-2"
+        [disabled]="currentPage === totalPages()"
+        (click)="nextPage()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- List of complaints -->
+  <div *ngIf="filteredComplaints.length; else noComplaints" class="list-group">
+    <div *ngFor="let complaint of paginatedComplaints" class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <h6 class="mb-1">Complaint ID #{{ complaint.complaintId }}</h6>
+          <p class="text-muted mb-2">Status: {{ complaint.complaintStatus }}</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <small class="text-muted">{{ complaint.complaintDate | date: 'mediumDate' }}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="mb-1">{{ complaint.complaintDescription }}</p>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button class="btn btn-primary btn-sm" (click)="viewComplaint(complaint.complaintId!)">
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Complaints Message -->
+  <ng-template #noComplaints>
+    <div class="alert alert-warning text-center" role="alert">
+      No complaints found.
+    </div>
+  </ng-template>
+</div>

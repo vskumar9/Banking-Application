@@ -9,45 +9,54 @@
       <h3>{{ data.customerFirstName }} {{ data.customerLastName }}</h3>
     </div>
     <div class="card-body">
-      <!-- <h5 class="card-title">Contact Information</h5>
-      <p class="card-text"><strong>Email:</strong> {{ data.emailAddress }}</p>
-      <p class="card-text"><strong>Cell Phone:</strong> {{ data.cellPhone }}</p>
-      <p class="card-text"><strong>Home Phone:</strong> {{ data.homePhone }}</p>
-      <p class="card-text"><strong>Work Phone:</strong> {{ data.workPhone }}</p>
 
-      <h5 class="card-title mt-4">Address</h5>
-      <p class="card-text"><strong>Address 1:</strong> {{ data.customerAddress1 }}</p>
-      <p class="card-text"><strong>Address 2:</strong> {{ data.customerAddress2 }}</p>
-      <p class="card-text"><strong>City:</strong> {{ data.city }}, {{ data.state }} - {{ data.zipCode }}</p>
-
-      <h5 class="card-title mt-4">Account Information</h5>
-      <p class="card-text"><strong>Status:</strong> {{ data.isActive ? 'Active' : 'Inactive' }}</p>
-      <p class="card-text"><strong>Last Login Date:</strong> {{ data.lastLoginDate | date:'medium' }}</p> -->
-
-      <div *ngIf="data.accounts.length">
+      <div *ngIf="data.accounts.length; else noAccounts">
         <h5 class="card-title mt-4">Accounts</h5>
         <ul class="list-group">
           <li *ngFor="let account of data.accounts" class="list-group-item">
             <strong>Account ID:</strong> {{ account.accountId }} - 
             <strong>Balance:</strong> ${{ account.currentBalance }}
-            <p><strong>interestSavingsRateValue: </strong>
-              <strong *ngFor="let ir of account.interestSavingsRate">
-                {{ir.interestRateValue}}
-              </strong>
-            </p>
+            <ng-container *ngIf="account.interestSavingsRate.length">
+              <p><strong>interestSavingsRateValue: </strong>
+                <strong *ngFor="let ir of account.interestSavingsRate">
+                  {{ir.interestRateValue}}
+                </strong>
+              </p>
+            </ng-container>
           </li>
         </ul>
       </div>
-      <div *ngIf="data.transactionLogs.length">
+
+      <ng-template #noAccounts>
+        <h5 class="card-title mt-4">You have no Accounts, please contact <strong>SUNBANK</strong>.</h5>
+      </ng-template>  
+
+      <div *ngIf="data.transactionLogs.length; else noTransactionLogs">
         <h5 class="card-title mt-4">Transactions</h5>
         <ul class="list-group">
-          <li *ngFor="let transaction of data.transactionLogs" class="list-group-item">
-            <strong>ID:</strong> {{ transaction.transactionId }} - 
+          <li *ngFor="let transaction of getPagedTransactions()" class="list-group-item">
+            <strong>Transaction Id:</strong> {{ transaction.transactionId }} - 
             <strong>Amount:</strong> ${{ transaction.transactionAmount }}
-            <p><strong>New Balance: </strong>{{transaction.newBalance}}</p>
+            <p><strong>Balance: </strong>{{ transaction.newBalance }}</p>
           </li>
         </ul>
+        
+        <!-- Pagination Controls -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="prevPage()">Previous</button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages()">
+              <button class="page-link" (click)="nextPage()">Next</button>
+            </li>
+          </ul>
+        </nav>
       </div>
+
+      <ng-template #noTransactionLogs>
+        <h5 class="card-title mt-4">No Transaction Logs found.</h5>
+      </ng-template>
 
       <button class="btn btn-primary mt-4" routerLink="profile">View Full Profile</button>
     </div>

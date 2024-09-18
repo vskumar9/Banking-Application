@@ -9,9 +9,9 @@ export interface Complaint {
     complaintId?: number | null;
     customerId?: string | null;
     complaintTypeId?: number | null;
-    complaintDate?: Date | null;
+    complaintDate: Date ;
     complaintDescription?: string | null;
-    files?: string | null;
+    files?: File | null;
     complaintStatus?: string | null;
     employeeId?: string | null;
     resolutionDate?: Date | null;

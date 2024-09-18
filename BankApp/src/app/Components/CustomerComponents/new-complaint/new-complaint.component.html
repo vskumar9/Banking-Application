@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <h2>Register a New Complaint</h2>
+  
+  <!-- Complaint Form -->
+  <form (ngSubmit)="submitComplaint()">
+    <!-- Complaint Type -->
+    <div class="mb-3">
+      <label for="complaintType" class="form-label">Complaint Type</label>
+      <select class="form-select" id="complaintType" required [(ngModel)]="complaint!.complaintTypeId" name="complaintTypeId">
+        <!-- <option value="">Select Type</option> -->
+        <option *ngFor="let type of complaintTypes" [value]="type.complaintTypeId">
+         {{type.complaintTypeId}} || {{ type.complaintTypeName }} || {{type.complaintTypeDescription}}
+        </option>
+      </select>
+    </div>
+    
+      
+
+    <!-- Complaint Date -->
+    <!-- <div class="mb-3">
+      <label for="complaintDate" class="form-label">Complaint Date</label>
+      <input type="date" class="form-control" id="complaintDate" [(ngModel)]="complaint!.complaintDate" name="complaintDate" required>
+    </div> -->
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="complaintDescription" class="form-label">Complaint Description</label>
+      <textarea class="form-control" id="complaintDescription" rows="3" [(ngModel)]="complaint!.complaintDescription" name="complaintDescription" required></textarea>
+    </div>
+
+    <!-- Attachments -->
+    <div class="mb-3">
+      <label for="complaintFiles" class="form-label">Upload Files</label>
+      <input type="file" class="form-control" id="complaintFiles" (change)="onFileSelected($event)">
+    </div>
+
+    <!-- Assigned Employee -->
+    <!-- <div class="mb-3">
+      <label for="employeeId" class="form-label">Assign Employee</label>
+      <select class="form-select" id="employeeId" [(ngModel)]="complaint!.employeeId" name="employeeId">
+        <option value="">Select Employee</option>
+        <option *ngFor="let employee of employees" [value]="employee.employeeId">
+          {{ employee.employeeFirstName }} {{ employee.employeeLastName }}
+        </option>
+      </select>
+    </div> -->
+
+    <!-- Complaint Status -->
+    <!-- <div class="mb-3">
+      <label for="complaintStatus" class="form-label">Status</label>
+      <select class="form-select" id="complaintStatus" [(ngModel)]="complaint!.complaintStatus" name="complaintStatus" required>
+        <option value="Open">Open</option>
+        <option value="Resolved">Resolved</option>
+        <option value="Pending">Pending</option>
+      </select>
+    </div> -->
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Submit Complaint</button>
+  </form>
+</div>

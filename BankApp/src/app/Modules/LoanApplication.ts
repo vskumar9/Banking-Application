@@ -10,7 +10,7 @@ export interface LoanApplication {
     loanTypeId?: number | null;
     loanAmount?: number | null;
     applicationDate?: Date | null;
-    files?: string | null;
+    files?: File | null;
     loanStatus?: string | null;
     employeeId?: string | null;
     approvalDate?: Date | null;

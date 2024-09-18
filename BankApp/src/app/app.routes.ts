@@ -9,6 +9,10 @@ import { ComplaintsComponent } from './Components/CustomerComponents/complaints/
 import { LoanComponent } from './Components/CustomerComponents/loan/loan.component';
 import { HomeComponent } from './Components/CustomerComponents/home/home.component';
 import { RegisteredComponent } from './Components/CustomerComponents/registered/registered.component';
+import { UpdateComponent } from './Components/CustomerComponents/update/update.component';
+import { ComplaintDetailsComponent } from './Components/CustomerComponents/complaint-details/complaint-details.component';
+import { NewComplaintComponent } from './Components/CustomerComponents/new-complaint/new-complaint.component';
+import { LoanDetailsComponent } from './Components/CustomerComponents/loan-details/loan-details.component';
 
 export const routes: Routes = [
   {
@@ -24,9 +28,13 @@ export const routes: Routes = [
     data: { requiredRole: 'customer' },
     children: [
       { path: 'profile', title: 'Profile', component: ProfileComponent },
+      {path:'profile/update',component:UpdateComponent},
       { path: 'transfer', title: 'Money Transfer', component: TransferComponent },
       { path: 'complaints', title: 'Customer Complaints', component: ComplaintsComponent },
-      { path: 'loan', title: 'Loan', component: LoanComponent }
+      { path: 'complaints/newComplaint', title: 'Customer Complaints', component: NewComplaintComponent },
+      { path: 'complaints/details/:id', title: 'Customer Complaints', component: ComplaintDetailsComponent },
+      { path: 'loan', title: 'Loan', component: LoanComponent },
+      { path: 'loan/loanDetails/:id', title: 'Loan Details', component: LoanDetailsComponent }
     ]
   },
   {
