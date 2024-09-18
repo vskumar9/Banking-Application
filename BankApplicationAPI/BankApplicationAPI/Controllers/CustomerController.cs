@@ -5,7 +5,6 @@ using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using BankApplicationAPI.Interfaces;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -134,9 +133,9 @@ namespace BankApplicationAPI.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("customer/Update")]
         [Authorize(Roles = "customer")] // Only update customer details self customer
-        public async Task<ActionResult> UpdateCustomerByCustomer()
+        public async Task<ActionResult> UpdateCustomerByCustomer([FromBody] Customer customer)
         {
             var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
             if (string.IsNullOrEmpty(customerId))
@@ -144,13 +143,16 @@ namespace BankApplicationAPI.Controllers
 
             try
             {
-                var customers = await _customerService.GetCustomerByCustomerIdAsync(customerId);
-                _applicationUtil.ValidateEmail(customers.EmailAddress!);
-                _applicationUtil.ValidatePassword(customers.PasswordHash!);
-                if (customers == null)
+                if(customer.CustomerId != customerId)
+                {
+                    return Unauthorized("Invalid token.");
+                }
+                _applicationUtil.ValidateEmail(customer.EmailAddress!);
+                _applicationUtil.ValidatePassword(customer.PasswordHash!);
+                if (customer == null)
                     return NotFound("Customer not found.");
 
-                var updatedCustomer = await _customerService.UpdateCustomerAsync(customers);
+                var updatedCustomer = await _customerService.UpdateCustomerAsync(customer);
                 if (updatedCustomer != null)
                     return Ok(updatedCustomer);
 

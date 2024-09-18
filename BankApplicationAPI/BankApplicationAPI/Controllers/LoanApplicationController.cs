@@ -59,8 +59,8 @@ namespace BankApplicationAPI.Controllers
             if (loanApplication == null)
                 return BadRequest("Invalid loan application data.");
 
-            try
-            {
+            try{
+
                 var result = await _loanApplicationService.CreateLoanApplicationAsync(loanApplication);
                 if (result)
                     return CreatedAtAction(nameof(GetLoanApplication), new { id = loanApplication.LoanId }, loanApplication);

@@ -1,7 +1,9 @@
-﻿using BankApplicationAPI.Models;
+﻿using BankApplicationAPI.DTO;
+using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -18,7 +20,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/Complaint
         [HttpGet]
-        [Authorize(Roles = "admin, support")] // Only admins and support can view the complaints
+        [Authorize(Roles = "admin, support")]
         public async Task<ActionResult<IEnumerable<Complaint>>> GetComplaints()
         {
             try
@@ -37,7 +39,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/Complaint/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin, support")] // Only admins and support can view a specific complaint
+        [Authorize(Roles = "admin, support, customer")]
         public async Task<ActionResult<Complaint>> GetComplaint(int id)
         {
             try
@@ -56,19 +58,48 @@ namespace BankApplicationAPI.Controllers
 
         // POST: api/Complaint
         [HttpPost]
-        [Authorize(Roles = "admin, support")] // Both admins and support can create complaints
-        public async Task<ActionResult> CreateComplaint([FromBody] Complaint complaint)
+        [Authorize(Roles = "admin, support, customer")]
+        public async Task<ActionResult> CreateComplaint([FromForm] ComplaintDTO complaintDto)
         {
-            if (complaint == null)
+            if (complaintDto == null)
                 return BadRequest("Invalid data.");
 
             try
             {
-                var created = await _complaintService.CreateComplaintAsync(complaint);
-                if (created)
-                    return CreatedAtAction(nameof(GetComplaint), new { id = complaint.ComplaintId }, complaint);
+                var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+                if (complaintDto.File == null || complaintDto.File.Length == 0)
+                    return BadRequest(new { message = "No file uploaded." });
 
-                return BadRequest("Failed to create complaint.");
+                // Create upload directory if it doesn't exist
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                if (!Directory.Exists(uploadPath))
+                    Directory.CreateDirectory(uploadPath);
+
+                // Save file
+                var fileName = Path.GetFileName(complaintDto.File.FileName);
+                var filePath = Path.Combine(uploadPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await complaintDto.File.CopyToAsync(stream);
+                }
+
+                var complaint = new Complaint
+                {
+                    ComplaintTypeId = complaintDto.ComplaintTypeId,
+                    ComplaintDate = complaintDto.ComplaintDate,
+                    ComplaintDescription = complaintDto.ComplaintDescription,
+                    ComplaintStatus = complaintDto.ComplaintStatus,
+                    EmployeeId = complaintDto.EmployeeId,
+                    Files = $"/uploads/{fileName}" // Store relative path for easier access
+                };
+
+                if (User.IsInRole("customer"))
+                    complaint.CustomerId = customerId;
+                else if (User.IsInRole("admin, support"))
+                    complaint.EmployeeId = customerId;
+
+                var created = await _complaintService.CreateComplaintAsync(complaint);
+                return CreatedAtAction(nameof(GetComplaint), new { id = complaint.ComplaintId }, complaint);
             }
             catch
             {
@@ -78,7 +109,7 @@ namespace BankApplicationAPI.Controllers
 
         // PUT: api/Complaint/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin, support")] // Both admins and support can update complaints
+        [Authorize(Roles = "admin, support")]
         public async Task<ActionResult> UpdateComplaint(int id, [FromBody] Complaint complaint)
         {
             if (complaint == null || complaint.ComplaintId != id)
@@ -100,7 +131,7 @@ namespace BankApplicationAPI.Controllers
 
         // DELETE: api/Complaint/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")] // Only admins can delete complaints
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteComplaint(int id)
         {
             try
@@ -119,6 +150,53 @@ namespace BankApplicationAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data.");
             }
+        }
+
+        // GET: api/Complaint/download/5
+        [HttpGet("download/{id}")]
+        [Authorize]
+        public async Task<IActionResult> DownloadFile(int id)
+        {
+            var complaint = await _complaintService.GetComplaintsByComplaintIdAsync(id);
+            if (complaint == null || string.IsNullOrEmpty(complaint.Files))
+                return NotFound("File not found.");
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", complaint.Files.TrimStart('/'));
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("File not found.");
+
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            //var mimeType = "application/octet-stream"; // Default MIME type, change according to file type if needed
+            return new FileStreamResult(fileStream, GetContentType(filePath))
+            {
+                FileDownloadName = Path.GetFileName(filePath)
+            };
+        }
+
+        private string GetContentType(string filePath)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(filePath).ToLowerInvariant();
+            return types.ContainsKey(ext) ? types[ext] : "application/octet-stream";
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
         }
     }
 }

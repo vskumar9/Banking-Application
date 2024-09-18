@@ -18,7 +18,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/ComplaintType
         [HttpGet]
-        [Authorize(Roles = "admin, support")] // Admins and support can view complaint types
+        [Authorize(Roles = "admin, support, customer")] // Admins and support can view complaint types
         public async Task<ActionResult<IEnumerable<ComplaintType>>> GetComplaintTypes()
         {
             try

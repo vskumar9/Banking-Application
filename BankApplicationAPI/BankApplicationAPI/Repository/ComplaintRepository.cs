@@ -89,8 +89,11 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(ResolutionComments))
                     query = query.Where(c => c.ResolutionComments!.Contains(ResolutionComments));
 
-                return await query.Include(c => c.Customer).Include(c => c.ComplaintType)
-                                  .Include(c => c.Employee).ToListAsync();
+                return await query.Include(c => c.Customer).ThenInclude(c => c.ComplaintFeedbacks)
+                                     .Include(c => c.ComplaintType)
+                                     .Include(c => c.Employee)
+                                     .Include(c => c.ComplaintResolutions)
+                                     .Include(c => c.ComplaintStatusHistories).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -105,9 +108,11 @@ namespace BankApplicationAPI.Repository
             try
             {
                 return await _context.Complaints
-                                     .Include(c => c.Customer)
+                                     .Include(c => c.Customer).ThenInclude(c => c.ComplaintFeedbacks)
                                      .Include(c => c.ComplaintType)
                                      .Include(c => c.Employee)
+                                     .Include(c => c.ComplaintResolutions)
+                                     .Include(c => c.ComplaintStatusHistories)
                                      .ToListAsync();
             }
             catch (Exception ex)
@@ -124,9 +129,11 @@ namespace BankApplicationAPI.Repository
             {
                 return await _context.Complaints
                                      .Where(c => c.ComplaintId == ComplaintId)
-                                     .Include(c => c.Customer)
+                                     .Include(c => c.Customer).ThenInclude(c => c.ComplaintFeedbacks)
                                      .Include(c => c.ComplaintType)
                                      .Include(c => c.Employee)
+                                     .Include(c => c.ComplaintResolutions)
+                                     .Include(c => c.ComplaintStatusHistories)
                                      .FirstOrDefaultAsync() ?? throw new NullReferenceException();
             }
             catch (Exception ex)

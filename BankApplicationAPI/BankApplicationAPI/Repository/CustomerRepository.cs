@@ -188,17 +188,40 @@ namespace BankApplicationAPI.Repository
                     throw new ArgumentNullException(nameof(customer), "Customer cannot be null");
                 }
 
-                var existingCustomer = await _context.Customers.FindAsync(customer.CustomerId);
+                var existingCustomer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == customer.CustomerId);
                 if (existingCustomer == null)
                 {
                     throw new KeyNotFoundException("Customer not found");
                 }
-                if (!string.IsNullOrEmpty(customer.PasswordHash) && !BCrypt.Net.BCrypt.Verify(customer.PasswordHash, existingCustomer.PasswordHash))
+
+                // If the customer is attempting to update the password
+                if (!string.IsNullOrEmpty(customer.PasswordHash))
                 {
-                    customer.PasswordHash = BCrypt.Net.BCrypt.HashPassword(customer.PasswordHash);
+                    // Check if the provided password matches the existing password hash
+                    if (!BCrypt.Net.BCrypt.Verify(customer.PasswordHash, existingCustomer.PasswordHash))
+                    {
+                        existingCustomer.PasswordHash = BCrypt.Net.BCrypt.HashPassword(customer.PasswordHash);
+                    }
+                }
+                else
+                {
+                    // If password is null or empty, keep the existing password hash
+                    existingCustomer.PasswordHash = existingCustomer.PasswordHash;
                 }
 
-                _context.Entry(existingCustomer).CurrentValues.SetValues(customer);
+                // Update other customer fields
+                existingCustomer.CustomerFirstName = customer.CustomerFirstName;
+                existingCustomer.CustomerLastName = customer.CustomerLastName;
+                existingCustomer.CustomerAddress1 = customer.CustomerAddress1;
+                existingCustomer.CustomerAddress2 = customer.CustomerAddress2;
+                existingCustomer.CellPhone = customer.CellPhone;
+                existingCustomer.WorkPhone = customer.WorkPhone;
+                existingCustomer.City = customer.City;
+                existingCustomer.EmailAddress = customer.EmailAddress;
+                existingCustomer.State = customer.State;
+                existingCustomer.ZipCode = customer.ZipCode;
+                existingCustomer.HomePhone = customer.HomePhone;
+
                 await _context.SaveChangesAsync();
                 return existingCustomer;
             }
@@ -213,5 +236,6 @@ namespace BankApplicationAPI.Repository
                 throw new Exception("An unexpected error occurred.", ex);
             }
         }
+
     }
 }
