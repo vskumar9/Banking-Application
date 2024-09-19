@@ -24,7 +24,7 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.Account", b =>
                 {
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int")
                         .HasColumnName("AccountID");
 
@@ -98,7 +98,7 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.AccountStatusType", b =>
                 {
-                    b.Property<byte>("AccountStatusTypeId")
+                    b.Property<byte?>("AccountStatusTypeId")
                         .HasColumnType("tinyint")
                         .HasColumnName("AccountStatusTypeID");
 
@@ -141,18 +141,17 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.AuditLog", b =>
                 {
-                    b.Property<int>("AuditLogId")
+                    b.Property<int?>("AuditLogId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuditLogId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("AuditLogId"));
 
                     b.Property<string>("Action")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("ActionDate")
+                    b.Property<DateTime?>("ActionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
@@ -162,7 +161,6 @@ namespace BankApplicationAPI.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("EmployeeId")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)")
@@ -183,7 +181,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 1,
                             Action = "User Login",
-                            ActionDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7454),
+                            ActionDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9313),
                             Details = "User logged in successfully",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.1"
@@ -192,7 +190,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 2,
                             Action = "Password Reset",
-                            ActionDate = new DateTime(2024, 9, 14, 16, 35, 6, 735, DateTimeKind.Local).AddTicks(7460),
+                            ActionDate = new DateTime(2024, 9, 19, 14, 3, 41, 808, DateTimeKind.Local).AddTicks(9318),
                             Details = "Password reset for user John",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.2"
@@ -201,7 +199,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 3,
                             Action = "Created New User",
-                            ActionDate = new DateTime(2024, 9, 14, 15, 45, 6, 735, DateTimeKind.Local).AddTicks(7465),
+                            ActionDate = new DateTime(2024, 9, 19, 13, 13, 41, 808, DateTimeKind.Local).AddTicks(9323),
                             Details = "Admin created a new user",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.3"
@@ -210,7 +208,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 4,
                             Action = "Failed Login Attempt",
-                            ActionDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7469),
+                            ActionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9328),
                             Details = "User failed login attempt",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.4"
@@ -219,7 +217,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 5,
                             Action = "Deleted Account",
-                            ActionDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7473),
+                            ActionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9332),
                             Details = "Admin deleted user account",
                             EmployeeId = "E111112",
                             IpAddress = "192.168.1.5"
@@ -228,12 +226,12 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.Complaint", b =>
                 {
-                    b.Property<int>("ComplaintId")
+                    b.Property<int?>("ComplaintId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ComplaintID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComplaintId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ComplaintId"));
 
                     b.Property<DateTime?>("ComplaintDate")
                         .HasColumnType("datetime");
@@ -286,7 +284,7 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             ComplaintId = 1,
-                            ComplaintDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(4998),
+                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7283),
                             ComplaintDescription = "Issue with transaction",
                             ComplaintStatus = "Open",
                             ComplaintTypeId = 1,
@@ -297,19 +295,19 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             ComplaintId = 2,
-                            ComplaintDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5030),
+                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7312),
                             ComplaintDescription = "Incorrect charge",
                             ComplaintStatus = "Resolved",
                             ComplaintTypeId = 2,
                             CustomerId = "C111112",
                             EmployeeId = "E111112",
                             ResolutionComments = "Refunded",
-                            ResolutionDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5034)
+                            ResolutionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7316)
                         },
                         new
                         {
                             ComplaintId = 3,
-                            ComplaintDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5048),
+                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7330),
                             ComplaintDescription = "Account hacked",
                             ComplaintStatus = "In Progress",
                             ComplaintTypeId = 3,
@@ -320,19 +318,19 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             ComplaintId = 4,
-                            ComplaintDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5054),
+                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7337),
                             ComplaintDescription = "Card not working",
                             ComplaintStatus = "Resolved",
                             ComplaintTypeId = 1,
                             CustomerId = "C111114",
                             EmployeeId = "E111114",
                             ResolutionComments = "Card replaced",
-                            ResolutionDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5058)
+                            ResolutionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7341)
                         },
                         new
                         {
                             ComplaintId = 5,
-                            ComplaintDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5062),
+                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7346),
                             ComplaintDescription = "Unauthorized transaction",
                             ComplaintStatus = "Open",
                             ComplaintTypeId = 2,
@@ -344,12 +342,12 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.ComplaintFeedback", b =>
                 {
-                    b.Property<int>("FeedbackId")
+                    b.Property<int?>("FeedbackId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("FeedbackID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("FeedbackId"));
 
                     b.Property<int?>("ComplaintId")
                         .HasColumnType("int")
@@ -385,7 +383,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 1,
                             CustomerId = "C111111",
                             FeedbackComments = "Waiting for response",
-                            FeedbackDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5126)
+                            FeedbackDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7619)
                         },
                         new
                         {
@@ -393,7 +391,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 2,
                             CustomerId = "C111112",
                             FeedbackComments = "Good service",
-                            FeedbackDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5132)
+                            FeedbackDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7624)
                         },
                         new
                         {
@@ -401,7 +399,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 3,
                             CustomerId = "C111113",
                             FeedbackComments = "Please expedite",
-                            FeedbackDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5136)
+                            FeedbackDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7630)
                         },
                         new
                         {
@@ -409,7 +407,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 4,
                             CustomerId = "C111114",
                             FeedbackComments = "Resolved quickly",
-                            FeedbackDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5140)
+                            FeedbackDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7633)
                         },
                         new
                         {
@@ -417,18 +415,18 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 5,
                             CustomerId = "C111115",
                             FeedbackComments = "Still no response",
-                            FeedbackDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5144)
+                            FeedbackDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7639)
                         });
                 });
 
             modelBuilder.Entity("BankApplicationAPI.Models.ComplaintResolution", b =>
                 {
-                    b.Property<int>("ResolutionId")
+                    b.Property<int?>("ResolutionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ResolutionID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResolutionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ResolutionId"));
 
                     b.Property<int?>("ComplaintId")
                         .HasColumnType("int")
@@ -465,7 +463,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 1,
                             ComplaintId = 1,
                             EmployeeId = "E111111",
-                            ResolutionDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5198),
+                            ResolutionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7705),
                             ResolutionDescription = "Investigated",
                             ResolutionMethod = "Manual"
                         },
@@ -474,7 +472,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 2,
                             ComplaintId = 2,
                             EmployeeId = "E111112",
-                            ResolutionDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5205),
+                            ResolutionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7712),
                             ResolutionDescription = "Refund processed",
                             ResolutionMethod = "Automatic"
                         },
@@ -483,7 +481,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 3,
                             ComplaintId = 3,
                             EmployeeId = "E111113",
-                            ResolutionDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5210),
+                            ResolutionDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7717),
                             ResolutionDescription = "Ongoing investigation",
                             ResolutionMethod = "Manual"
                         },
@@ -492,7 +490,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 4,
                             ComplaintId = 4,
                             EmployeeId = "E111114",
-                            ResolutionDate = new DateTime(2024, 9, 9, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5214),
+                            ResolutionDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7720),
                             ResolutionDescription = "Card replaced",
                             ResolutionMethod = "Automatic"
                         },
@@ -501,7 +499,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 5,
                             ComplaintId = 5,
                             EmployeeId = "E111111",
-                            ResolutionDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5218),
+                            ResolutionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7724),
                             ResolutionDescription = "Waiting for confirmation",
                             ResolutionMethod = "Manual"
                         });
@@ -509,12 +507,12 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.ComplaintStatusHistory", b =>
                 {
-                    b.Property<int>("StatusHistoryId")
+                    b.Property<int?>("StatusHistoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("StatusHistoryID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusHistoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("StatusHistoryId"));
 
                     b.Property<int?>("ComplaintId")
                         .HasColumnType("int")
@@ -546,7 +544,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 1,
                             ComplaintStatus = "Open",
                             StatusComments = "Under review",
-                            StatusDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5274)
+                            StatusDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7779)
                         },
                         new
                         {
@@ -554,7 +552,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 2,
                             ComplaintStatus = "Resolved",
                             StatusComments = "Refunded",
-                            StatusDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5279)
+                            StatusDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7786)
                         },
                         new
                         {
@@ -562,7 +560,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 3,
                             ComplaintStatus = "In Progress",
                             StatusComments = "Investigation ongoing",
-                            StatusDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5284)
+                            StatusDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7790)
                         },
                         new
                         {
@@ -570,7 +568,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 4,
                             ComplaintStatus = "Resolved",
                             StatusComments = "Card replaced",
-                            StatusDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5288)
+                            StatusDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7793)
                         },
                         new
                         {
@@ -578,18 +576,18 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 5,
                             ComplaintStatus = "Open",
                             StatusComments = "Pending",
-                            StatusDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5291)
+                            StatusDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7797)
                         });
                 });
 
             modelBuilder.Entity("BankApplicationAPI.Models.ComplaintType", b =>
                 {
-                    b.Property<int>("ComplaintTypeId")
+                    b.Property<int?>("ComplaintTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ComplaintTypeID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComplaintTypeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ComplaintTypeId"));
 
                     b.Property<string>("ComplaintTypeDescription")
                         .HasMaxLength(100)
@@ -640,19 +638,17 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.Configuration", b =>
                 {
-                    b.Property<int>("ConfigurationId")
+                    b.Property<int?>("ConfigurationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConfigurationId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ConfigurationId"));
 
                     b.Property<string>("ConfigKey")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ConfigValue")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -660,13 +656,12 @@ namespace BankApplicationAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("LastUpdated")
+                    b.Property<DateTime?>("LastUpdated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
@@ -684,7 +679,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "MaxLoginAttempts",
                             ConfigValue = "5",
                             Description = "Maximum number of login attempts before account lockout",
-                            LastUpdated = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7526),
+                            LastUpdated = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9376),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -693,7 +688,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "SessionTimeout",
                             ConfigValue = "30",
                             Description = "Session timeout duration in minutes",
-                            LastUpdated = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7532),
+                            LastUpdated = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9380),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -702,7 +697,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "PasswordExpirationDays",
                             ConfigValue = "90",
                             Description = "Number of days before a password expires",
-                            LastUpdated = new DateTime(2024, 9, 7, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7536),
+                            LastUpdated = new DateTime(2024, 9, 12, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9384),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -711,7 +706,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "MinPasswordLength",
                             ConfigValue = "8",
                             Description = "Minimum password length for user accounts",
-                            LastUpdated = new DateTime(2024, 9, 14, 13, 45, 6, 735, DateTimeKind.Local).AddTicks(7540),
+                            LastUpdated = new DateTime(2024, 9, 19, 11, 13, 41, 808, DateTimeKind.Local).AddTicks(9388),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -720,7 +715,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "EnableTwoFactorAuth",
                             ConfigValue = "true",
                             Description = "Enables or disables two-factor authentication",
-                            LastUpdated = new DateTime(2024, 8, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7544),
+                            LastUpdated = new DateTime(2024, 8, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9392),
                             UpdatedBy = "E111111"
                         });
                 });
@@ -814,7 +809,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "kumar",
                             EmailAddress = "sanjeev@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$VmjWKqiXTJDOLG6XbgmIeOISm4XrIFexPBZg7caauDr2O8PAFPI4O",
+                            PasswordHash = "$2a$11$OHkL1HRy3y36NyBBYYBvfO0pAe/cXcyHjaNQGVRzwY5oF7WJ0gmfW",
                             State = "Maharashtra",
                             ZipCode = "10001"
                         },
@@ -827,7 +822,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "ray",
                             EmailAddress = "sanjay@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$BF7SaXSsi8v0eYBX7bAkmuaVg.V2YQP5rr9xbaez2BdIeqfWnJAia",
+                            PasswordHash = "$2a$11$AikCDWu/6ZLMmeW32R9vweqROZs5mU8XYOKJ40WhcKzpS5LycjVzi",
                             State = "west bengal",
                             ZipCode = "90001"
                         },
@@ -840,7 +835,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "reddy",
                             EmailAddress = "kumar@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$p6eGgOvi3OIBjSLjqsOEgeLtNHL4spLHP9iM7dXYGPjYoX0g9A9ui",
+                            PasswordHash = "$2a$11$RPwqs6slsG2EEyxb.uCxROwrL3FNPKfES94crINYIKaXHVbI2M7dK",
                             State = "Tamilnadu",
                             ZipCode = "60601"
                         },
@@ -853,7 +848,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "kumar",
                             EmailAddress = "jay@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$B7a0pDGlZ21prRznMwjwPONhMxJzLamz0sGwTXjUsc5jPftnW9Ipy",
+                            PasswordHash = "$2a$11$hfVvtXmMjDkBC02029/BQ.WDWAQmnDydl/30y.6AFh7DVrNrrbKzq",
                             State = "Andhra pradesh",
                             ZipCode = "77001"
                         },
@@ -866,7 +861,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "kumar",
                             EmailAddress = "pavan@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$o14FJOv8ypGvvhEkXXobAeMn812JeWGD0842J0hUk9EXOd3A3yEdS",
+                            PasswordHash = "$2a$11$Z061t4gU066QPwobzrRoCuP/vaEKBlz1DVcbApBLO9./3JmtEMZWe",
                             State = "Andhra pradesh",
                             ZipCode = "85001"
                         });
@@ -879,7 +874,7 @@ namespace BankApplicationAPI.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
@@ -914,53 +909,49 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             EmployeeId = "E111111",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "Amit@example.com",
                             EmployeeFirstName = "Amit",
                             EmployeeLastName = "Sharma",
                             IsActive = false,
-                            PasswordHash = "$2a$11$vS9qVDq5JQhlRFMX0VyAaOFIMlp/OBFc/R0VreR1Dhmlrk2U4YLPG"
+                            PasswordHash = "$2a$11$MLTeKde/36HgFm8QhFj8jOM3KJs2FcxQgEKIerCEJBfIpMtYIkrdq"
                         },
                         new
                         {
                             EmployeeId = "E111112",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "Neha@example.com",
                             EmployeeFirstName = "Neha",
                             EmployeeLastName = "Patel",
                             IsActive = false,
-                            PasswordHash = "$2a$11$E52hro/2nV2m//2ouUt4HuHykGWwCVaCQJv3A2HNVxfOU.5BSJsiO"
+                            PasswordHash = "$2a$11$PqxiUPTmvh2CrI.OQMiMH.CiKQL/SXsTSCwwjrpIN7M.zoblI49SW"
                         },
                         new
                         {
                             EmployeeId = "E111113",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "Raj@example.com",
                             EmployeeFirstName = "Raj",
                             EmployeeLastName = "Kumar",
                             IsActive = false,
-                            PasswordHash = "$2a$11$eFQ2lIMVfCVaOx9HMobQSOna8n2nvSXkuYp0ZGYanu9Sof42Ll57C"
+                            PasswordHash = "$2a$11$w2QLDBCF4PmljK5IPIOUYu6PDIUa62bldhFSzZPSPqacJsVy4CRem"
                         },
                         new
                         {
                             EmployeeId = "E111114",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "Priya@example.com",
                             EmployeeFirstName = "Priya",
                             EmployeeLastName = "Desai",
                             IsActive = false,
-                            PasswordHash = "$2a$11$yKFaYtRcsVRFP/bQ/4Ss2uotcBhOvAN7HRiESNhbhUQuXmK5OnKRS"
+                            PasswordHash = "$2a$11$AmlH3HjGfiHAvjJ00cxJgOmyMU2QCM6vA2sgepqi1Nip.9rM3ggmi"
                         });
                 });
 
             modelBuilder.Entity("BankApplicationAPI.Models.LoanApplication", b =>
                 {
-                    b.Property<int>("LoanId")
+                    b.Property<int?>("LoanId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("LoanID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("LoanId"));
 
                     b.Property<DateTime?>("ApplicationDate")
                         .HasColumnType("datetime");
@@ -1011,8 +1002,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 1,
-                            ApplicationDate = new DateTime(2024, 9, 4, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5538),
-                            ApprovalDate = new DateTime(2024, 9, 9, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5543),
+                            ApplicationDate = new DateTime(2024, 9, 9, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8037),
+                            ApprovalDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8041),
                             Comments = "Approved for personal loan",
                             CustomerId = "C111111",
                             EmployeeId = "E111111",
@@ -1023,8 +1014,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 2,
-                            ApplicationDate = new DateTime(2024, 9, 6, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5556),
-                            ApprovalDate = new DateTime(2024, 9, 10, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5558),
+                            ApplicationDate = new DateTime(2024, 9, 11, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8054),
+                            ApprovalDate = new DateTime(2024, 9, 15, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8056),
                             Comments = "Approved for home loan",
                             CustomerId = "C111112",
                             EmployeeId = "E111112",
@@ -1035,8 +1026,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 3,
-                            ApplicationDate = new DateTime(2024, 9, 8, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5565),
-                            ApprovalDate = new DateTime(2024, 9, 11, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5568),
+                            ApplicationDate = new DateTime(2024, 9, 13, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8071),
+                            ApprovalDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8074),
                             Comments = "Rejected due to insufficient credit score",
                             CustomerId = "C111113",
                             EmployeeId = "E111113",
@@ -1047,8 +1038,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 4,
-                            ApplicationDate = new DateTime(2024, 9, 10, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5573),
-                            ApprovalDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5592),
+                            ApplicationDate = new DateTime(2024, 9, 15, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8080),
+                            ApprovalDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8092),
                             Comments = "Approved for car loan",
                             CustomerId = "C111114",
                             EmployeeId = "E111113",
@@ -1059,8 +1050,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 5,
-                            ApplicationDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5616),
-                            ApprovalDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5619),
+                            ApplicationDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8121),
+                            ApprovalDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8123),
                             Comments = "Pending approval",
                             CustomerId = "C111115",
                             EmployeeId = "E111111",
@@ -1072,12 +1063,12 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.LoanPaymentSchedule", b =>
                 {
-                    b.Property<int>("PaymentId")
+                    b.Property<int?>("PaymentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("PaymentID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("PaymentId"));
 
                     b.Property<decimal?>("BalanceAfterPayment")
                         .HasColumnType("money");
@@ -1110,7 +1101,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 9000m,
                             LoanId = 1,
                             PaymentAmount = 1000m,
-                            PaymentDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5781),
+                            PaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8182),
                             PaymentStatus = "Completed"
                         },
                         new
@@ -1119,7 +1110,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 240000m,
                             LoanId = 2,
                             PaymentAmount = 10000m,
-                            PaymentDate = new DateTime(2024, 9, 9, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5789),
+                            PaymentDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8189),
                             PaymentStatus = "Completed"
                         },
                         new
@@ -1128,7 +1119,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 4000m,
                             LoanId = 4,
                             PaymentAmount = 1000m,
-                            PaymentDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5795),
+                            PaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8194),
                             PaymentStatus = "Completed"
                         },
                         new
@@ -1137,7 +1128,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 15000m,
                             LoanId = 5,
                             PaymentAmount = 5000m,
-                            PaymentDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5801),
+                            PaymentDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8199),
                             PaymentStatus = "Pending"
                         },
                         new
@@ -1146,19 +1137,19 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 2000m,
                             LoanId = 3,
                             PaymentAmount = 3000m,
-                            PaymentDate = new DateTime(2024, 9, 11, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5806),
+                            PaymentDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8203),
                             PaymentStatus = "Completed"
                         });
                 });
 
             modelBuilder.Entity("BankApplicationAPI.Models.LoanRepaymentLog", b =>
                 {
-                    b.Property<int>("RepaymentId")
+                    b.Property<int?>("RepaymentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("RepaymentID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RepaymentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("RepaymentId"));
 
                     b.Property<string>("EmployeeId")
                         .HasColumnType("varchar(255)")
@@ -1194,7 +1185,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             LoanId = 1,
                             RepaymentAmount = 1000m,
-                            RepaymentDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5875),
+                            RepaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8267),
                             RepaymentMethod = "Bank Transfer"
                         },
                         new
@@ -1203,7 +1194,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111112",
                             LoanId = 2,
                             RepaymentAmount = 10000m,
-                            RepaymentDate = new DateTime(2024, 9, 9, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5882),
+                            RepaymentDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8273),
                             RepaymentMethod = "Cheque"
                         },
                         new
@@ -1212,7 +1203,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111113",
                             LoanId = 4,
                             RepaymentAmount = 1000m,
-                            RepaymentDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5887),
+                            RepaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8278),
                             RepaymentMethod = "Direct Debit"
                         },
                         new
@@ -1221,7 +1212,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111114",
                             LoanId = 5,
                             RepaymentAmount = 5000m,
-                            RepaymentDate = new DateTime(2024, 9, 14, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5892),
+                            RepaymentDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8282),
                             RepaymentMethod = "Bank Transfer"
                         },
                         new
@@ -1230,19 +1221,19 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             LoanId = 3,
                             RepaymentAmount = 3000m,
-                            RepaymentDate = new DateTime(2024, 9, 11, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(5897),
+                            RepaymentDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8286),
                             RepaymentMethod = "Cheque"
                         });
                 });
 
             modelBuilder.Entity("BankApplicationAPI.Models.LoanType", b =>
                 {
-                    b.Property<int>("LoanTypeId")
+                    b.Property<int?>("LoanTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("LoanTypeID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoanTypeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("LoanTypeId"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(100)
@@ -1301,18 +1292,17 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.Permission", b =>
                 {
-                    b.Property<int>("PermissionId")
+                    b.Property<int?>("PermissionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PermissionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("PermissionId"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PermissionName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -1349,18 +1339,17 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.Role", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("RoleId"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("RoleName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -1397,16 +1386,16 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.RolePermission", b =>
                 {
-                    b.Property<int>("RolePermissionId")
+                    b.Property<int?>("RolePermissionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolePermissionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("RolePermissionId"));
 
-                    b.Property<int>("PermissionId")
+                    b.Property<int?>("PermissionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("RolePermissionId");
@@ -1482,7 +1471,7 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.SavingsInterestRate", b =>
                 {
-                    b.Property<byte>("InterestSavingsRateId")
+                    b.Property<byte?>("InterestSavingsRateId")
                         .HasColumnType("tinyint")
                         .HasColumnName("InterestSavingsRateID");
 
@@ -1533,9 +1522,12 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.TransactionLog", b =>
                 {
-                    b.Property<int>("TransactionId")
+                    b.Property<int?>("TransactionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TransactionID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TransactionId"));
 
                     b.Property<int?>("AccountId")
                         .HasColumnType("int")
@@ -1583,7 +1575,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             NewBalance = 6000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 13, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7258),
+                            TransactionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8735),
                             TransactionTypeId = (byte)1
                         },
                         new
@@ -1594,7 +1586,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111112",
                             NewBalance = 14000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 12, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7278),
+                            TransactionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8743),
                             TransactionTypeId = (byte)2
                         },
                         new
@@ -1605,7 +1597,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111113",
                             NewBalance = 24000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 11, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7301),
+                            TransactionDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9011),
                             TransactionTypeId = (byte)3
                         },
                         new
@@ -1616,7 +1608,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111114",
                             NewBalance = 34000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 10, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7308),
+                            TransactionDate = new DateTime(2024, 9, 15, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9021),
                             TransactionTypeId = (byte)4
                         },
                         new
@@ -1627,14 +1619,14 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             NewBalance = 45000m,
                             TransactionAmount = 5000m,
-                            TransactionDate = new DateTime(2024, 9, 9, 16, 45, 6, 735, DateTimeKind.Local).AddTicks(7321),
+                            TransactionDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9032),
                             TransactionTypeId = (byte)5
                         });
                 });
 
             modelBuilder.Entity("BankApplicationAPI.Models.TransactionType", b =>
                 {
-                    b.Property<byte>("TransactionTypeId")
+                    b.Property<byte?>("TransactionTypeId")
                         .HasColumnType("tinyint")
                         .HasColumnName("TransactionTypeID");
 
@@ -1696,20 +1688,19 @@ namespace BankApplicationAPI.Migrations
 
             modelBuilder.Entity("BankApplicationAPI.Models.UserRole", b =>
                 {
-                    b.Property<int>("UserRoleId")
+                    b.Property<int?>("UserRoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserRoleId"));
 
                     b.Property<string>("EmployeeId")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("EmployeeID");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("UserRoleId");
@@ -1776,7 +1767,6 @@ namespace BankApplicationAPI.Migrations
                     b.HasOne("BankApplicationAPI.Models.Employee", "Employee")
                         .WithMany("AuditLogs")
                         .HasForeignKey("EmployeeId")
-                        .IsRequired()
                         .HasConstraintName("FK__AuditLogs__Emplo__6D0D32F4");
 
                     b.Navigation("Employee");
@@ -1855,7 +1845,6 @@ namespace BankApplicationAPI.Migrations
                     b.HasOne("BankApplicationAPI.Models.Employee", "UpdatedByNavigation")
                         .WithMany("Configurations")
                         .HasForeignKey("UpdatedBy")
-                        .IsRequired()
                         .HasConstraintName("FK__Configura__Updat__70DDC3D8");
 
                     b.Navigation("UpdatedByNavigation");
@@ -1917,13 +1906,11 @@ namespace BankApplicationAPI.Migrations
                     b.HasOne("BankApplicationAPI.Models.Permission", "Permission")
                         .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId")
-                        .IsRequired()
                         .HasConstraintName("FK__RolePermi__Permi__693CA210");
 
                     b.HasOne("BankApplicationAPI.Models.Role", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
-                        .IsRequired()
                         .HasConstraintName("FK__RolePermi__RoleI__68487DD7");
 
                     b.Navigation("Permission");
@@ -1967,13 +1954,11 @@ namespace BankApplicationAPI.Migrations
                     b.HasOne("BankApplicationAPI.Models.Employee", "Employee")
                         .WithMany("UserRoles")
                         .HasForeignKey("EmployeeId")
-                        .IsRequired()
                         .HasConstraintName("FK__UserRoles__Emplo__628FA481");
 
                     b.HasOne("BankApplicationAPI.Models.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
-                        .IsRequired()
                         .HasConstraintName("FK__UserRoles__RoleI__6383C8BA");
 
                     b.Navigation("Employee");

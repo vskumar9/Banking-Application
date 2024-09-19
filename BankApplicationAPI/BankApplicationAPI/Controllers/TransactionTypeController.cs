@@ -18,7 +18,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/TransactionType
         [HttpGet]
-        [Authorize(Roles = "admin, support, cashier")] // Admins, support, and cashiers can view all transaction types
+        [Authorize(Roles = "admin, support, cashier, customer")] // Admins, support, and cashiers can view all transaction types
         public async Task<ActionResult<IEnumerable<TransactionType>>> GetTransactionTypes()
         {
             try

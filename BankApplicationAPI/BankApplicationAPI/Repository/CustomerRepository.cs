@@ -145,6 +145,7 @@ namespace BankApplicationAPI.Repository
                                      .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
                                      .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                     .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanType)
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
                                      .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
                                      .FirstOrDefaultAsync() ?? throw new NullReferenceException();

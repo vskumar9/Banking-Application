@@ -375,7 +375,6 @@ public partial class SunBankContext : DbContext
             entity.ToTable("TransactionLog");
 
             entity.Property(e => e.TransactionId)
-                .ValueGeneratedNever()
                 .HasColumnName("TransactionID");
             entity.Property(e => e.AccountId).HasColumnName("AccountID");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");

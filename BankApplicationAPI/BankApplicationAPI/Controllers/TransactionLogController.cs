@@ -3,6 +3,7 @@ using BankApplicationAPI.Repository;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -126,30 +127,40 @@ namespace BankApplicationAPI.Controllers
         public async Task<ActionResult> TransferFunds(byte TransactionTypeId, [FromBody] TransferRequest request)
         {
             if (request == null || request.Amount <= 0 || request.FromAccountId <= 0 || request.ToAccountId <= 0)
-                return BadRequest("Invalid transfer request.");
+                return BadRequest(new { message = "Invalid transfer request." });
 
             try
             {
-                var employeeId = User.FindFirst("EmployeeId")?.Value;
-                var customerId = User.FindFirst("CustomerId")?.Value;
+                //var employeeId = User.FindFirstValue(ClaimTypes.PrimarySid);
+                var customer = User.FindFirstValue(ClaimTypes.PrimarySid);
+                string? employeeId = null;
+                string? customerId = null;
+                if (User.IsInRole("admin") || User.IsInRole("staff") || User.IsInRole("cashier"))
+                {
+                    employeeId = customer;
+                }
+                if(User.IsInRole("customer"))
+                {
+                    customerId = customer;
+                }
 
-                if (string.IsNullOrEmpty(employeeId) || string.IsNullOrEmpty(customerId))
-                    return Unauthorized("Invalid user credentials.");
 
-                var result = await _transactionLogService.TransferFundsAsync(request.FromAccountId, request.ToAccountId, request.Amount, employeeId, customerId, TransactionTypeId);
+
+                if (!string.IsNullOrEmpty(employeeId) && !string.IsNullOrEmpty(customerId))
+                    return Unauthorized(new { message = "Invalid user credentials." });
+
+                var result = await _transactionLogService.TransferFundsAsync(request.FromAccountId, request.ToAccountId, request.Amount, employeeId!, customerId!, TransactionTypeId);
 
                 if (result)
-                    return Ok("Transfer successful.");
+                    return Ok(new { message = "Transfer successful." });
 
-                return BadRequest("Failed to complete the transfer. Check account details and balance.");
+                return BadRequest(new { message = "Failed to complete the transfer. Check account details and balance." });
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error processing the transfer: {ex.Message}", ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error processing the transfer.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error processing the transfer." });
             }
         }
-
-
     }
 }

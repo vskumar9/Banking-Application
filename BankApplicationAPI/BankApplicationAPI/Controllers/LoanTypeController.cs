@@ -18,7 +18,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/LoanType
         [HttpGet]
-        [Authorize(Roles = "admin, support, staff")] // Admins, support, and staff can view all loan types
+        [Authorize(Roles = "admin, support, staff, customer")] // Admins, support, and staff can view all loan types
         public async Task<ActionResult<IEnumerable<LoanType>>> GetLoanTypes()
         {
             try
@@ -34,7 +34,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/LoanType/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin, support, staff")] // Admins, support, and staff can view a specific loan type
+        [Authorize(Roles = "admin, support, staff, customer")] // Admins, support, and staff can view a specific loan type
         public async Task<ActionResult<LoanType>> GetLoanType(int id)
         {
             try

@@ -110,6 +110,8 @@ namespace BankApplicationAPI.Services
                 CustomerId = customerId
             };
 
+            var toCustomerId = await _account.GetAccountsByAccountIdAsync(toAccountId);
+
             // Create transaction log for 'toAccount' (Deposit)
             var transactionLogTo = new TransactionLog
             {
@@ -119,7 +121,7 @@ namespace BankApplicationAPI.Services
                 NewBalance = toAccount.CurrentBalance + amount,
                 AccountId = toAccountId,
                 EmployeeId = employeeId,
-                CustomerId = customerId
+                CustomerId = toCustomerId.CustomerId
             };
 
             // Update balances

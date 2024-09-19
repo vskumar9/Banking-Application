@@ -1,7 +1,9 @@
-﻿using BankApplicationAPI.Models;
+﻿using BankApplicationAPI.DTO;
+using BankApplicationAPI.Models;
 using BankApplicationAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BankApplicationAPI.Controllers
 {
@@ -54,16 +56,43 @@ namespace BankApplicationAPI.Controllers
         // POST: api/LoanApplication
         [HttpPost]
         [Authorize(Roles = "customer")] // Only customers can create loan applications
-        public async Task<ActionResult> CreateLoanApplication([FromBody] LoanApplication loanApplication)
+        public async Task<ActionResult> CreateLoanApplication([FromForm] LoanDTO loanApplication)
         {
             if (loanApplication == null)
                 return BadRequest("Invalid loan application data.");
 
             try{
+                var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
 
-                var result = await _loanApplicationService.CreateLoanApplicationAsync(loanApplication);
+                if (loanApplication.File! == null || loanApplication.File.Length == 0)
+                    return BadRequest(new { message = "No file uploaded." });
+
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                if (!Directory.Exists(uploadPath))
+                    Directory.CreateDirectory(uploadPath);
+
+                // Save file
+                var fileName = Path.GetFileName(loanApplication.File.FileName);
+                var filePath = Path.Combine(uploadPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await loanApplication.File.CopyToAsync(stream);
+                }
+
+                var Loan = new LoanApplication
+                {
+                    CustomerId = customerId,
+                    LoanTypeId = loanApplication.LoanTypeId,
+                    LoanAmount = loanApplication.LoanAmount,
+                    ApplicationDate = loanApplication.ApplicationDate,
+                    Comments = loanApplication.Comments,
+                    EmployeeId = loanApplication.EmployeeId,
+                    Files = $"/uploads/{fileName}" // Store relative path for easier access
+                };
+
+                var result = await _loanApplicationService.CreateLoanApplicationAsync(Loan);
                 if (result)
-                    return CreatedAtAction(nameof(GetLoanApplication), new { id = loanApplication.LoanId }, loanApplication);
+                    return CreatedAtAction(nameof(GetLoanApplication), new { id = Loan.LoanId }, Loan);
 
                 return BadRequest("Failed to create loan application.");
             }
@@ -116,6 +145,53 @@ namespace BankApplicationAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting loan application.");
             }
+        }
+
+        // GET: api/Complaint/download/5
+        [HttpGet("download/{id}")]
+        [Authorize]
+        public async Task<IActionResult> DownloadFile(int id)
+        {
+            var complaint = await _loanApplicationService.GetLoanApplicationByLoanApplicationIdAsync(id);
+            if (complaint == null || string.IsNullOrEmpty(complaint.Files))
+                return NotFound("File not found.");
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", complaint.Files.TrimStart('/'));
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("File not found.");
+
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            //var mimeType = "application/octet-stream"; // Default MIME type, change according to file type if needed
+            return new FileStreamResult(fileStream, GetContentType(filePath))
+            {
+                FileDownloadName = Path.GetFileName(filePath)
+            };
+        }
+
+        private string GetContentType(string filePath)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(filePath).ToLowerInvariant();
+            return types.ContainsKey(ext) ? types[ext] : "application/octet-stream";
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
         }
     }
 }
