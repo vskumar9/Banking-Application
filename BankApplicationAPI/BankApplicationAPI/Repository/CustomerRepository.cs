@@ -129,17 +129,17 @@ namespace BankApplicationAPI.Repository
         }
 
         // Get Customer by CustomerId
-        public async Task<Customer> GetCustomerByCustomerIdAsync(string CustomerId)
+        public async Task<Customer> GetCustomerByCustomerIdAsync(string customerId)
         {
             try
             {
-                if (string.IsNullOrEmpty(CustomerId))
+                if (string.IsNullOrEmpty(customerId))
                 {
-                    throw new ArgumentException("CustomerId cannot be null or empty", nameof(CustomerId));
+                    throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
                 }
 
                 return await _context.Customers
-                                     .Where(c => c.CustomerId == CustomerId)
+                                     .Where(c => c.CustomerId == customerId)
                                      .Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
                                      .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
                                      .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
@@ -148,7 +148,7 @@ namespace BankApplicationAPI.Repository
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanType)
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
                                      .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
-                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException("id is null");
             }
             catch (Exception ex)
             {

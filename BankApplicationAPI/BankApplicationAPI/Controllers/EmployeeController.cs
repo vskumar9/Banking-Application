@@ -40,6 +40,25 @@ namespace BankApplicationAPI.Controllers
             }
         }
 
+        [HttpGet("employee")]
+        [Authorize(Roles = "admin, support, cashier, staff")] // Only admins can view all employees
+        public async Task<ActionResult<Employee>> GetEmployeeByEmployee()
+        {
+            try
+            {
+                var employeeId = User.FindFirstValue(ClaimTypes.PrimarySid);
+                if (string.IsNullOrEmpty(employeeId))
+                    return Unauthorized("Invalid token.");
+
+                var employee = await _employeeService.GetEmployeeByEmployeeIdAsync(employeeId);
+                return Ok(employee);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving employees.");
+            }
+        }
+
         // GET: api/Employee/5
         [HttpGet("{id}")]
         [Authorize(Roles = "admin, support")] // Admins and support can view a specific employee

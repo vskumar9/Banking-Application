@@ -109,7 +109,7 @@ namespace BankApplicationAPI.Controllers
 
         // PUT: api/Complaint/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin, support")]
+        [Authorize(Roles = "admin, support, staff")]
         public async Task<ActionResult> UpdateComplaint(int id, [FromBody] Complaint complaint)
         {
             if (complaint == null || complaint.ComplaintId != id)
