@@ -18,7 +18,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/AccountStatusType
         [HttpGet]
-        [Authorize(Roles = "admin, support")] // Only admins and support can view the list
+        //[Authorize(Roles = "admin, support")] // Only admins and support can view the list
         public async Task<ActionResult<IEnumerable<AccountStatusType>>> GetAccountStatusTypes()
         {
             try

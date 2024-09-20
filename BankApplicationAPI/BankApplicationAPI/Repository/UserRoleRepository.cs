@@ -104,7 +104,7 @@ namespace BankApplicationAPI.Repository
             {
                 return await _context.UserRoles
                     .Include(ur => ur.Employee)
-                    .Include(ur => ur.Role)
+                    .Include(ur => ur.Role).ThenInclude(r => r!.RolePermissions)
                     .ToListAsync();
             }
             catch (Exception ex)

@@ -89,7 +89,7 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(ResolutionComments))
                     query = query.Where(c => c.ResolutionComments!.Contains(ResolutionComments));
 
-                return await query.Include(c => c.Customer).ThenInclude(c => c.ComplaintFeedbacks)
+                return await query.Include(c => c.Customer).ThenInclude(c => c!.ComplaintFeedbacks)
                                      .Include(c => c.ComplaintType)
                                      .Include(c => c.Employee)
                                      .Include(c => c.ComplaintResolutions)
@@ -108,7 +108,7 @@ namespace BankApplicationAPI.Repository
             try
             {
                 return await _context.Complaints
-                                     .Include(c => c.Customer).ThenInclude(c => c.ComplaintFeedbacks)
+                                     .Include(c => c.Customer).ThenInclude(c => c!.ComplaintFeedbacks)
                                      .Include(c => c.ComplaintType)
                                      .Include(c => c.Employee)
                                      .Include(c => c.ComplaintResolutions)
@@ -129,7 +129,7 @@ namespace BankApplicationAPI.Repository
             {
                 return await _context.Complaints
                                      .Where(c => c.ComplaintId == ComplaintId)
-                                     .Include(c => c.Customer).ThenInclude(c => c.ComplaintFeedbacks)
+                                     .Include(c => c.Customer).ThenInclude(c => c!.ComplaintFeedbacks)
                                      .Include(c => c.ComplaintType)
                                      .Include(c => c.Employee)
                                      .Include(c => c.ComplaintResolutions)

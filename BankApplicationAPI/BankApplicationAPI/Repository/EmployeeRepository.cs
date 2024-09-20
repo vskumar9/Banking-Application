@@ -138,21 +138,29 @@ namespace BankApplicationAPI.Repository
                     throw new ArgumentException("EmployeeId cannot be null or empty", nameof(EmployeeId));
                 }
 
-                return await _context.Employees
-                                     .Where(e => e.EmployeeId == EmployeeId)
-                                     .Include(e => e.AuditLogs)
-                                      .Include(e => e.ComplaintResolutions!).ThenInclude(e => e.Complaint)
-                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintFeedbacks)
-                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintStatusHistories)
-                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintType)
-                                      .Include(e => e.Configurations!).ThenInclude(e => e.UpdatedByNavigation)
-                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanPaymentSchedules)
-                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanType)
-                                      .Include(e => e.LoanRepaymentLogs!).ThenInclude(e => e.Loan)
-                                      .Include(e => e.TransactionLogs!).ThenInclude(e => e.TransactionType)
-                                      .Include(e => e.UserRoles!).ThenInclude(e => e.Role)
-                                      .Include(e => e.UserRoles!).ThenInclude(e => e.Role!.RolePermissions)
-                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException();
+                // Query the employee by ID and include the relevant navigation properties
+                var employee = await _context.Employees
+                    //// Exact match on EmployeeId
+                    .Include(e => e.AuditLogs)
+                   .Include(e => e.ComplaintResolutions)!.ThenInclude(cr => cr!.Complaint)
+                    //.Include(e => e.Complaints)!.ThenInclude(c => c!.ComplaintFeedbacks)
+                    //.Include(e => e.Complaints)!.ThenInclude(c => c!.ComplaintStatusHistories)
+                    //.Include(e => e.Complaints)!.ThenInclude(c => c!.ComplaintType)
+                    //.Include(e => e.Configurations)!.ThenInclude(c => c!.UpdatedByNavigation)
+                    .Include(e => e.LoanApplications)!.ThenInclude(la => la!.LoanPaymentSchedules)
+                    //.Include(e => e.LoanApplications)!.ThenInclude(la => la!.LoanType)
+                    //.Include(e => e.LoanRepaymentLogs)!.ThenInclude(lr => lr!.Loan)
+                    //.Include(e => e.TransactionLogs)!.ThenInclude(tl => tl!.TransactionType)
+                    .Include(e => e.UserRoles)!.ThenInclude(ur => ur!.Role)
+                    .Include(e => e.UserRoles)!.ThenInclude(ur => ur!.Role!.RolePermissions)
+                    .FirstOrDefaultAsync(e=>e.EmployeeId==EmployeeId);
+
+                if (employee == null)
+                {
+                    throw new NullReferenceException("Employee not found.");
+                }
+
+                return employee;
             }
             catch (Exception ex)
             {
@@ -167,16 +175,16 @@ namespace BankApplicationAPI.Repository
             try
             {
                 return await _context.Employees
-                                     .Include(e => e.AuditLogs)
-                                      .Include(e => e.ComplaintResolutions!).ThenInclude(e => e.Complaint)
-                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintFeedbacks)
-                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintStatusHistories)
-                                      .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintType)
-                                      .Include(e => e.Configurations!).ThenInclude(e => e.UpdatedByNavigation)
-                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanPaymentSchedules)
-                                      .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanType)
-                                      .Include(e => e.LoanRepaymentLogs!).ThenInclude(e => e.Loan)
-                                      .Include(e => e.TransactionLogs!).ThenInclude(e => e.TransactionType)
+                                     //.Include(e => e.AuditLogs)
+                                     // .Include(e => e.ComplaintResolutions!).ThenInclude(e => e.Complaint)
+                                     // .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintFeedbacks)
+                                     // .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintStatusHistories)
+                                     // .Include(e => e.Complaints!).ThenInclude(e => e.ComplaintType)
+                                     // .Include(e => e.Configurations!).ThenInclude(e => e.UpdatedByNavigation)
+                                     // .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanPaymentSchedules)
+                                     // .Include(e => e.LoanApplications!).ThenInclude(e => e.LoanType)
+                                     // .Include(e => e.LoanRepaymentLogs!).ThenInclude(e => e.Loan)
+                                     // .Include(e => e.TransactionLogs!).ThenInclude(e => e.TransactionType)
                                       .Include(e => e.UserRoles!).ThenInclude(e => e.Role)
                                       .Include(e => e.UserRoles!).ThenInclude(e => e.Role!.RolePermissions)
                                      .ToListAsync();

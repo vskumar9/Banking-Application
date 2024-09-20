@@ -46,16 +46,27 @@ namespace BankApplicationAPI.Controllers
         {
             try
             {
-                var employeeId = User.FindFirstValue(ClaimTypes.PrimarySid);
-                if (string.IsNullOrEmpty(employeeId))
+               var EmployeeId = User.FindFirstValue(ClaimTypes.PrimarySid);
+                if (string.IsNullOrEmpty(EmployeeId))
+                {
                     return Unauthorized("Invalid token.");
+                }
 
-                var employee = await _employeeService.GetEmployeeByEmployeeIdAsync(employeeId);
+                // Log the employee ID from the token for debugging
+                Console.WriteLine($"Employee ID from token: {EmployeeId}");
+
+                var employee = await _employeeService.GetEmployeeByEmployeeIdAsync(EmployeeId);
+                if (employee == null)
+                {
+                    return NotFound("Employee not found.");
+                }
+
                 return Ok(employee);
             }
-            catch
+            catch (Exception ex)  // Catch all exceptions and log them
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving employees.");
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving employee.");
             }
         }
 

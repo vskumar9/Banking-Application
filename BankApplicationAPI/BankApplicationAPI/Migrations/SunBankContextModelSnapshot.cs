@@ -181,7 +181,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 1,
                             Action = "User Login",
-                            ActionDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9313),
+                            ActionDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5839),
                             Details = "User logged in successfully",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.1"
@@ -190,7 +190,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 2,
                             Action = "Password Reset",
-                            ActionDate = new DateTime(2024, 9, 19, 14, 3, 41, 808, DateTimeKind.Local).AddTicks(9318),
+                            ActionDate = new DateTime(2024, 9, 20, 19, 46, 31, 353, DateTimeKind.Local).AddTicks(5845),
                             Details = "Password reset for user John",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.2"
@@ -199,7 +199,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 3,
                             Action = "Created New User",
-                            ActionDate = new DateTime(2024, 9, 19, 13, 13, 41, 808, DateTimeKind.Local).AddTicks(9323),
+                            ActionDate = new DateTime(2024, 9, 20, 18, 56, 31, 353, DateTimeKind.Local).AddTicks(5851),
                             Details = "Admin created a new user",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.3"
@@ -208,7 +208,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 4,
                             Action = "Failed Login Attempt",
-                            ActionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9328),
+                            ActionDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5856),
                             Details = "User failed login attempt",
                             EmployeeId = "E111111",
                             IpAddress = "192.168.1.4"
@@ -217,7 +217,7 @@ namespace BankApplicationAPI.Migrations
                         {
                             AuditLogId = 5,
                             Action = "Deleted Account",
-                            ActionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9332),
+                            ActionDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5861),
                             Details = "Admin deleted user account",
                             EmployeeId = "E111112",
                             IpAddress = "192.168.1.5"
@@ -284,7 +284,7 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             ComplaintId = 1,
-                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7283),
+                            ComplaintDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4408),
                             ComplaintDescription = "Issue with transaction",
                             ComplaintStatus = "Open",
                             ComplaintTypeId = 1,
@@ -295,19 +295,19 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             ComplaintId = 2,
-                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7312),
+                            ComplaintDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4440),
                             ComplaintDescription = "Incorrect charge",
                             ComplaintStatus = "Resolved",
                             ComplaintTypeId = 2,
                             CustomerId = "C111112",
                             EmployeeId = "E111112",
                             ResolutionComments = "Refunded",
-                            ResolutionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7316)
+                            ResolutionDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4444)
                         },
                         new
                         {
                             ComplaintId = 3,
-                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7330),
+                            ComplaintDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4453),
                             ComplaintDescription = "Account hacked",
                             ComplaintStatus = "In Progress",
                             ComplaintTypeId = 3,
@@ -318,19 +318,19 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             ComplaintId = 4,
-                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7337),
+                            ComplaintDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4457),
                             ComplaintDescription = "Card not working",
                             ComplaintStatus = "Resolved",
                             ComplaintTypeId = 1,
                             CustomerId = "C111114",
                             EmployeeId = "E111114",
                             ResolutionComments = "Card replaced",
-                            ResolutionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7341)
+                            ResolutionDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4460)
                         },
                         new
                         {
                             ComplaintId = 5,
-                            ComplaintDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7346),
+                            ComplaintDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4463),
                             ComplaintDescription = "Unauthorized transaction",
                             ComplaintStatus = "Open",
                             ComplaintTypeId = 2,
@@ -383,7 +383,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 1,
                             CustomerId = "C111111",
                             FeedbackComments = "Waiting for response",
-                            FeedbackDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7619)
+                            FeedbackDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4507)
                         },
                         new
                         {
@@ -391,7 +391,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 2,
                             CustomerId = "C111112",
                             FeedbackComments = "Good service",
-                            FeedbackDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7624)
+                            FeedbackDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4514)
                         },
                         new
                         {
@@ -399,7 +399,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 3,
                             CustomerId = "C111113",
                             FeedbackComments = "Please expedite",
-                            FeedbackDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7630)
+                            FeedbackDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4517)
                         },
                         new
                         {
@@ -407,7 +407,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 4,
                             CustomerId = "C111114",
                             FeedbackComments = "Resolved quickly",
-                            FeedbackDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7633)
+                            FeedbackDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4520)
                         },
                         new
                         {
@@ -415,7 +415,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 5,
                             CustomerId = "C111115",
                             FeedbackComments = "Still no response",
-                            FeedbackDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7639)
+                            FeedbackDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4523)
                         });
                 });
 
@@ -463,7 +463,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 1,
                             ComplaintId = 1,
                             EmployeeId = "E111111",
-                            ResolutionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7705),
+                            ResolutionDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4574),
                             ResolutionDescription = "Investigated",
                             ResolutionMethod = "Manual"
                         },
@@ -472,7 +472,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 2,
                             ComplaintId = 2,
                             EmployeeId = "E111112",
-                            ResolutionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7712),
+                            ResolutionDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4578),
                             ResolutionDescription = "Refund processed",
                             ResolutionMethod = "Automatic"
                         },
@@ -481,7 +481,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 3,
                             ComplaintId = 3,
                             EmployeeId = "E111113",
-                            ResolutionDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7717),
+                            ResolutionDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4582),
                             ResolutionDescription = "Ongoing investigation",
                             ResolutionMethod = "Manual"
                         },
@@ -490,7 +490,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 4,
                             ComplaintId = 4,
                             EmployeeId = "E111114",
-                            ResolutionDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7720),
+                            ResolutionDate = new DateTime(2024, 9, 15, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4585),
                             ResolutionDescription = "Card replaced",
                             ResolutionMethod = "Automatic"
                         },
@@ -499,7 +499,7 @@ namespace BankApplicationAPI.Migrations
                             ResolutionId = 5,
                             ComplaintId = 5,
                             EmployeeId = "E111111",
-                            ResolutionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7724),
+                            ResolutionDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4588),
                             ResolutionDescription = "Waiting for confirmation",
                             ResolutionMethod = "Manual"
                         });
@@ -544,7 +544,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 1,
                             ComplaintStatus = "Open",
                             StatusComments = "Under review",
-                            StatusDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7779)
+                            StatusDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4630)
                         },
                         new
                         {
@@ -552,7 +552,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 2,
                             ComplaintStatus = "Resolved",
                             StatusComments = "Refunded",
-                            StatusDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7786)
+                            StatusDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4633)
                         },
                         new
                         {
@@ -560,7 +560,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 3,
                             ComplaintStatus = "In Progress",
                             StatusComments = "Investigation ongoing",
-                            StatusDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7790)
+                            StatusDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4636)
                         },
                         new
                         {
@@ -568,7 +568,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 4,
                             ComplaintStatus = "Resolved",
                             StatusComments = "Card replaced",
-                            StatusDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7793)
+                            StatusDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4640)
                         },
                         new
                         {
@@ -576,7 +576,7 @@ namespace BankApplicationAPI.Migrations
                             ComplaintId = 5,
                             ComplaintStatus = "Open",
                             StatusComments = "Pending",
-                            StatusDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(7797)
+                            StatusDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(4643)
                         });
                 });
 
@@ -679,7 +679,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "MaxLoginAttempts",
                             ConfigValue = "5",
                             Description = "Maximum number of login attempts before account lockout",
-                            LastUpdated = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9376),
+                            LastUpdated = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5916),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -688,7 +688,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "SessionTimeout",
                             ConfigValue = "30",
                             Description = "Session timeout duration in minutes",
-                            LastUpdated = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9380),
+                            LastUpdated = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5922),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -697,7 +697,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "PasswordExpirationDays",
                             ConfigValue = "90",
                             Description = "Number of days before a password expires",
-                            LastUpdated = new DateTime(2024, 9, 12, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9384),
+                            LastUpdated = new DateTime(2024, 9, 13, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5927),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -706,7 +706,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "MinPasswordLength",
                             ConfigValue = "8",
                             Description = "Minimum password length for user accounts",
-                            LastUpdated = new DateTime(2024, 9, 19, 11, 13, 41, 808, DateTimeKind.Local).AddTicks(9388),
+                            LastUpdated = new DateTime(2024, 9, 20, 16, 56, 31, 353, DateTimeKind.Local).AddTicks(5931),
                             UpdatedBy = "E111111"
                         },
                         new
@@ -715,7 +715,7 @@ namespace BankApplicationAPI.Migrations
                             ConfigKey = "EnableTwoFactorAuth",
                             ConfigValue = "true",
                             Description = "Enables or disables two-factor authentication",
-                            LastUpdated = new DateTime(2024, 8, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9392),
+                            LastUpdated = new DateTime(2024, 8, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5935),
                             UpdatedBy = "E111111"
                         });
                 });
@@ -809,7 +809,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "kumar",
                             EmailAddress = "sanjeev@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$OHkL1HRy3y36NyBBYYBvfO0pAe/cXcyHjaNQGVRzwY5oF7WJ0gmfW",
+                            PasswordHash = "$2a$11$vlUAbd34pLEk79dBUH.Cz.3GwbjPEgCecw9fvXkQ1Me04KJes99R6",
                             State = "Maharashtra",
                             ZipCode = "10001"
                         },
@@ -822,7 +822,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "ray",
                             EmailAddress = "sanjay@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$AikCDWu/6ZLMmeW32R9vweqROZs5mU8XYOKJ40WhcKzpS5LycjVzi",
+                            PasswordHash = "$2a$11$1fb162AGQbZaJMPolr/Fz.jUY9yZdHn3RsV7SdC62yzh8ba76okma",
                             State = "west bengal",
                             ZipCode = "90001"
                         },
@@ -835,7 +835,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "reddy",
                             EmailAddress = "kumar@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$RPwqs6slsG2EEyxb.uCxROwrL3FNPKfES94crINYIKaXHVbI2M7dK",
+                            PasswordHash = "$2a$11$/4xNHXyjRW/zvE4YLKA8cupoYuNs.6gRdk1Qn2wlgL1gH71tcb3ii",
                             State = "Tamilnadu",
                             ZipCode = "60601"
                         },
@@ -848,7 +848,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "kumar",
                             EmailAddress = "jay@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$hfVvtXmMjDkBC02029/BQ.WDWAQmnDydl/30y.6AFh7DVrNrrbKzq",
+                            PasswordHash = "$2a$11$jr8D7Gz7n/VSDmHwrx7lPOEidb3nTz4MXBaLOOcoSGr3CZ87Feqaq",
                             State = "Andhra pradesh",
                             ZipCode = "77001"
                         },
@@ -861,7 +861,7 @@ namespace BankApplicationAPI.Migrations
                             CustomerLastName = "kumar",
                             EmailAddress = "pavan@example.com",
                             IsActive = false,
-                            PasswordHash = "$2a$11$Z061t4gU066QPwobzrRoCuP/vaEKBlz1DVcbApBLO9./3JmtEMZWe",
+                            PasswordHash = "$2a$11$I9Mar507Q5NADdz72uapnuvufc8MRCwXR3lWUIy9jDVc61lKUcIFG",
                             State = "Andhra pradesh",
                             ZipCode = "85001"
                         });
@@ -913,7 +913,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeFirstName = "Amit",
                             EmployeeLastName = "Sharma",
                             IsActive = false,
-                            PasswordHash = "$2a$11$MLTeKde/36HgFm8QhFj8jOM3KJs2FcxQgEKIerCEJBfIpMtYIkrdq"
+                            PasswordHash = "$2a$11$SubYO3/iRUCHZTzxCPG.N.Z0SfwRWq/dpdP1cHs8Wo7TQKdAmVMZW"
                         },
                         new
                         {
@@ -922,7 +922,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeFirstName = "Neha",
                             EmployeeLastName = "Patel",
                             IsActive = false,
-                            PasswordHash = "$2a$11$PqxiUPTmvh2CrI.OQMiMH.CiKQL/SXsTSCwwjrpIN7M.zoblI49SW"
+                            PasswordHash = "$2a$11$8l7RvAGNe1Zrp6ymfsTFXOEQiyFd4.f1r9mjURfBYUNY71pbtvtQy"
                         },
                         new
                         {
@@ -931,7 +931,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeFirstName = "Raj",
                             EmployeeLastName = "Kumar",
                             IsActive = false,
-                            PasswordHash = "$2a$11$w2QLDBCF4PmljK5IPIOUYu6PDIUa62bldhFSzZPSPqacJsVy4CRem"
+                            PasswordHash = "$2a$11$.HWdvdB41VsMNoXXkqmuy.awMCF4gkAchUBf0ApiROWsDlQrqQChu"
                         },
                         new
                         {
@@ -940,7 +940,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeFirstName = "Priya",
                             EmployeeLastName = "Desai",
                             IsActive = false,
-                            PasswordHash = "$2a$11$AmlH3HjGfiHAvjJ00cxJgOmyMU2QCM6vA2sgepqi1Nip.9rM3ggmi"
+                            PasswordHash = "$2a$11$MB9roPHtXMkyBXizOqQWdeFLtvqoWm2m/.U2n44BC3yHBF4jVIvyu"
                         });
                 });
 
@@ -1002,8 +1002,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 1,
-                            ApplicationDate = new DateTime(2024, 9, 9, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8037),
-                            ApprovalDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8041),
+                            ApplicationDate = new DateTime(2024, 9, 10, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5003),
+                            ApprovalDate = new DateTime(2024, 9, 15, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5011),
                             Comments = "Approved for personal loan",
                             CustomerId = "C111111",
                             EmployeeId = "E111111",
@@ -1014,8 +1014,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 2,
-                            ApplicationDate = new DateTime(2024, 9, 11, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8054),
-                            ApprovalDate = new DateTime(2024, 9, 15, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8056),
+                            ApplicationDate = new DateTime(2024, 9, 12, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5025),
+                            ApprovalDate = new DateTime(2024, 9, 16, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5027),
                             Comments = "Approved for home loan",
                             CustomerId = "C111112",
                             EmployeeId = "E111112",
@@ -1026,8 +1026,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 3,
-                            ApplicationDate = new DateTime(2024, 9, 13, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8071),
-                            ApprovalDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8074),
+                            ApplicationDate = new DateTime(2024, 9, 14, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5034),
+                            ApprovalDate = new DateTime(2024, 9, 17, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5036),
                             Comments = "Rejected due to insufficient credit score",
                             CustomerId = "C111113",
                             EmployeeId = "E111113",
@@ -1038,8 +1038,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 4,
-                            ApplicationDate = new DateTime(2024, 9, 15, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8080),
-                            ApprovalDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8092),
+                            ApplicationDate = new DateTime(2024, 9, 16, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5042),
+                            ApprovalDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5174),
                             Comments = "Approved for car loan",
                             CustomerId = "C111114",
                             EmployeeId = "E111113",
@@ -1050,8 +1050,8 @@ namespace BankApplicationAPI.Migrations
                         new
                         {
                             LoanId = 5,
-                            ApplicationDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8121),
-                            ApprovalDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8123),
+                            ApplicationDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5204),
+                            ApprovalDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5206),
                             Comments = "Pending approval",
                             CustomerId = "C111115",
                             EmployeeId = "E111111",
@@ -1101,7 +1101,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 9000m,
                             LoanId = 1,
                             PaymentAmount = 1000m,
-                            PaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8182),
+                            PaymentDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5291),
                             PaymentStatus = "Completed"
                         },
                         new
@@ -1110,7 +1110,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 240000m,
                             LoanId = 2,
                             PaymentAmount = 10000m,
-                            PaymentDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8189),
+                            PaymentDate = new DateTime(2024, 9, 15, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5297),
                             PaymentStatus = "Completed"
                         },
                         new
@@ -1119,7 +1119,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 4000m,
                             LoanId = 4,
                             PaymentAmount = 1000m,
-                            PaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8194),
+                            PaymentDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5305),
                             PaymentStatus = "Completed"
                         },
                         new
@@ -1128,7 +1128,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 15000m,
                             LoanId = 5,
                             PaymentAmount = 5000m,
-                            PaymentDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8199),
+                            PaymentDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5311),
                             PaymentStatus = "Pending"
                         },
                         new
@@ -1137,7 +1137,7 @@ namespace BankApplicationAPI.Migrations
                             BalanceAfterPayment = 2000m,
                             LoanId = 3,
                             PaymentAmount = 3000m,
-                            PaymentDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8203),
+                            PaymentDate = new DateTime(2024, 9, 17, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5317),
                             PaymentStatus = "Completed"
                         });
                 });
@@ -1185,7 +1185,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             LoanId = 1,
                             RepaymentAmount = 1000m,
-                            RepaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8267),
+                            RepaymentDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5385),
                             RepaymentMethod = "Bank Transfer"
                         },
                         new
@@ -1194,7 +1194,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111112",
                             LoanId = 2,
                             RepaymentAmount = 10000m,
-                            RepaymentDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8273),
+                            RepaymentDate = new DateTime(2024, 9, 15, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5392),
                             RepaymentMethod = "Cheque"
                         },
                         new
@@ -1203,7 +1203,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111113",
                             LoanId = 4,
                             RepaymentAmount = 1000m,
-                            RepaymentDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8278),
+                            RepaymentDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5397),
                             RepaymentMethod = "Direct Debit"
                         },
                         new
@@ -1212,7 +1212,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111114",
                             LoanId = 5,
                             RepaymentAmount = 5000m,
-                            RepaymentDate = new DateTime(2024, 9, 19, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8282),
+                            RepaymentDate = new DateTime(2024, 9, 20, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5401),
                             RepaymentMethod = "Bank Transfer"
                         },
                         new
@@ -1221,7 +1221,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             LoanId = 3,
                             RepaymentAmount = 3000m,
-                            RepaymentDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8286),
+                            RepaymentDate = new DateTime(2024, 9, 17, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5405),
                             RepaymentMethod = "Cheque"
                         });
                 });
@@ -1575,7 +1575,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             NewBalance = 6000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 18, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8735),
+                            TransactionDate = new DateTime(2024, 9, 19, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5623),
                             TransactionTypeId = (byte)1
                         },
                         new
@@ -1586,7 +1586,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111112",
                             NewBalance = 14000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 17, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(8743),
+                            TransactionDate = new DateTime(2024, 9, 18, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5632),
                             TransactionTypeId = (byte)2
                         },
                         new
@@ -1597,7 +1597,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111113",
                             NewBalance = 24000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 16, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9011),
+                            TransactionDate = new DateTime(2024, 9, 17, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5650),
                             TransactionTypeId = (byte)3
                         },
                         new
@@ -1608,7 +1608,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111114",
                             NewBalance = 34000m,
                             TransactionAmount = 1000m,
-                            TransactionDate = new DateTime(2024, 9, 15, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9021),
+                            TransactionDate = new DateTime(2024, 9, 16, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5656),
                             TransactionTypeId = (byte)4
                         },
                         new
@@ -1619,7 +1619,7 @@ namespace BankApplicationAPI.Migrations
                             EmployeeId = "E111111",
                             NewBalance = 45000m,
                             TransactionAmount = 5000m,
-                            TransactionDate = new DateTime(2024, 9, 14, 14, 13, 41, 808, DateTimeKind.Local).AddTicks(9032),
+                            TransactionDate = new DateTime(2024, 9, 15, 19, 56, 31, 353, DateTimeKind.Local).AddTicks(5669),
                             TransactionTypeId = (byte)5
                         });
                 });

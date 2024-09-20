@@ -138,17 +138,16 @@ namespace BankApplicationAPI.Repository
                     throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
                 }
 
-                return await _context.Customers
-                                     .Where(c => c.CustomerId == customerId)
+                return await _context.Customers                                     
                                      .Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
                                      .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
-                                     .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
+                                     .Include(c => c.ComplaintFeedbacks!)
                                      .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanType)
                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
                                      .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
-                                     .FirstOrDefaultAsync() ?? throw new NullReferenceException("id is null");
+                                     .FirstOrDefaultAsync(c=>c.CustomerId!.Equals(customerId)) ?? throw new NullReferenceException("id is null");
             }
             catch (Exception ex)
             {
@@ -164,12 +163,12 @@ namespace BankApplicationAPI.Repository
             {
                 return await _context.Customers
                                       .Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
-                                      .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
-                                      .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
-                                      .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
-                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
-                                      .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
-                                      .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
+                                      //.Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
+                                      //.Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
+                                      //.Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
+                                      //.Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                      //.Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
+                                      //.Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
                                       .ToListAsync();
             }
             catch (Exception ex)

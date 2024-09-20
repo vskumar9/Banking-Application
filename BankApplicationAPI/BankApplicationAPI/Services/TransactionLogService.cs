@@ -97,6 +97,11 @@ namespace BankApplicationAPI.Services
 
             if (fromAccount.CurrentBalance < totalDeduction)
                 return false;
+            var toCustomerId = await _account.GetAccountsByAccountIdAsync(toAccountId);
+            if (toCustomerId == null)
+            {
+                return false;
+            }
 
             // Create transaction log for 'fromAccount' (Withdrawal + Fee)
             var transactionLogFrom = new TransactionLog
@@ -110,13 +115,13 @@ namespace BankApplicationAPI.Services
                 CustomerId = customerId
             };
 
-            var toCustomerId = await _account.GetAccountsByAccountIdAsync(toAccountId);
+            
 
             // Create transaction log for 'toAccount' (Deposit)
             var transactionLogTo = new TransactionLog
             {
                 TransactionDate = DateTime.UtcNow,
-                TransactionTypeId = 1, // 1 for Deposit
+                TransactionTypeId = 1, 
                 TransactionAmount = amount,
                 NewBalance = toAccount.CurrentBalance + amount,
                 AccountId = toAccountId,

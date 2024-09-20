@@ -25,7 +25,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/Customer
         [HttpGet]
-        [Authorize(Roles = "admin, support")] // Admins and support can view all customers
+        [Authorize(Roles = "admin, support, staff")] // Admins and support can view all customers
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
             try
@@ -42,7 +42,7 @@ namespace BankApplicationAPI.Controllers
         
         // GET: api/Customer/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin, support")] // Admins and support can view a specific customer
+        [Authorize(Roles = "admin, support, staff")] // Admins and support can view a specific customer
         public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
             try

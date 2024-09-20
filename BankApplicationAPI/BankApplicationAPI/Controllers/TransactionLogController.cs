@@ -22,7 +22,7 @@ namespace BankApplicationAPI.Controllers
 
         // GET: api/TransactionLog
         [HttpGet]
-        [Authorize(Roles = "admin, support, cashier")] // Admins, support, and cashiers can view all transaction logs
+        [Authorize(Roles = "admin, support, cashier, staff")] // Admins, support, and cashiers can view all transaction logs
         public async Task<ActionResult<IEnumerable<TransactionLog>>> GetTransactionLogs()
         {
             try
