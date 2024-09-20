@@ -1,0 +1,104 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4" *ngIf="loanDetails">
+    <h2 class="mb-4">Loan Details</h2>
+  
+    <!-- Loan Basic Details -->
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Loan ID:</strong> {{ loanDetails.loanId }}</p>
+        <p><strong>Loan Type:</strong> {{ loanDetails.loanType?.loanTypeName }}</p>
+        <p><strong>Loan Amount:</strong> {{ loanDetails.loanAmount | currency }}</p>
+        <p><strong>Application Date:</strong> {{ loanDetails.applicationDate | date: 'medium' }}</p>
+        <p><strong>Approval Date:</strong> {{ loanDetails.approvalDate | date: 'medium' }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Status:</strong> {{ loanDetails.loanStatus }}</p>
+        <p><strong>Assigned Employee:</strong> {{ loanDetails.employee?.employeeFirstName }} {{ loanDetails.employee?.employeeLastName }}</p>
+        <p><strong>Comments:</strong> {{ loanDetails.comments || 'N/A' }}</p>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <!-- Customer Details -->
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Customer Details</h3>
+        <p><strong>Name:</strong> {{ loanDetails.customer?.customerFirstName }} {{ loanDetails.customer?.customerLastName }}</p>
+        <p><strong>Email:</strong> {{ loanDetails.customer?.emailAddress }}</p>
+        <p><strong>Phone:</strong> {{ loanDetails.customer?.cellPhone }}</p>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <!-- Loan Repayment Schedule -->
+    <div class="row" *ngIf="loanDetails.loanPaymentSchedules?.length">
+      <div class="col-md-12">
+        <h3>Repayment Schedule</h3>
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>#</th>
+              <th>Due Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schedule of loanDetails.loanPaymentSchedules; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ schedule.paymentDate | date: 'medium' }}</td>
+              <td>{{ schedule.paymentAmount | currency }}</td>
+              <td>{{ schedule.paymentStatus }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- No Repayment Schedule Message -->
+    <div *ngIf="!loanDetails.loanPaymentSchedules?.length" class="alert alert-info mt-3">
+      No repayment schedule available.
+    </div>
+  
+    <hr>
+  
+    <!-- Loan Repayment Logs -->
+    <div class="row" *ngIf="loanDetails.loanRepaymentLogs?.length">
+      <div class="col-md-12">
+        <h3>Repayment Logs</h3>
+        <table class="table table-striped table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>#</th>
+              <th>Payment Date</th>
+              <th>Amount</th>
+              <th>Payment Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of loanDetails.loanRepaymentLogs; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ log.repaymentDate | date: 'medium' }}</td>
+              <td>{{ log.repaymentAmount | currency }}</td>
+              <td>{{ log.repaymentMethod }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- No Repayment Logs Message -->
+    <div *ngIf="!loanDetails.loanRepaymentLogs?.length" class="alert alert-info mt-3">
+      No repayment logs found.
+    </div>
+  
+  </div>
+  
+  <!-- No Loan Details Found Message -->
+  <div *ngIf="!loanDetails" class="alert alert-warning mt-4">
+    No loan details found.
+  </div>
+  

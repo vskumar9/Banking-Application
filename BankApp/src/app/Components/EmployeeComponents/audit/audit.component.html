@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+    <h2 class="mb-4">Audit Logs</h2>
+  
+    <!-- Search Bar -->
+    <div class="form-group">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Search audit logs" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterAuditLogs()" 
+      />
+    </div>
+  
+    <!-- Audit Logs Table -->
+    <table class="table table-striped table-bordered mt-3">
+      <thead class="thead-light">
+        <tr>
+          <th>#</th>
+          <th>Id</th>
+          <th>Action</th>
+          <th>Employee</th>
+          <th>Action Date</th>
+          <th>IP Address</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of auditLogs; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ log.auditLogId}}</td>
+          <td>{{ log.action }}</td>
+          <td>{{ log.employee?.employeeFirstName }} {{ log.employee?.employeeLastName }}</td>
+          <td>{{ log.actionDate | date:'medium' }}</td>
+          <td>{{ log.ipAddress }}</td>
+          <td>{{ log.details }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- No logs message -->
+    <div *ngIf="filterAuditLogs().length === 0" class="alert alert-info mt-3">
+      No audit logs found.
+    </div>
+  </div>
+  

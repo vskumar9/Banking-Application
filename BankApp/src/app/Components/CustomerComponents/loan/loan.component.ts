@@ -38,7 +38,10 @@ export class LoanComponent {
     this.customerService.getCustomer().subscribe(
       (customer: Customer) => {
         this.customer = customer;
-        this.loans = customer.loanApplications;
+        this.loans = customer.loanApplications.map(loan => ({
+          ...loan,
+          loanType: loan.loanType
+        }));
         this.filteredLoans = this.loans;
         this.updatePagination();
       },
@@ -53,6 +56,10 @@ export class LoanComponent {
     this.router.navigate([`/Home/loan/loanDetails/${loanId}`]);
   }
 
+  applyLoan(): void {
+    this.router.navigate(['/Home/loan/applyLoan']); 
+  }
+  
   filterLoans(): void {
     const filterTextLower = this.filterText.toLowerCase();
     this.filteredLoans = this.loans.filter(loan =>

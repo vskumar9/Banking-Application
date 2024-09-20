@@ -1,1 +1,48 @@
 <app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Transfer Funds</h2>
+
+  <form (ngSubmit)="transferFunds()">
+    <!-- From Account -->
+    <div class="form-group">
+      <label for="fromAccount">From Account</label>
+      <select id="fromAccount" class="form-control" [(ngModel)]="transferRequest.fromAccountId" name="fromAccount" required>
+        <option value="" disabled>Select your account</option>
+        <option *ngFor="let account of accounts" [value]="account.accountId">
+          {{ account.accountId }} - {{ account.currentBalance | currency:'USD' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- To Account -->
+    <div class="form-group">
+      <label for="toAccount">To Account</label>
+      <input type="number" id="toAccount" class="form-control" [(ngModel)]="transferRequest.toAccountId" name="toAccount" placeholder="Enter recipient's account ID" required>
+    </div>
+
+    <!-- Amount -->
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" class="form-control" [(ngModel)]="transferRequest.amount" name="amount" placeholder="Enter transfer amount" required>
+    </div>
+
+    <!-- Transaction Type (Hidden) -->
+    <input type="hidden" [(ngModel)]="transactionTypeId" name="transactionTypeId" value="3">
+
+    <!-- Disabled Transaction Type Dropdown -->
+    <div class="form-group">
+      <label for="transactionType">Transaction Type</label>
+      <select id="transactionType" class="form-control" disabled>
+        <option value="3">Transfer</option>
+      </select>
+    </div>
+
+    <!-- Error and Success Messages -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading">Transfer</button>
+  </form>
+</div>

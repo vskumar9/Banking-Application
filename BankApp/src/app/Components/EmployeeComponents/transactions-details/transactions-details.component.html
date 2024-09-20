@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<div class="container mt-4" *ngIf="transaction">
+    <h2 class="text-center mb-4">Transaction Details</h2>
+  
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Transaction ID: {{ transaction!.transactionId }}</h5>
+        <p class="card-text"><strong>Date:</strong> {{ transaction!.transactionDate | date: 'medium' }}</p>
+        <p class="card-text"><strong>Customer ID:</strong> {{ transaction!.customerId }}</p>
+        <p class="card-text"><strong>Employee ID:</strong> {{ transaction!.employeeId }}</p>
+        <p class="card-text"><strong>Account ID:</strong> {{ transaction!.accountId }}</p>
+        <p class="card-text"><strong>Transaction Amount:</strong> {{ transaction!.transactionAmount | currency }}</p>
+        <p class="card-text"><strong>New Balance:</strong> {{ transaction!.newBalance | currency }}</p>
+        <p class="card-text"><strong>Transaction Type:</strong> {{ transaction!.transactionType!.transactionTypeName }}</p>
+      </div>
+    </div>
+  
+    <div class="mt-4">
+      <a routerLink="/staffdashboard/transactions" class="btn btn-primary">Back to Transactions</a>
+    </div>
+  </div>
+  
+  <!-- Show message if transaction details are not available -->
+  <div *ngIf="!transaction" class="alert alert-warning">
+    Transaction details not found.
+  </div>
+  

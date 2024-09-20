@@ -1,0 +1,192 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Register a New Customer</h2>
+
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <div class="row">
+      <!-- First Name -->
+      <div class="col-md-6 mb-3">
+        <label for="customerFirstName" class="form-label">First Name:</label>
+        <input
+          id="customerFirstName"
+          name="customerFirstName"
+          [(ngModel)]="customer.customerFirstName"
+          type="text"
+          class="form-control"
+          placeholder="Enter first name"
+          required
+          #customerFirstName="ngModel"
+        />
+        <div *ngIf="customerFirstName.invalid && customerFirstName.touched" class="text-danger">
+          First name is required.
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="col-md-6 mb-3">
+        <label for="customerLastName" class="form-label">Last Name:</label>
+        <input
+          id="customerLastName"
+          name="customerLastName"
+          [(ngModel)]="customer.customerLastName"
+          type="text"
+          class="form-control"
+          placeholder="Enter last name"
+          required
+          #customerLastName="ngModel"
+        />
+        <div *ngIf="customerLastName.invalid && customerLastName.touched" class="text-danger">
+          Last name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Address 1 -->
+      <div class="col-md-6 mb-3">
+        <label for="customerAddress1" class="form-label">Address 1:</label>
+        <input
+          id="customerAddress1"
+          name="customerAddress1"
+          [(ngModel)]="customer.customerAddress1"
+          type="text"
+          class="form-control"
+          placeholder="Enter address line 1"
+          required
+        />
+      </div>
+
+      <!-- Address 2 -->
+      <div class="col-md-6 mb-3">
+        <label for="customerAddress2" class="form-label">Address 2:</label>
+        <input
+          id="customerAddress2"
+          name="customerAddress2"
+          [(ngModel)]="customer.customerAddress2"
+          type="text"
+          class="form-control"
+          placeholder="Enter address line 2"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- City -->
+      <div class="col-md-4 mb-3">
+        <label for="city" class="form-label">City:</label>
+        <input
+          id="city"
+          name="city"
+          [(ngModel)]="customer.city"
+          type="text"
+          class="form-control"
+          placeholder="Enter city"
+          required
+        />
+      </div>
+
+      <!-- State -->
+      <div class="col-md-4 mb-3">
+        <label for="state" class="form-label">State:</label>
+        <input
+          id="state"
+          name="state"
+          [(ngModel)]="customer.state"
+          type="text"
+          class="form-control"
+          placeholder="Enter state"
+          required
+        />
+      </div>
+
+      <!-- Zip Code -->
+      <div class="col-md-4 mb-3">
+        <label for="zipCode" class="form-label">Zip Code:</label>
+        <input
+          id="zipCode"
+          name="zipCode"
+          [(ngModel)]="customer.zipCode"
+          type="text"
+          class="form-control"
+          placeholder="Enter zip code"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Email -->
+      <div class="col-md-6 mb-3">
+        <label for="emailAddress" class="form-label">Email:</label>
+        <input
+          id="emailAddress"
+          name="emailAddress"
+          [(ngModel)]="customer.emailAddress"
+          type="email"
+          class="form-control"
+          placeholder="Enter email address"
+          required
+        />
+      </div>
+
+      <!-- Cell Phone -->
+      <div class="col-md-6 mb-3">
+        <label for="cellPhone" class="form-label">Cell Phone:</label>
+        <input
+          id="cellPhone"
+          name="cellPhone"
+          [(ngModel)]="customer.cellPhone"
+          type="text"
+          class="form-control"
+          placeholder="Enter cell phone"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Password -->
+      <div class="col-md-6 mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input
+          id="password"
+          name="password"
+          [(ngModel)]="customer.passwordHash"
+          type="password"
+          class="form-control"
+          placeholder="Enter password"
+          required
+          minlength="6"
+        />
+        <div class="text-danger">
+          Password is required (minimum 6 characters) & 1  uppercase, 1 lowercase, 1 number, 1 special character
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="button" class="btn btn-danger m-4" (click)="goBack()">Back to Customers Page</button>
+    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
+  </form>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Display Registered Customer Details -->
+  <div *ngIf="registeredCustomer" class="mt-4">
+    <h3>Registered Customer Details:</h3>
+    <p><strong>First Name:</strong> {{ registeredCustomer.customerId }}</p>
+    <p><strong>First Name:</strong> {{ registeredCustomer.customerFirstName }}</p>
+    <p><strong>Last Name:</strong> {{ registeredCustomer.customerLastName }}</p>
+    <p><strong>Email:</strong> {{ registeredCustomer.emailAddress }}</p>
+    <p><strong>Address:</strong> {{ registeredCustomer.customerAddress1 }} {{ registeredCustomer.customerAddress2 }}, {{ registeredCustomer.city }}, {{ registeredCustomer.state }} {{ registeredCustomer.zipCode }}</p>
+    <p><strong>Phone:</strong> Cell: {{ registeredCustomer.cellPhone }}, Home: {{ registeredCustomer.homePhone }}, Work: {{ registeredCustomer.workPhone }}</p>
+  </div>
+</div>

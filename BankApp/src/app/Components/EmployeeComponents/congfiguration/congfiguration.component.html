@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Configuration List</h2>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Configuration List -->
+    <div *ngIf="configurations">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Configuration ID</th>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Description</th>
+            <th>Last Updated</th>
+            <th>Updated By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let config of configurations">
+            <td>{{ config.configurationId }}</td>
+            <td>{{ config.configKey }}</td>
+            <td>{{ config.configValue }}</td>
+            <td>{{ config.description || 'N/A' }}</td>
+            <td>{{ config.lastUpdated ? (config.lastUpdated | date: 'short') : 'N/A' }}</td>
+            <td>{{ config.updatedBy }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="configurations.length === 0" class="alert alert-info">
+      No configurations found.
+    </div>
+  </div>
+  

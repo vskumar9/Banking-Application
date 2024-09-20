@@ -1,24 +1,42 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Register a New Customer</h2>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
     <div class="row">
       <!-- First Name -->
       <div class="col-md-6 mb-3">
         <label for="customerFirstName" class="form-label">First Name:</label>
-        <input id="customerFirstName" formControlName="customerFirstName" type="text" class="form-control" placeholder="Enter first name" />
-        <!-- <div *ngIf="registerForm.get('customerFirstName').invalid && registerForm.get('customerFirstName').touched" class="text-danger">
+        <input
+          id="customerFirstName"
+          name="customerFirstName"
+          [(ngModel)]="customer.customerFirstName"
+          type="text"
+          class="form-control"
+          placeholder="Enter first name"
+          required
+          #customerFirstName="ngModel"
+        />
+        <div *ngIf="customerFirstName.invalid && customerFirstName.touched" class="text-danger">
           First name is required.
-        </div> -->
+        </div>
       </div>
 
       <!-- Last Name -->
       <div class="col-md-6 mb-3">
         <label for="customerLastName" class="form-label">Last Name:</label>
-        <input id="customerLastName" formControlName="customerLastName" type="text" class="form-control" placeholder="Enter last name" />
-        <!-- <div *ngIf="registerForm.get('customerLastName').invalid && registerForm.get('customerLastName').touched" class="text-danger">
+        <input
+          id="customerLastName"
+          name="customerLastName"
+          [(ngModel)]="customer.customerLastName"
+          type="text"
+          class="form-control"
+          placeholder="Enter last name"
+          required
+          #customerLastName="ngModel"
+        />
+        <div *ngIf="customerLastName.invalid && customerLastName.touched" class="text-danger">
           Last name is required.
-        </div> -->
+        </div>
       </div>
     </div>
 
@@ -26,13 +44,28 @@
       <!-- Address 1 -->
       <div class="col-md-6 mb-3">
         <label for="customerAddress1" class="form-label">Address 1:</label>
-        <input id="customerAddress1" formControlName="customerAddress1" type="text" class="form-control" placeholder="Enter address line 1" />
+        <input
+          id="customerAddress1"
+          name="customerAddress1"
+          [(ngModel)]="customer.customerAddress1"
+          type="text"
+          class="form-control"
+          placeholder="Enter address line 1"
+          required
+        />
       </div>
 
       <!-- Address 2 -->
       <div class="col-md-6 mb-3">
         <label for="customerAddress2" class="form-label">Address 2:</label>
-        <input id="customerAddress2" formControlName="customerAddress2" type="text" class="form-control" placeholder="Enter address line 2" />
+        <input
+          id="customerAddress2"
+          name="customerAddress2"
+          [(ngModel)]="customer.customerAddress2"
+          type="text"
+          class="form-control"
+          placeholder="Enter address line 2"
+        />
       </div>
     </div>
 
@@ -40,19 +73,43 @@
       <!-- City -->
       <div class="col-md-4 mb-3">
         <label for="city" class="form-label">City:</label>
-        <input id="city" formControlName="city" type="text" class="form-control" placeholder="Enter city" />
+        <input
+          id="city"
+          name="city"
+          [(ngModel)]="customer.city"
+          type="text"
+          class="form-control"
+          placeholder="Enter city"
+          required
+        />
       </div>
 
       <!-- State -->
       <div class="col-md-4 mb-3">
         <label for="state" class="form-label">State:</label>
-        <input id="state" formControlName="state" type="text" class="form-control" placeholder="Enter state" />
+        <input
+          id="state"
+          name="state"
+          [(ngModel)]="customer.state"
+          type="text"
+          class="form-control"
+          placeholder="Enter state"
+          required
+        />
       </div>
 
       <!-- Zip Code -->
       <div class="col-md-4 mb-3">
         <label for="zipCode" class="form-label">Zip Code:</label>
-        <input id="zipCode" formControlName="zipCode" type="text" class="form-control" placeholder="Enter zip code" />
+        <input
+          id="zipCode"
+          name="zipCode"
+          [(ngModel)]="customer.zipCode"
+          type="text"
+          class="form-control"
+          placeholder="Enter zip code"
+          required
+        />
       </div>
     </div>
 
@@ -60,27 +117,29 @@
       <!-- Email -->
       <div class="col-md-6 mb-3">
         <label for="emailAddress" class="form-label">Email:</label>
-        <input id="emailAddress" formControlName="emailAddress" type="email" class="form-control" placeholder="Enter email address" />
+        <input
+          id="emailAddress"
+          name="emailAddress"
+          [(ngModel)]="customer.emailAddress"
+          type="email"
+          class="form-control"
+          placeholder="Enter email address"
+          required
+        />
       </div>
 
       <!-- Cell Phone -->
       <div class="col-md-6 mb-3">
         <label for="cellPhone" class="form-label">Cell Phone:</label>
-        <input id="cellPhone" formControlName="cellPhone" type="text" class="form-control" placeholder="Enter cell phone" />
-      </div>
-    </div>
-
-    <div class="row">
-      <!-- Home Phone -->
-      <div class="col-md-6 mb-3">
-        <label for="homePhone" class="form-label">Home Phone:</label>
-        <input id="homePhone" formControlName="homePhone" type="text" class="form-control" placeholder="Enter home phone" />
-      </div>
-
-      <!-- Work Phone -->
-      <div class="col-md-6 mb-3">
-        <label for="workPhone" class="form-label">Work Phone:</label>
-        <input id="workPhone" formControlName="workPhone" type="text" class="form-control" placeholder="Enter work phone" />
+        <input
+          id="cellPhone"
+          name="cellPhone"
+          [(ngModel)]="customer.cellPhone"
+          type="text"
+          class="form-control"
+          placeholder="Enter cell phone"
+          required
+        />
       </div>
     </div>
 
@@ -88,10 +147,19 @@
       <!-- Password -->
       <div class="col-md-6 mb-3">
         <label for="password" class="form-label">Password:</label>
-        <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter password" />
-        <!-- <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched" class="text-danger">
-          Password is required (minimum 6 characters).
-        </div> -->
+        <input
+          id="password"
+          name="password"
+          [(ngModel)]="customer.passwordHash"
+          type="password"
+          class="form-control"
+          placeholder="Enter password"
+          required
+          minlength="6"
+        />
+        <div class="text-danger">
+          Password is required (minimum 6 characters) & 1  uppercase, 1 lowercase, 1 number, 1 special character
+        </div>
       </div>
     </div>
 
@@ -99,10 +167,8 @@
     <button type="button" class="btn btn-danger m-4" (click)="loginPage()">Back to Login</button>
     <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
   </form>
-  <div>
 
-  </div>
-
+  <!-- Success Message -->
   <div *ngIf="successMessage" class="alert alert-success mt-3">
     {{ successMessage }}
   </div>
@@ -112,6 +178,7 @@
     {{ errorMessage }}
   </div>
 
+  <!-- Display Registered Customer Details -->
   <div *ngIf="registeredCustomer" class="mt-4">
     <h3>Registered Customer Details:</h3>
     <p><strong>First Name:</strong> {{ registeredCustomer.customerId }}</p>

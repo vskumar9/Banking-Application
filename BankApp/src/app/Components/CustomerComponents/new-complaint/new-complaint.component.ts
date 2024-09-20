@@ -61,13 +61,12 @@ export class NewComplaintComponent {
 
     // Adding the file to FormData
     if (this.selectedFile) {
-      formData.append('file', this.selectedFile); // File object is added to the FormData
+      formData.append('file', this.selectedFile); 
     } else {
       console.error('No file selected');
       return;
     }
 
-    // Calling the service to register the complaint with FormData
     this.customerService.registerComplaint(formData).subscribe(
       response => {
         console.log('Complaint registered successfully:', response);

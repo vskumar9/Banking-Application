@@ -2,11 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from '../../Modules/Customer';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from '../ApiServices/auth.service';
 import { isPlatformBrowser } from '@angular/common';
-import { Complaint } from '../../Modules/Complaint';
 import { ComplaintType } from '../../Modules/ComplaintType';
+import { TransferRequest } from '../../Modules/TransferRequest';
+import { Account } from '../../Modules/Account';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,7 @@ export class CustomerService {
   }
 
   registerCustomer(customer: Customer): Observable<any> {
+    const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}`, customer);
   }
 
@@ -75,10 +77,49 @@ export class CustomerService {
   getLoanById(id: number): Observable<any>{
     const headers = this.getHeaders();
     return  this.http.get(`${this.mainUrl}/LoanApplication/` + id, { headers });
+  }
+
+  getLoanTypes(): Observable<any>{
+    const headers = this.getHeaders();
+    return  this.http.get(`${this.mainUrl}/LoanType`, { headers });
+  }
+
+  applyForLoan(formData : FormData): Observable<any>{
+    const headers = this.getHeaders();
+    return  this.http.post<any>(`${this.mainUrl}/LoanApplication`, formData, { headers });
+  }
+  
+  getLoanFileDownloadUrl(loanId: number): Observable<Blob> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.mainUrl}/LoanApplication/download/${loanId}`, { responseType: 'blob', headers });
 
   }
 
-  
+  getTransactionTypes():Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get(`${this.mainUrl}/TransactionType`, { headers });
+  }
+
+  transferAmount(request: TransferRequest, transactionTypeId: number): Observable<any> {
+    const headers = this.getHeaders();
+  const url = `${this.mainUrl}/TransactionLog/transfer?TransactionTypeId=${transactionTypeId}`;
+  return this.http.post<any>(url, request, { headers }).pipe(
+    catchError((error) => {
+      console.error('Transfer error:', error); 
+      return throwError(() => new Error(error?.error?.message || 'Transfer failed. Invalid response.'));
+    })
+  );
+  }
+
+  getAccountTypes(): Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get(`${this.mainUrl}/AccountStatusType`, { headers });
+  }
+
+  createAccount(account: Partial<Account>): Observable<Account> {
+    return this.http.post<Account>(`${this.mainUrl}/AccountStatusType`, account,  { headers: this.getHeaders() });
+
+  }
 
 
   

@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   customerAuth(login: Login): Observable<Token> {
-    console.log("welcome");
+    console.log("welcome customer");
     return this.http.post<Token>(this.apiUrl+'customer', login).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId)) {
@@ -36,14 +36,14 @@ export class AuthService {
     );
   }
   employeeAuth(login: Login): Observable<Token> {
-    console.log("welcome");
+    console.log("welcome employee");
     return this.http.post<Token>(this.apiUrl+'employee', login).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId)) {
-          localStorage.setItem(this.tokenKey, response.token); // Store the token in localStorage
+          localStorage.setItem(this.tokenKey, response.token); 
         }
-        this.setUserRoleFromToken(); // Update user role
-        this.router.navigate(['/adminDash']); // Navigate to home or dashboard
+        this.setUserRoleFromToken(); 
+        this.router.navigate(['/dashborad']); 
       })
     );
   }

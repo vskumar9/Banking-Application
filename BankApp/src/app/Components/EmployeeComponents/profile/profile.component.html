@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+<div class="container mt-4" *ngIf="employee">
+    <h2 class="text-center mb-4">Employee Profile</h2>
+  
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Employee ID: {{ employee.employeeId }}</h5>
+        <p class="card-text"><strong>First Name:</strong> {{ employee.employeeFirstName }}</p>
+        <p class="card-text"><strong>Last Name:</strong> {{ employee.employeeLastName }}</p>
+        <p class="card-text"><strong>Email:</strong> {{ employee.emailAddress }}</p>
+        <p class="card-text"><strong>Is Active:</strong> {{ employee.isActive ? 'Yes' : 'No' }}</p>
+        <p class="card-text"><strong>Created Date:</strong> {{ employee.createdDate | date: 'medium' }}</p>
+        <p class="card-text"><strong>Last Login Date:</strong> {{ employee.lastLoginDate | date: 'medium' }}</p>
+      </div>
+    </div>
+  
+    <h3 class="mt-4">Audit Logs</h3>
+    <ul *ngIf="employee.auditLogs?.length; else noAuditLogs">
+      <li *ngFor="let log of employee.auditLogs">
+        {{ log.details }} ({{ log.actionDate | date: 'medium' }})
+      </li>
+    </ul>
+    <ng-template #noAuditLogs><p>No audit logs available.</p></ng-template>
+  
+    <h3 class="mt-4">Complaints</h3>
+    <ul *ngIf="employee.complaints?.length; else noComplaints">
+      <li *ngFor="let complaint of employee.complaints">
+        {{ complaint.complaintDescription }} ({{ complaint.complaintDate | date: 'medium' }})
+      </li>
+    </ul>
+    <ng-template #noComplaints><p>No complaints available.</p></ng-template>
+  
+    <h3 class="mt-4">Loan Applications</h3>
+    <ul *ngIf="employee.loanApplications?.length; else noLoans">
+      <li *ngFor="let loan of employee.loanApplications">
+        Loan Amount: {{ loan.loanAmount | currency }} ({{ loan.applicationDate | date: 'medium' }})
+      </li>
+    </ul>
+    <ng-template #noLoans><p>No loan applications available.</p></ng-template>
+  
+    <h3 class="mt-4">Transaction Logs</h3>
+    <ul *ngIf="employee.transactionLogs?.length; else noTransactions">
+      <li *ngFor="let transaction of employee.transactionLogs">
+        Transaction Amount: {{ transaction.transactionAmount | currency }} ({{ transaction.transactionDate | date: 'medium' }})
+      </li>
+    </ul>
+    <ng-template #noTransactions><p>No transaction logs available.</p></ng-template>
+  
+    <h3 class="mt-4">User Roles</h3>
+    <ul *ngIf="employee.userRoles?.length; else noRoles">
+      <li *ngFor="let role of employee.userRoles">
+        {{ role.role?.roleName }}
+      </li>
+    </ul>
+    <ng-template #noRoles><p>No user roles available.</p></ng-template>
+  
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  

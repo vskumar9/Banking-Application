@@ -18,63 +18,54 @@
         <p><strong>Approval Date:</strong> {{ loan.approvalDate ? (loan.approvalDate | date: 'mediumDate') : 'Pending' }}</p>
         <p><strong>Comments:</strong> {{ loan.comments || 'N/A' }}</p>
 
-        <!-- Display customer details -->
-        <!-- <div *ngIf="loan.customer">
-          <h5 class="mt-4">Customer Details</h5>
-          <p><strong>Name:</strong> {{ loan.customer.customerFirstName }} {{ loan.customer.customerLastName }}</p>
-          <p><strong>Email:</strong> {{ loan.customer.emailAddress || 'N/A' }}</p>
-          <p><strong>Phone:</strong> {{ loan.customer.cellPhone || 'N/A' }}</p>
-        </div> -->
-
-        <!-- Display employee details -->
-        <!-- <div *ngIf="loan.employee">
-          <h5 class="mt-4">Employee Details</h5>
-          <p><strong>Employee ID:</strong> {{ loan.employee.employeeId || 'N/A' }}</p>
-          <p><strong>Name:</strong> {{ loan.employee.employeeFirstName }} {{ loan.employee.employeeLastName }}</p>
-        </div> -->
+        <!-- Download file -->
+        <div *ngIf="loan.files">
+          <p><strong>Attached File:</strong><a *ngIf="loan.files" (click)="getLoanFileDownloadUrl(loan.loanId!)" class="btn btn-outline-primary btn-sm">
+            Download File
+          </a></p>
+        </div>
 
         <!-- Display loan payment schedules -->
         <div *ngIf="loan.loanPaymentSchedules?.length">
-            <h5 class="mt-4">Payment Schedules</h5>
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Due Date</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Payment Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let schedule of loan.loanPaymentSchedules">
-                  <td>{{ schedule!.paymentDate | date: 'mediumDate' }}</td>
-                  <td>{{ schedule!.paymentAmount | currency:'USD' }}</td>
-                  <td>{{ schedule!.paymentStatus }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
+          <h5 class="mt-4">Payment Schedules</h5>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Due Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Payment Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let schedule of loan.loanPaymentSchedules">
+                <td>{{ schedule.paymentDate | date: 'mediumDate' }}</td>
+                <td>{{ schedule.paymentAmount | currency:'USD' }}</td>
+                <td>{{ schedule.paymentStatus }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- Display loan repayment logs -->
         <div *ngIf="loan.loanRepaymentLogs?.length">
-            <h5 class="mt-4">Repayment Logs</h5>
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Repayment ID</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let log of loan.loanRepaymentLogs">
-                  <td>{{ log.repaymentId }}</td>
-                  <td>{{ log.repaymentAmount | currency:'USD' }}</td>
-                  <td>{{ log.repaymentDate | date: 'mediumDate' }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>          
+          <h5 class="mt-4">Repayment Logs</h5>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Repayment ID</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of loan.loanRepaymentLogs">
+                <td>{{ log.repaymentId }}</td>
+                <td>{{ log.repaymentAmount | currency:'USD' }}</td>
+                <td>{{ log.repaymentDate | date: 'mediumDate' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

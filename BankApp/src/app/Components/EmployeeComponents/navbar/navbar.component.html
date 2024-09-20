@@ -1,0 +1,108 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLinkActive="active">SunBank</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <!-- Admin, Staff, Support, Cashier Home Links -->
+          <li class="nav-item" *ngIf="isAdmin || isStaff || isSupport || isCashier" routerLinkActive="active">
+              <div *ngIf="isAdmin">
+                  <a class="nav-link" routerLink="/admindashboard">Admin Home</a>
+              </div>
+              <div *ngIf="isStaff">
+                  <a class="nav-link" routerLink="/staffdashboard">Staff Home</a>
+              </div>
+              <div *ngIf="isSupport">
+                  <a class="nav-link" routerLink="/supportdashboard">Support Home</a>
+              </div>
+              <div *ngIf="isCashier">
+                  <a class="nav-link" routerLink="/cashierdashboard">Cashier Home</a>
+              </div>
+          </li>
+
+          <!-- Transfer Links -->
+          <!-- <li class="nav-item" *ngIf=" isStaff || isCashier" routerLinkActive="active">
+              <div *ngIf="isCashier">
+                  <a class="nav-link" routerLink="/cashierdashboard/transfer">Transfer</a>
+              </div>
+              <div *ngIf="isStaff">
+                  <a class="nav-link" routerLink="/staffdashboard/transfer">Transfer</a>
+              </div>
+          </li> -->
+
+          <!-- Complaints Links -->
+          <!-- <li class="nav-item" *ngIf="isSupport || isStaff" routerLinkActive="active">
+              <div *ngIf="isSupport">
+                  <a class="nav-link" routerLink="/supportdashboard/complaints">Complaints</a>
+              </div>
+              <div *ngIf="isStaff">
+                  <a class="nav-link" routerLink="/staffdashboard/complaints">Complaints</a>
+              </div>
+          </li> -->
+
+          <!-- Loan Links -->
+          <li class="nav-item" *ngIf=" isSupport || isStaff" routerLinkActive="active">
+              <div *ngIf="isSupport">
+                  <a class="nav-link" routerLink="/supportdashboard/loan">Loan</a>
+              </div>
+              <div *ngIf="isStaff">
+                  <a class="nav-link" routerLink="/staffdashboard/loan">Loan</a>
+              </div>
+          </li>
+
+          <!-- Customers Links -->
+          <li class="nav-item" *ngIf="isAdmin || isSupport || isStaff || isCashier" routerLinkActive="active">
+              <div *ngIf="isAdmin">
+                  <a class="nav-link" routerLink="/admindashboard/customers">Customers</a>
+              </div>
+              <div *ngIf="isSupport">
+                  <a class="nav-link" routerLink="/supportdashboard/customers">Customers</a>
+              </div>
+              <div *ngIf="isStaff">
+                  <a class="nav-link" routerLink="/staffdashboard/customers">Customers</a>
+              </div>
+              <div *ngIf="isCashier">
+                  <a class="nav-link" routerLink="/cashierdashboard/customers">Customers</a>
+              </div>
+          </li>
+
+          <!-- Transactions Links -->
+          <li class="nav-item" *ngIf=" isSupport || isStaff || isCashier" routerLinkActive="active">
+              <div *ngIf="isAdmin">
+                  <a class="nav-link" routerLink="/admindashboard/transactions">Transactions</a>
+              </div>
+              <div *ngIf="isSupport">
+                  <a class="nav-link" routerLink="/supportdashboard/transactions">Transactions</a>
+              </div>
+              <div *ngIf="isStaff">
+                  <a class="nav-link" routerLink="/staffdashboard/transactions">Transactions</a>
+              </div>
+              <div *ngIf="isCashier">
+                  <a class="nav-link" routerLink="/cashierdashboard/transactions">Transactions</a>
+              </div>
+          </li>
+
+          <!-- Employees, Audit Log, Configuration Links (Admin Only) -->
+          <li class="nav-item" *ngIf="isAdmin" routerLinkActive="active">
+              <a class="nav-link" routerLink="/admindashboard/employees">Employees</a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin" routerLinkActive="active">
+              <a class="nav-link" routerLink="/admindashboard/audit">Audit Log</a>
+          </li>
+          <li class="nav-item" *ngIf="isAdmin" routerLinkActive="active">
+              <a class="nav-link" routerLink="/admindashboard/configuration">Configuration</a>
+          </li>
+      </ul>
+
+      <!-- Profile and Logout buttons -->
+       <div *ngIf="isAdmin">
+           <a routerLink="/admindashboard/profile/" routerLinkActive="active" class="btn btn-outline-primary text-dark m-2 my-sm-0">Profile</a>
+        </div>
+        <div *ngIf="isStaff">
+           <a routerLink="/staffdashboard/profile/" routerLinkActive="active" class="btn btn-outline-primary text-dark m-2 my-sm-0">Profile</a>
+       </div>
+      <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()" type="submit">Logout</button>
+  </div>
+</nav>

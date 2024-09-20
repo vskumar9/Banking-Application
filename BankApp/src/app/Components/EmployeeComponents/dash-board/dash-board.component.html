@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div *ngIf="employee" class="card shadow-sm p-4">
+    <h2 class="card-title text-center"><span *ngIf="isAdmin" class="font-weight-bold">Welcome to Admin</span><span *ngIf="isStaff" class="font-weight-bold">Welcome to Staff</span> <br>Dashboard</h2>
+
+    <!-- Displaying common employee details -->
+    <div class="row mb-3">
+      <div class="col-sm-4">
+        <p class="font-weight-bold">Employee Name:</p>
+      </div>
+      <div class="col-sm-8">
+        <p>{{ employee!.employeeFirstName }} {{ employee!.employeeLastName }}</p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-4">
+        <p class="font-weight-bold">Email Address:</p>
+      </div>
+      <div class="col-sm-8">
+        <p>{{ employee!.emailAddress }}</p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-4">
+        <p class="font-weight-bold">Last Login Date:</p>
+      </div>
+      <div class="col-sm-8">
+        <p>{{ employee!.lastLoginDate | date: 'short' }}</p>
+      </div>
+    </div>
+  </div>
+</div>

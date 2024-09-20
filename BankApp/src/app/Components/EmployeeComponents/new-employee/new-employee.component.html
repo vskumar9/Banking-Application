@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Add New Employee</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="employeeForm">
+    <!-- Email Address -->
+    <div class="form-group mt-3">
+      <label for="emailAddress">Email Address</label>
+      <input id="emailAddress" formControlName="emailAddress" class="form-control" placeholder="Enter Email Address" required />
+    </div>
+    
+    <!-- Password -->
+    <div class="form-group mt-3">
+      <label for="passwordHash">Password</label>
+      <input type="password" id="passwordHash" formControlName="passwordHash" class="form-control" placeholder="Enter Password" required />
+    </div>
+
+    <!-- First Name -->
+    <div class="form-group mt-3">
+      <label for="employeeFirstName">First Name</label>
+      <input id="employeeFirstName" formControlName="employeeFirstName" class="form-control" placeholder="Enter First Name" required />
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group mt-3">
+      <label for="employeeLastName">Last Name</label>
+      <input id="employeeLastName" formControlName="employeeLastName" class="form-control" placeholder="Enter Last Name" required />
+    </div>
+
+    <!-- Is Active -->
+    <div class="form-group mt-3">
+      <label for="isActive">Is Active</label>
+      <select id="isActive" formControlName="isActive" class="form-control">
+        <option [value]="true">Yes</option>
+        <option [value]="false">No</option>
+      </select>
+    </div>
+
+    <!-- Role Selection -->
+    <div class="form-group mt-3">
+      <label for="roleId">Select Role</label>
+      <select id="roleId" formControlName="roleId" class="form-control" required>
+        <option *ngFor="let role of availableRoles" [value]="role.roleId">{{ role.roleName }}</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4" [disabled]="employeeForm.invalid">Add Employee</button>
+  </form>
+</div>

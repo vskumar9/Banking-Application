@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+    <h2>Update Loan Details</h2>
+  
+    <form (ngSubmit)="onSubmit()" [formGroup]="loanForm">
+      <!-- Loan Amount -->
+      <div class="form-group">
+        <label for="loanAmount">Loan Amount</label>
+        <input type="number" id="loanAmount" formControlName="loanAmount" class="form-control" placeholder="Enter loan amount" />
+        <!-- <div *ngIf="loanForm.controls.loanAmount.invalid && loanForm.controls.loanAmount.touched" class="text-danger">
+          Loan amount is required.
+        </div> -->
+      </div>
+  
+      <!-- Loan Type -->
+      <div class="form-group mt-3">
+        <label for="loanTypeId">Loan Type</label>
+        <select id="loanTypeId" formControlName="loanTypeId" class="form-control">
+
+          <option disabled *ngFor="let loanType of loanTypes" [value]="loanType.loanTypeId">{{ loanType.loanTypeName }}</option>
+        </select>
+        <!-- <div *ngIf="loanForm.controls.loanTypeId.invalid && loanForm.controls.loanTypeId.touched" class="text-danger">
+          Loan type is required.
+        </div> -->
+      </div>
+  
+      <!-- Loan Status -->
+      <div class="form-group mt-3">
+        <label for="loanStatus">Loan Status</label>
+        <select id="loanStatus" formControlName="loanStatus" class="form-control">
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+  
+      <!-- Assigned Employee -->
+      <div class="form-group mt-3">
+        <label for="employeeId">Assigned Employee</label>
+        <input type="text" id="employeeId" formControlName="employeeId" class="form-control" placeholder="Enter employee ID" />
+        <!-- <div *ngIf="loanForm.controls.employeeId.invalid && loanForm.controls.employeeId.touched" class="text-danger">
+          Employee ID is required.
+        </div> -->
+      </div>
+  
+      <!-- Comments -->
+      <div class="form-group mt-3">
+        <label for="comments">Comments</label>
+        <textarea id="comments" formControlName="comments" class="form-control" placeholder="Enter comments"></textarea>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary mt-4" [disabled]="loanForm.invalid">Update Loan</button>
+    </form>
+  </div>
+  

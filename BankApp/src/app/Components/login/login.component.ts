@@ -10,8 +10,6 @@ import { Component, OnInit } from '@angular/core';
 import { Login } from '../../Modules/Login';
 import { AuthService } from '../../Services/ApiServices/auth.service';
 import { Router } from '@angular/router';
-import { CustomerService } from '../../Services/CustomerService/customer.service';
-import { Customer } from '../../Modules/Customer';
 
 @Component({
   selector: 'app-login',
@@ -65,6 +63,7 @@ export class LoginComponent implements OnInit {
   registerPage(){
     this.router.navigate(['/registered']);
   }
+
   roleBased(value: string) {
     if (value == 'admin') {
       this.roleAdmin = true;
@@ -89,6 +88,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
   login(userType: 'customer' | 'employee') {
     if (userType === 'customer' && this.employeeForm.valid) {
       const loginData = this.employeeForm.value;
@@ -100,28 +100,28 @@ export class LoginComponent implements OnInit {
       const loginData = this.employeeForm.value;
       if (this.roleAdmin) {
         this.authService.employeeAuth(loginData).subscribe(
-          (data) => this.handleAuthResponse(data, '/adminDash', loginData),
-          (error) => this.handleError(error)
-        );
+          (data) => this.handleAuthResponse(data, '/admindashboard', loginData),
+          (error) => this.handleError(error));
       } else if (this.roleCashier) {
         this.authService.employeeAuth(loginData).subscribe(
-          (data) => this.handleAuthResponse(data, '/cashierDash', loginData),
+          (data) => this.handleAuthResponse(data, '/cashierdashboard', loginData),
           (error) => this.handleError(error)
         );
       } else if (this.roleStaff) {
         this.authService.employeeAuth(loginData).subscribe(
-          (data) => this.handleAuthResponse(data, '/staffDash', loginData),
+          (data) => this.handleAuthResponse(data, '/staffdashboard', loginData),
           (error) => this.handleError(error)
         );
       } else if (this.roleSupport) {
         this.authService.employeeAuth(loginData).subscribe(
-          (data) => this.handleAuthResponse(data, '/supportDash', loginData),
+          (data) => this.handleAuthResponse(data, '/supportdashboard', loginData),
           (error) => this.handleError(error)
         );
       } else {
         alert('Please fill in all required fields.');
       }
-    } else {
+    } 
+    else {
       alert('Please fill in all required fields.');
     }
   }

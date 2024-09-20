@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Customer Details</h2>
+
+  <!-- Customer Details Card -->
+  <div *ngIf="customer" class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ customer.customerFirstName }} {{ customer.customerLastName }}</h5>
+      
+      <p><strong>Customer ID:</strong> {{ customer.customerId }}</p>
+      <p><strong>Email:</strong> {{ customer.emailAddress }}</p>
+      <p><strong>Phone:</strong> Cell: {{ customer.cellPhone }}, Home: {{ customer.homePhone }}, Work: {{ customer.workPhone }}</p>
+      
+      <h6 class="mt-4">Address</h6>
+      <p>{{ customer.customerAddress1 }} {{ customer.customerAddress2 }}</p>
+      <p>{{ customer.city }}, {{ customer.state }} {{ customer.zipCode }}</p>
+      
+      <h6 class="mt-4">Accounts</h6>
+      <ul class="list-group">
+        <li *ngFor="let account of customer.accounts" class="list-group-item">
+          <strong>Account ID:</strong> {{ account.accountId }} - <strong>Balance:</strong> {{ account.currentBalance | currency }}
+        </li>
+      </ul>
+
+      <h6 class="mt-4">Complaints</h6>
+      <ul class="list-group">
+        <li *ngFor="let complaint of customer.complaints" class="list-group-item">
+          <strong>Complaint ID:</strong> {{ complaint.complaintId }} - <strong>Status:</strong> {{ complaint.complaintStatus }}
+        </li>
+      </ul>
+
+      <h6 class="mt-4">Loan Applications</h6>
+      <ul class="list-group">
+        <li *ngFor="let loan of customer.loanApplications" class="list-group-item">
+          <strong>Loan ID:</strong> {{ loan.loanId }} - <strong>Amount:</strong> {{ loan.loanAmount | currency }}
+        </li>
+      </ul>
+
+      <h6 class="mt-4">Transaction Logs</h6>
+      <ul class="list-group">
+        <li *ngFor="let transaction of customer.transactionLogs" class="list-group-item">
+          <strong>Transaction ID:</strong> {{ transaction.transactionId }} - <strong>Amount:</strong> {{ transaction.transactionAmount | currency }}
+        </li>
+      </ul>
+
+      <div class="mt-4">
+        <button class="btn btn-primary" (click)="goBack()">Back to List</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display a message if no customer is found -->
+  <div *ngIf="!customer" class="alert alert-warning mt-4">
+    Customer not found.
+  </div>
+</div>

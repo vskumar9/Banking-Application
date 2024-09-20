@@ -3,6 +3,13 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Applied Loans</h2>
 
+  <!-- Apply Loan Button -->
+  <div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-success" (click)="applyLoan()">
+      Apply for a New Loan
+    </button>
+  </div>
+
   <!-- Filter Input -->
   <div class="mb-4">
     <input 
@@ -34,8 +41,8 @@
           <td>{{ loan.loanType?.loanTypeName || 'N/A' }}</td>
           <td>{{ loan.loanAmount | currency:'USD' }}</td>
           <td>{{ loan.applicationDate | date: 'mediumDate' }}</td>
-          <td>{{ loan.loanStatus }}</td>
-          <td>{{ loan.approvalDate ? (loan.approvalDate | date: 'mediumDate') : 'Pending' }}</td>
+          <td>{{ loan.loanStatus ||  'Pending'}}</td>
+          <td>{{ loan.approvalDate ? (loan.approvalDate | date: 'mediumDate') : 'N/A' }}</td>
           <td>
             <button class="btn btn-primary btn-sm" (click)="viewLoanDetails(loan.loanId!)">View Details</button>
           </td>

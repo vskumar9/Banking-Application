@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Apply for a New Loan</h2>
+
+  <form (ngSubmit)="submitLoanApplication()" #loanForm="ngForm">
+
+    <!-- Loan Type -->
+    <div class="form-group">
+      <label for="loanType">Loan Type</label>
+      <select id="loanType" class="form-control" required [(ngModel)]="loanApplication.loanTypeId" name="loanTypeId">
+        <option *ngFor="let loanType of loanTypes" [value]="loanType.loanTypeId">{{ loanType.loanTypeName }}</option>
+      </select>
+    </div>
+
+    <!-- Loan Amount -->
+    <div class="form-group">
+      <label for="loanAmount">Loan Amount</label>
+      <input type="number" id="loanAmount" class="form-control" required [(ngModel)]="loanApplication.loanAmount" name="loanAmount">
+    </div>
+
+    <!-- Application Date -->
+    <div class="form-group">
+      <label for="applicationDate">Application Date</label>
+      <input type="date" id="applicationDate" class="form-control" [(ngModel)]="loanApplication.applicationDate" name="applicationDate" required>
+    </div>
+
+    <!-- File Upload (Optional) -->
+    <div class="form-group">
+      <label for="files">Supporting Documents</label>
+      <input type="file" id="files" class="form-control" (change)="handleFileInput($event)">
+    </div>
+
+    <!-- Comments -->
+    <div class="form-group">
+      <label for="comments">Comments</label>
+      <textarea id="comments" class="form-control" [(ngModel)]="loanApplication.comments" name="comments"></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group text-center mt-4">
+      <button type="submit" class="btn btn-success" [disabled]="!loanForm.valid">Apply for Loan</button>
+    </div>
+
+    <!-- Success/Error Message -->
+    <div *ngIf="successMessage" class="alert alert-success mt-4">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-4">{{ errorMessage }}</div>
+  </form>
+</div>

@@ -43,5 +43,27 @@ export class LoanDetailsComponent {
       }
     );
   }
+
+  getLoanFileDownloadUrl(loanId: number | null): void {
+    if (!loanId) {
+      console.error('Complaint ID is missing');
+      return;
+    }
+
+    this.customerService.getFileDownloadUrl(loanId).subscribe(
+      (response: Blob) => {
+        const blob = new Blob([response], { type: response.type });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = this.loan?.files?.name || 'complaint-file';
+        a.click();
+        window.URL.revokeObjectURL(url); // Clean up after download
+      },
+      (error) => {
+        console.error('Error downloading the file:', error);
+      }
+    );
+  }
   
 }
