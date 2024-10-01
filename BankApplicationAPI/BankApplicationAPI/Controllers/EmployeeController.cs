@@ -169,6 +169,8 @@ namespace BankApplicationAPI.Controllers
         {
             try
             {
+                var employeeId = User.FindFirstValue(ClaimTypes.PrimarySid);
+                if (employeeId!.Equals(id)) return BadRequest("Self are not delete this operation in this time.");
                 var employees = await _employeeService.GetEmployeeByEmployeeIdAsync(id);
                 if (employees == null)
                     return NotFound("Employee not found.");

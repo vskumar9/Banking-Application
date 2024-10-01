@@ -66,6 +66,42 @@ namespace BankApplicationAPI.Services
             catch { throw; }
         }
 
+        public async Task<IEnumerable<Customer>> GetAccountsByCustomerId(string customerId)
+        {
+            try
+            {
+                return await _customer.GetAccountsByCustomerId(customerId);
+            }
+            catch { throw; }
+        }
+
+        public async Task<IEnumerable<Customer>> GetComplaintsByCustomerId(string customerId)
+        {
+            try
+            {
+                return await _customer.GetComplaintsByCustomerId(customerId);
+            }
+            catch { throw; }
+        }
+
+        public async Task<IEnumerable<Customer>> GetLoansByCustomerId(string customerId)
+        {
+            try
+            {
+                return await _customer.GetLoansByCustomerId(customerId);
+            }
+            catch { throw; }
+        }
+
+        public async Task<IEnumerable<Customer>> GetTransactionLogsByCustomerId(string customerId)
+        {
+            try
+            {
+                return await _customer.GetTransactionLogsByCustomerId(customerId);
+            }
+            catch { throw; }
+        }
+
 
 
     }

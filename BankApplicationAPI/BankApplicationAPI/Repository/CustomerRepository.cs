@@ -81,6 +81,45 @@ namespace BankApplicationAPI.Repository
             }
         }
 
+        public async Task<IEnumerable<Customer>> GetAccountsByCustomerId(string customerId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(customerId))
+                {
+                    throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
+                }
+                return await _context.Customers.Where(c => c.CustomerId!.Equals(customerId))
+                                               .Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
+                                               .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching customer");
+                throw new Exception("An error occurred while fetching the customer.", ex);
+            }
+        }
+
+        public async Task<IEnumerable<Customer>> GetComplaintsByCustomerId(string customerId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(customerId))
+                {
+                    throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
+                }
+                return await _context.Customers.Where(c => c.CustomerId!.Equals(customerId))
+                                               .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching customer");
+                throw new Exception("An error occurred while fetching the customer.", ex);
+            }
+        }
+
         // Get Customer by optional parameters
         public async Task<IEnumerable<Customer>> GetCustomerAsync(string? CustomerId = null, string? CustomerFirstName = null, string? CustomerLastName = null, string? City = null, string? State = null, string? ZipCode = null, string? EmailAddress = null, string? CellPhone = null)
         {
@@ -112,13 +151,14 @@ namespace BankApplicationAPI.Repository
                 if (!string.IsNullOrEmpty(CellPhone))
                     query = query.Where(c => c.CellPhone == CellPhone);
 
-                return await query.Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
-                                  .Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
-                                  .Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
-                                  .Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
-                                  .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
-                                  .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
-                                  .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
+                return await query
+                                  //.Include(c => c.Accounts!).ThenInclude(c => c.AccountStatusType)
+                                  //.Include(c => c.Accounts!).ThenInclude(c => c.InterestSavingsRate)
+                                  //.Include(c => c.ComplaintFeedbacks!).ThenInclude(c => c.Complaint)
+                                  //.Include(c => c.Complaints!).ThenInclude(c => c.ComplaintResolutions)
+                                  //.Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                  //.Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
+                                  //.Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType)
                                   .ToListAsync();
             }
             catch (Exception ex)
@@ -175,6 +215,47 @@ namespace BankApplicationAPI.Repository
             {
                 _logger.LogError(ex, "Error fetching all customers");
                 throw new Exception("An error occurred while fetching all customers.", ex);
+            }
+        }
+
+        public async Task<IEnumerable<Customer>> GetLoansByCustomerId(string customerId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(customerId))
+                {
+                    throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
+                }
+                return await _context.Customers.Where(c => c.CustomerId!.Equals(customerId))
+                                                .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanType)
+                                                .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanPaymentSchedules)
+                                                .Include(c => c.LoanApplications!).ThenInclude(c => c.LoanRepaymentLogs)
+                                                .ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching customer");
+                throw new Exception("An error occurred while fetching the customer.", ex);
+            }
+        }
+
+        public async Task<IEnumerable<Customer>> GetTransactionLogsByCustomerId(string customerId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(customerId))
+                {
+                    throw new ArgumentException("CustomerId cannot be null or empty", nameof(customerId));
+                }
+                return await _context.Customers.Where(c => c.CustomerId!.Equals(customerId))
+                                                .Include(c => c.TransactionLogs!).ThenInclude(c => c.TransactionType).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching customer");
+                throw new Exception("An error occurred while fetching the customer.", ex);
             }
         }
 

@@ -191,5 +191,93 @@ namespace BankApplicationAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting customer.");
             }
         }
+
+        [HttpGet("accounts")]
+        [Authorize(Roles = "customer")] // customer account data
+        public async Task<ActionResult> GetAccountsByCustomerId()
+        {
+            var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+            if (string.IsNullOrEmpty(customerId))
+                return Unauthorized("Invalid token.");
+
+            try
+            {
+                var customers = await _customerService.GetAccountsByCustomerId(customerId);
+                if (customers == null)
+                    return NotFound("Customer not found.");
+                return Ok(customers);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving customer.");
+            }
+        }
+
+        [HttpGet("complaints")]
+        [Authorize(Roles = "customer")] // customer complaints data
+        public async Task<ActionResult> GetComplaintsByCustomerId()
+        {
+            var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+            if (string.IsNullOrEmpty(customerId))
+                return Unauthorized("Invalid token.");
+
+            try
+            {
+                var customers = await _customerService.GetComplaintsByCustomerId(customerId);
+                if (customers == null)
+                    return NotFound("Customer not found.");
+                return Ok(customers);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving customer.");
+            }
+        }
+        
+        [HttpGet("loans")]
+        [Authorize(Roles = "customer")] // customer loans data
+        public async Task<ActionResult> GetLoansByCustomerId()
+        {
+            var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+            if (string.IsNullOrEmpty(customerId))
+                return Unauthorized("Invalid token.");
+
+            try
+            {
+                var customers = await _customerService.GetLoansByCustomerId(customerId);
+                if (customers == null)
+                    return NotFound("Customer not found.");
+                return Ok(customers);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving customer.");
+            }
+        }
+        
+        [HttpGet("transactions")]
+        [Authorize(Roles = "customer")] // customer loans data
+        public async Task<ActionResult> GetTransactionLogsByCustomerId()
+        {
+            var customerId = User.FindFirstValue(ClaimTypes.PrimarySid);
+            if (string.IsNullOrEmpty(customerId))
+                return Unauthorized("Invalid token.");
+
+            try
+            {
+                var customers = await _customerService.GetTransactionLogsByCustomerId(customerId);
+                if (customers == null)
+                    return NotFound("Customer not found.");
+                return Ok(customers);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving customer.");
+            }
+        }
     }
 }
